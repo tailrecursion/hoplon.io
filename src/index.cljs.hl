@@ -1,5 +1,4 @@
 (page index.html
-  (:refer-clojure :exclude [meta])
   (:require
     [clojure.string             :as string]
     [bootstrap.core             :as core]
@@ -7,10 +6,7 @@
     [bootstrap.glyph            :as glyph]
     [bootstrap.button           :as button]
     [bootstrap.navbar           :as navbar]
-    [tailrecursion.hoplon.util  :as hutil]
-    ))
-
-(def meta html-meta)
+    [tailrecursion.hoplon.util  :as hutil]))
 
 (def route (hutil/route-cell 100 "#/home/"))
 
