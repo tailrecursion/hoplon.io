@@ -1,0 +1,4 @@
+(ns bootstrap.button)
+
+(defelem group    [attr kids] (apply (div :class "btn-group") attr kids))
+(defelem default  [attr kids] (apply (button :type "button" :class "btn btn-default") attr kids))

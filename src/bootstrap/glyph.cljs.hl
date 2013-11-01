@@ -1,0 +1,8 @@
+(ns bootstrap.glyph)
+
+(defn mkglyph [img] (span :class (str "glyphicon glyphicon-" img)))
+
+(defelem star           [attr kids] (mkglyph "star"))
+(defelem cloud-download [attr kids] (mkglyph "cloud-download"))
+(defelem cloud-upload   [attr kids] (mkglyph "cloud-upload"))
+

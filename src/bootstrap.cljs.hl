@@ -1,0 +1,3 @@
+(ns bootstrap)
+
+(defelem container [attr kids] (apply (div :class "container") attr kids))
