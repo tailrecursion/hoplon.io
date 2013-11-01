@@ -12,6 +12,7 @@ pom.xml
 *.jar
 *.class
 *~
+hs_err_*
 .lein-deps-sum
 .lein-failures
 .lein-plugins

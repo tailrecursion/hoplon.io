@@ -1,31 +1,41 @@
 (page index.html
   (:refer-clojure :exclude [meta])
   (:require
-    [bootstrap        :as core]
-    [bootstrap.glyph  :as glyph]
-    [bootstrap.button :as button]))
+    [clojure.string             :as string]
+    [bootstrap.core             :as core]
+    [bootstrap.meta             :as meta]
+    [bootstrap.glyph            :as glyph]
+    [bootstrap.button           :as button]
+    [bootstrap.navbar           :as navbar]
+    [tailrecursion.hoplon.util  :as hutil]
+    ))
 
 (def meta html-meta)
 
+(def route (hutil/route-cell 100 "#/home/"))
+
+(def-values
+  [page-setup nav-bar content-home content-about content-contact]
+  (navbar/page-fixed-top
+    route         
+    "Bootstrap 101 Test"
+    "Hoplon demo testing Twitter Bootstrap library design."
+    ["#/home/"    "Hello World"]
+    ["#/home/"    "Home"]
+    ["#/about/"   "About"]
+    ["#/contact/" "Contact"]))
+
 (html
   (head
-    (title "Bootstrap 101 Template")
-    (meta :name "viewport" :content "width=device-width, initial-scale=1.0")
-    (link :href "css/bootstrap.min.css" :rel "stylesheet" :media "screen")
-    (link :href "css/starter-template.css" :rel "stylesheet" :media "screen")) 
+    (page-setup))
   (body
-    ((div :class "navbar navbar-inverse navbar-fixed-top")
-       (core/container
-         ((div :class "navbar-header")
-            (a :class "navbar-brand" :href "#/" "Hello World"))
-         ((div :class "collapse navbar-collapse")
-            ((ul :class "nav navbar-nav")
-               (li :class "active" (a :href "#/" "Home"))
-               (li (a :href "#/about" "About"))
-               (li (a :href "#/contact" "Contact"))))))
-    (core/container
-      (h1 "hello world") 
-      (button/group
-        (button/default (glyph/star)            " Star")
-        (button/default (glyph/cloud-download)  " Download")
-        (button/default (glyph/cloud-upload)    " Upload")))))
+    (nav-bar)
+    (content-home
+      (h1 "Home")
+      (p "This is the home content."))
+    (content-about
+      (h1 "About")
+      (p "This is the about content."))
+    (content-contact
+      (h1 "Contact")
+      (p "This is the contact content."))))
