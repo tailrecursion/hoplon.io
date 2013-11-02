@@ -3,4 +3,5 @@
 
 (def meta html-meta)
 
-(defelem description [attr kids] (meta :name "description" :content (first kids)))
+(defelem viewport    [attr kids] (meta :name "viewport"     :content (first kids)))
+(defelem description [attr kids] (meta :name "description"  :content (first kids)))

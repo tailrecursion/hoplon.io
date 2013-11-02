@@ -3,23 +3,23 @@
     [clojure.string             :as string]
     [bootstrap.core             :as core]
     [bootstrap.meta             :as meta]
+    [bootstrap.page             :as page]
     [bootstrap.glyph            :as glyph]
     [bootstrap.button           :as button]
     [bootstrap.navbar           :as navbar]
     [tailrecursion.hoplon.util  :as hutil]))
 
-(def route (hutil/route-cell 100 "#/home/"))
+(def route (hutil/route-cell 10 "#/home/"))
 
 (def-values
   [page-setup nav-bar content-home content-about content-contact]
-  (navbar/page-fixed-top
+  (page/navbar-fixed-top
     route         
-    "Bootstrap 101 Test"
+    "Bootstrap Test"
     "Hoplon demo testing Twitter Bootstrap library design."
-    ["#/home/"    "Hello World"]
-    ["#/home/"    "Home"]
-    ["#/about/"   "About"]
-    ["#/contact/" "Contact"]))
+    [(a :href "#/home/"            "Home") (core/container)]
+    [(a :href "#/about/"          "About") (core/container)]
+    [(a :href "#/contact/"      "Contact") (core/container)]))
 
 (html
   (head

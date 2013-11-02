@@ -1,0 +1,13 @@
+(ns bootstrap.page
+  (:require
+    [bootstrap.core   :as core]
+    [bootstrap.meta   :as meta]
+    [bootstrap.navbar :as navbar]))
+
+(defn navbar-fixed-top [route title-text description & kvs]
+  (into [#(spliced
+            (core/setup)
+            (title title-text)
+            (meta/description description))
+         (apply navbar/fixed-top route title-text (map first kvs))] 
+        (map (fn [[l c]] (c :do-toggle (cell= (navbar/active? l route)))) kvs)))
