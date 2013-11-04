@@ -1,4 +1,5 @@
 (ns bootstrap.navbar
+  (:refer-hoplon :exclude [nav header])
   (:require
     [bootstrap.core :as core]
     [bootstrap.meta :as meta]

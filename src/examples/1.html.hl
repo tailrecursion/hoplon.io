@@ -1,0 +1,26 @@
+<script type="text/hoplon">
+  (page "examples/1.html")
+  
+  (defn my-list [& items]
+    (div
+      :class "my-list"
+      (apply ul (map #(li (div :class "my-list-item" %)) items))))
+
+  (def clicks (cell 0))
+</script>
+    
+<html>
+  <head>
+    <title>example page</title>
+  </head>
+  <body>
+    <h1>Hello, Hoplon</h1>
+
+    <my-list>
+      <p><text>You've clicked ~{clicks} times, so far.</text></p>
+      <p><text>If you click again you'll have clicked ~(inc clicks) times.</text></p>
+    </my-list>
+
+    <button on-click="{{ #(swap! clicks inc) }}">click me</button>
+  </body>
+</html>

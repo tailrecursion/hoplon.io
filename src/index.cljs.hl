@@ -1,7 +1,10 @@
 (page index.html
+  (:require-macros
+    [bootstrap.code             :as code])
   (:require
     [clojure.string             :as string]
     [bootstrap.core             :as core]
+    [bootstrap.grid             :as grid]
     [bootstrap.meta             :as meta]
     [bootstrap.page             :as page]
     [bootstrap.glyph            :as glyph]
@@ -21,14 +24,84 @@
     [(a :href "#/about/"          "About") (core/container)]
     [(a :href "#/contact/"      "Contact") (core/container)]))
 
+(defc mouse {:client [0 0] :page [0 0] :screen [0 0]})
+(defc= show-nav? (> 100 (get-in mouse [:client 1])))
+
+(cell= (pr show-nav?))
+
+(defmethod do! :slide-toggle-once
+  [elem _ arg]
+  (if arg
+    (.slideDown (js/jQuery elem) "slow")
+    (.slideUp (js/jQuery elem) "slow")))
+
 (html
   (head
-    (page-setup))
+    (page-setup)
+    (link :rel "stylesheet" :href "css/github.css" :media "screen"))
   (body
-    (nav-bar)
+    :on-mousemove #(reset! mouse {:client  [(.-clientX %) (.-clientY %)]
+                                  :page    [(.-pageX   %) (.-pageY   %)]
+                                  :screen  [(.-screenX %) (.-screenY %)]})
+    ((nav-bar) 
+      :do-slide-toggle-once show-nav?)
     (content-home
-      (h1 "Home")
-      (p "This is the home content."))
+      (grid/row
+        (grid/col2)
+        (grid/col8
+          (div
+            :class "page-header"
+            (h1 "Hello World"))
+          (p "Hoplon is a set of libraries for making web pages.")
+          )
+        (grid/col2)) 
+      (grid/row
+        (grid/col2
+          (p
+            "This is what the code does."))
+        (grid/col8
+          (div
+            :class "panel panel-default"
+            (div
+              :id "/home/example1/"
+              :class "panel-heading"
+              "Example:")
+            (div
+              :class "panel-body"
+              "Foo bar.")) 
+          (code/xml
+                ;;{{
+                <script type="text/hoplon">
+                  (page index.html)
+                  
+                  (defn my-list [& items]
+                    (div
+                      :class "my-list"
+                      (apply ul (map #(li (div :class "my-list-item" %)) items))))
+
+                  (def clicks (cell 0))
+                </script>
+                    
+                <html>
+                  <head>
+                    <title>example page</title>
+                  </head>
+                  <body>
+                    <h1>Hello, Hoplon</h1>
+                    
+                    <my-list>
+                      <span>first thing</span>
+                      <span>second thing</span>
+                    </my-list>
+
+                    <p><text>You've clicked ~{clicks} times, so far.</text></p>
+                    <button on-click="{{ #(swap! clicks inc) }}">click me</button>
+                  </body>
+                </html>
+                ;;}}
+                ))
+        (grid/col2
+          (p "asdf"))))
     (content-about
       (h1 "About")
       (p "This is the about content."))
