@@ -15,91 +15,127 @@
 (def route (hutil/route-cell 10 "#/home/"))
 
 (def-values
-  [page-setup nav-bar content-home content-about content-contact]
+  [page-setup nav-bar content-home content-getting-started content-about content-contact]
   (page/navbar-fixed-top
     route         
     "Bootstrap Test"
     "Hoplon demo testing Twitter Bootstrap library design."
-    [(a :href "#/home/"            "Home") (core/container)]
-    [(a :href "#/about/"          "About") (core/container)]
-    [(a :href "#/contact/"      "Contact") (core/container)]))
-
-(defc mouse {:client [0 0] :page [0 0] :screen [0 0]})
-(defc= show-nav? (> 100 (get-in mouse [:client 1])))
-
-(cell= (pr show-nav?))
-
-(defmethod do! :slide-toggle-once
-  [elem _ arg]
-  (if arg
-    (.slideDown (js/jQuery elem) "slow")
-    (.slideUp (js/jQuery elem) "slow")))
+    [(a :href "#/home/"                       "Home") (div)]
+    [(a :href "#/getting-started/" "Getting Started") (core/container)]
+    [(a :href "#/about/"                     "About") (core/container)]
+    [(a :href "#/contact/"                 "Contact") (core/container)]))
 
 (html
   (head
-    (page-setup)
-    (link :rel "stylesheet" :href "css/github.css" :media "screen"))
+    (html-meta :charset "utf-8")
+    (page-setup))
   (body
-    :on-mousemove #(reset! mouse {:client  [(.-clientX %) (.-clientY %)]
-                                  :page    [(.-pageX   %) (.-pageY   %)]
-                                  :screen  [(.-screenX %) (.-screenY %)]})
-    ((nav-bar) 
-      :do-slide-toggle-once show-nav?)
+    (nav-bar)
     (content-home
+      (core/jumbotron
+        (core/container
+          (h1 "Hello, Hoplon!")
+          (p "A simpler way to program the web.")
+          (p (button/start :href "#/getting-started/" "Get started »"))))
+      (core/container
+        (grid/row
+          (grid/col4
+            (h2 "One good thing.")
+            (p "Mauris placerat porta sem, sit amet pellentesque nibh
+               vulputate et. Nunc quam sapien, rutrum in metus a, egestas
+               elementum ante."))
+          (grid/col4
+            (h2 "Another good thing.")
+            (p "Pellentesque id purus fringilla lectus luctus imperdiet sit
+               amet vel justo. Duis vel augue mi. Sed non porttitor orci, a
+               mollis lectus."))
+          (grid/col4
+            (h2 "And a final good thing.")
+            (p "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In eu
+               lorem et massa sodales convallis at et leo. Quisque auctor
+               commodo dapibus.")))
+        (hr)
+        (grid/row
+          (grid/col4
+            (h2 "You can make a thing.")
+            (p "You can make it in ClojureScript if you wanna."))
+          (grid/col8
+            (code/clj
+              ;;{{
+              (html
+                (head
+                  (title "The Great Debacle")
+                  (link :rel "stylesheet" :href "css/main.css" :media "screen"))
+                (body
+                  (h1 "My Life Story")))
+              ;;}}
+              )
+            (code/xml
+              ;;{{
+              <html>
+                <head>
+                  <title>The Great Debacle</title>
+                  <link rel="stylesheet" href="css/main.css" media="screen">
+                </head>
+                <body>
+                  <h1>My Life Story</h1>
+                </body>
+              </html>
+              ;;}}
+              )
+            )
+          )
+        (hr)
+        (footer :style "padding:30px 0px;" "Copyright 100")))
+    (content-getting-started
       (grid/row
         (grid/col2)
         (grid/col8
-          (div
-            :class "page-header"
-            (h1 "Hello World"))
-          (p "Hoplon is a set of libraries for making web pages.")
-          )
+          (div :class "page-header" (h1 "Hello World"))
+          (p "Hoplon is a set of libraries for making web pages."))
         (grid/col2)) 
       (grid/row
         (grid/col2
-          (p
-            "This is what the code does."))
+          :style "text-align:right"
+          (p (b "This is what the code does.")))
         (grid/col8
           (div
             :class "panel panel-default"
-            (div
-              :id "/home/example1/"
-              :class "panel-heading"
-              "Example:")
-            (div
-              :class "panel-body"
-              "Foo bar.")) 
+            (div :class "panel-heading" "Example:")
+            (div :class "panel-body"    "Foo bar.")) 
           (code/xml
-                ;;{{
-                <script type="text/hoplon">
-                  (page index.html)
-                  
-                  (defn my-list [& items]
-                    (div
-                      :class "my-list"
-                      (apply ul (map #(li (div :class "my-list-item" %)) items))))
+            ;;{{
+            <script type="text/hoplon">
+              (page index.html)
+              
+              (defn my-list [& items]
+                (div
+                  :class "my-list"
+                  (apply ul (map #(li (div :class "my-list-item" %)) items))))
 
-                  (def clicks (cell 0))
-                </script>
-                    
-                <html>
-                  <head>
-                    <title>example page</title>
-                  </head>
-                  <body>
-                    <h1>Hello, Hoplon</h1>
-                    
-                    <my-list>
-                      <span>first thing</span>
-                      <span>second thing</span>
-                    </my-list>
+              (def clicks (cell 0))
+            </script>
+                
+            <html>
+              <head>
+                <title>example page</title>
+              </head>
+              <body>
+                <h1>Hello, Hoplon</h1>
+                
+                <my-list>
+                  <span>first thing</span>
+                  <span>second thing</span>
+                </my-list>
 
-                    <p><text>You've clicked ~{clicks} times, so far.</text></p>
-                    <button on-click="{{ #(swap! clicks inc) }}">click me</button>
-                  </body>
-                </html>
-                ;;}}
-                ))
+                <p><text>You've clicked ~{clicks} times, so far.</text></p>
+                <button on-click="{{ #(swap! clicks inc) }}">click me</button>
+              </body>
+            </html>
+            ;;}}
+            ) 
+          (hr) 
+          (footer :style "padding:30px 0px;" "Copyright 100"))
         (grid/col2
           (p "asdf"))))
     (content-about

@@ -9,3 +9,4 @@
     (link :href "css/starter-template.css" :rel "stylesheet" :media "screen")))
 
 (defelem container [attr kids] (apply (div :class "container") attr kids))
+(defelem jumbotron [attr kids] (apply (div :class "jumbotron" :style "background-color:#ffcc33") attr kids))
