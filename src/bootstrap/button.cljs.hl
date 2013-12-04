@@ -3,3 +3,4 @@
 (defelem group    [attr kids] (apply (div :class "btn-group") attr kids))
 (defelem default  [attr kids] (apply (button :type "button" :class "btn btn-default") attr kids))
 (defelem start    [attr kids] (apply (a :class "btn btn-large btn-primary") attr kids))
+(defelem more     [attr kids] (apply (a :class "btn btn-primary") attr kids))
