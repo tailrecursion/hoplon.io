@@ -5,4 +5,7 @@
 (defelem star           [attr kids] (mkglyph "star"))
 (defelem cloud-download [attr kids] (mkglyph "cloud-download"))
 (defelem cloud-upload   [attr kids] (mkglyph "cloud-upload"))
+(defelem pushpin        [attr kids] (mkglyph "pushpin"))
+(defelem resize-horiz   [attr kids] (mkglyph "resize-horizontal"))
+
 

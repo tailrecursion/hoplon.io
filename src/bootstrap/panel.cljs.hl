@@ -1,5 +1,5 @@
 (ns bootstrap.panel
-  (:refer-hoplon :exclude [body heading])
+  (:refer-hoplon :exclude [body title heading])
   
   )
 
@@ -7,3 +7,4 @@
 (defelem info     [attr kids] (apply (div :class "panel panel-info") attr kids))
 (defelem body     [attr kids] (apply (div :class "panel-body") attr kids))
 (defelem heading  [attr kids] (apply (div :class "panel-heading") attr kids))
+(defelem title    [attr kids] (apply (h3 :class "panel-title") attr kids))

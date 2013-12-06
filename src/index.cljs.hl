@@ -16,16 +16,19 @@
 
 (def route (hutil/route-cell 10 "#/home/"))
 
+(def hoplon-url         "https://github.com/tailrecursion/hoplon")
+(def boot-url           "https://github.com/tailrecursion/boot")
+(def hoplon-clojars-url "https://clojars.org/tailrecursion/hoplon")
+
 (def-values
   [page-setup nav-bar content-home content-getting-started content-about content-contact]
   (page/navbar-fixed-top
     route         
-    "Bootstrap Test"
-    "Hoplon demo testing Twitter Bootstrap library design."
+    "Hoplon"
+    "Hoplon"
     [(a :href "#/home/"                       "Home") (div)]
     [(a :href "#/getting-started/" "Getting Started") (core/container)]
-    [(a :href "#/about/"                     "About") (core/container)]
-    [(a :href "#/contact/"                 "Contact") (core/container)]))
+    [(a :href hoplon-url :target "_blank"   "GitHub") (core/container)]))
 
 (defc example     1)
 (defc bmi-height  180)
@@ -53,6 +56,18 @@
         (< bmi 30.0) ["overweight"  "orange"]
         :else        ["obese"       "red"]))
 
+(def video-dims         {:width 523 :height 392})
+(def video-url          "//www.youtube-nocookie.com/embed/XQu8TTBmGhA")
+(def video-thumb-url    "http://img.youtube.com/vi/XQu8TTBmGhA/0.jpg")
+
+(defn hyphenate! []
+  (.. (js/jQuery "p") (addClass "hyphenate") (css "text-align" "justify"))
+  (.run js/Hyphenator))
+
+(add-initfn!
+  (fn []
+    (hyphenate!)))
+
 (html
   :lang "en"
   (head
@@ -62,6 +77,7 @@
     (link :href "css/starter-template.css"  :rel "stylesheet" :media "screen"))
   (body
     (nav-bar)
+    (noscript (div :class "nojs-error" "This page uses JavaScript but it looks like you have it turned off."))
     (content-home
       (core/jumbotron
         (core/container
@@ -95,49 +111,83 @@
             (p "Hoplon provides a number of libraries promoting a simpler
                model for web applications. The project can be divided into
                three main components: the HTML evaluator, the clientside state
-               machine, and a serverside RPC server. These components can be
-               used together as a full stack, or individually to solve a
-               specific problem as a part of another stack.")
+               machine, and serverside RPC middleware. These components can be
+               used together as a full stack, or individually as a part of
+               another stack.")
+            (p "More concretely, Hoplon ships with a compiler for compiling
+               Hoplon pages into HTML and JavaScript (implemented as a build 
+               task for the "
+               (a :href boot-url :target "_blank" "boot")
+               " build tool), ClojureScript libraries for creating
+               spreadsheet-like dataflow programs and wiring them to the DOM,
+               and ClojureScript and Clojure libraries for RPC interaction
+               between client and server.")
+            (p "The source code for Hoplon is hosted on "
+               (a :href hoplon-url :target "_blank" "GitHub")
+               " and Maven artifacts are deployed to "
+               (a :href hoplon-clojars-url :target "_blank" "Clojars")
+               ". Contributions of code, feedback, feature requests, etc. are
+               welcome. Please read the "
+               (a :style "text-decoration:line-through;" :href "javascript:void(0)" "Contributors")
+               " page for more information.")
+            (h2 "Web Apps " (small "Applications, not documents."))
+            (p "Web applications are not documents. Users need to be able to
+               interact with them. They contain state. Through them the user
+               communicates with backend systems to have some effect on the
+               real world. Of course they're composed of HTML, CSS, etc., but
+               any resemblance to trees of HTML documents is incidental;
+               conflating the two leads to an explosion of needless complexity.")
+            (p "Hoplon web apps are organized like applications. The Hoplon
+               compiler produces artifacts, not documents. These artifacts are
+               equivalent to JAR files in Maven–their coordinates being the
+               URL on which they're deployed. The compilation unit is the page,
+               which produces a single compiled HTML file. This HTML file loads
+               a compiled JavaScript file, "
+               (em "main.js")
+               ", a dependency shared by all pages in the project.")
             (h2 "HTML Evaluator " (small "Page markup is a program."))
-            (p "Web applications are not simply documents. Users must be able
-               to interact with them and they must interact with backend
-               systems. Web application user interfaces share some of the
-               properties of documents, though. UIs are built by composing
-               elements in a document tree using HTML markup. However, without
-               JavaScript this tree cannot actually interact with the user, at
-               all.")
-            (p "The incidental complexity of web application UI development
-               comes at the boundary between the DOM and the JavaScript
-               environment. There is a fundamental disconnect between the
-               literal representation of the DOM (the HTML markup) and the
-               dynamic environment (the JavaScript VM). The page markup is
-               evaluated and the resulting DOM is accessible from JavaScript,
-               but it's a one-way linkage; the markup has no mechanism by which
-               it can refer to objects other than built-in primitives (i.e. "
-               (em "div") ", " (em "span")
-               ", etc). The browser's HTML evaluator does not include any means
-               of abstraction whatsoever, so there is no literal representation
-               for composite forms.")
+            (p "Web application user interfaces are specified as trees of
+               nested elements in HTML markup, but this document-like
+               appearance is misleading. Without JavaScript this markup cannot
+               provide the dynamic behavior that web applications require.")
+            (p "It is at the boundary between the DOM and the JavaScript
+               environment that the incindental complexities of web application
+               UI development are found. There is a fundamental disconnect
+               between the literal representation of the DOM (the HTML markup)
+               and the dynamic environment (the JavaScript VM). The page markup
+               is evaluated by the browser and the resulting DOM is then
+               accessible from JavaScript, but it's a one-way linkage–there is
+               no way to refer to objects created dynamically in the JavaScript
+               environment from the markup. The browser's HTML evaluation model
+               lacks a means of abstraction, preventing the development of new
+               elements by composition.")
             (p "Hoplon provides a HTML evaluator that closes the loop, unifying
                the page markup and the JavaScript environment. Page markup,
-               expressed using either the standard HTML5 syntax or Clojure
-               sexps, is evaluated as ClojureScript and the result becomes the
-               DOM for the page. HTML tags are simply ClojureScript vars. Of
-               course, Hoplon ships with all of the standard HTML5 primitives
-               but the evaluation model facilitates the use of custom compound
+               expressed in either the standard HTML5 syntax or Clojure sexps,
+               is evaluated as ClojureScript and the result becomes the DOM for
+               the page. HTML tags are simply ClojureScript vars. Of course,
+               Hoplon ships with all of the standard HTML5 primitives but the
+               evaluation model now facilitates the use of custom compound
                elements defined in the environment, too.")
+            (p "Additionally, the unification of HTML and ClojureScript syntax,
+               semantics, and namespace in the HTML evaluator facilitates the
+               use of macros in markup.  This makes it possible to write
+               powerful looping and control structures for use in the page's
+               HTML markup itself, bringing the power and expressiveness of
+               Lisp to HTML.")
             (h2 "Components " (small "First-class custom DOM elements."))
             (p "While there is no shortage of templating systems to create
                blobs of DOM elements, there is no mechanism to create custom
                elements that are composable in any meaningful way. Consider
                the situation where a template engine binds a DOM template to
                some data and returns the filled-in DOM subtree. What happens
-               when you append a child to that DOM element? The child gets
-               appended to the outermost element in the filled template, which
-               is probably not useful at all.")
+               when you append a child to, or set an attribute on that DOM
+               element? The child gets appended to, or attribute set on the
+               outermost element of the filled template, generally not what is
+               required for the composition semantic.")
             (p "Hoplon provides facilities for creating real, first-class
                components. That is to say, Hoplon components are first-class
-               citizens in the DOM world––they are, essentially, user-defined
+               citizens in the DOM world–they are, essentially, user-defined
                custom DOM elements. They have a literal representation in the
                page markup and they implement the semantics of HTML: setting
                attributes and appending children. When a child is appended to
@@ -182,6 +232,16 @@
                defined, the user interface manages itself.")
             )
           (grid/col6
+            (h2 (small "Screencast"))
+            (panel/default
+              (panel/body
+                (iframe
+                  :class            "center-block"
+                  :width            (:width video-dims)
+                  :height           (:height video-dims)
+                  :src              video-url
+                  :frameborder      "0"
+                  :allowfullscreen  true)))
             (h2 (small "Examples"))
             (list/divgroup
               (list/divitem
@@ -416,7 +476,11 @@
                     )
                   )))))
         (hr)
-        (footer :style "padding:30px 0px;" "Copyright 100")))
+        (footer
+          :style "padding:30px 0px;"
+          (div
+            :style "text-align:center;"
+            "Copyright © Alan Dipert and Micha Niskin. All rights reserved."))))
     (content-getting-started
       (grid/row
         (grid/col2)
@@ -467,10 +531,4 @@
           (hr) 
           (footer :style "padding:30px 0px;" "Copyright 100"))
         (grid/col2
-          (p "asdf"))))
-    (content-about
-      (h1 "About")
-      (p "This is the about content."))
-    (content-contact
-      (h1 "Contact")
-      (p "This is the contact content."))))
+          (p "asdf"))))))
