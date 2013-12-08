@@ -248,10 +248,10 @@
                 :on-click #(reset! example 1)
                 (a
                   :do-toggle (cell= (not= example 1))
-                  (h3 :class "panel-title" "Typical Page"))
+                  (panel/title "Typical Page"))
                 (div
                   :do-toggle (cell= (= example 1))
-                  (h3 :class "panel-title" "Typical Page")
+                  (panel/title "Typical Page")
                   (hr)
                   (p "The page can be coded in either ClojureScript or HTML
                      syntax. The compiler can parse either one. It's easy to
@@ -310,10 +310,10 @@
                 (a :class "topfix" :do-scroll-to (cell= (= example 2)))
                 (a
                   :do-toggle (cell= (not= example 2))
-                  (h3 :class "panel-title" "BMI Calculator"))
+                  (panel/title "BMI Calculator"))
                 (div
                   :do-toggle (cell= (= example 2))
-                  (h3 :class "panel-title" "BMI Calculator")
+                  (panel/title "BMI Calculator")
                   (hr)
                   (p "This is an example of a spreadsheet-like application.
                      The application's state is contained in "
@@ -406,10 +406,10 @@
                 (a :class "topfix" :do-scroll-to (cell= (= example 3)))
                 (a
                   :do-toggle (cell= (not= example 3))
-                  (h3 :class "panel-title" "List Component"))
+                  (panel/title "List Component"))
                 (div
                   :do-toggle (cell= (= example 3))
-                  (h3 :class "panel-title" "List Component")
+                  (panel/title "List Component")
                   (hr)
                   (p "This is an example of a custom element, or component. The "
                      (em "on-append!")
@@ -483,52 +483,20 @@
             "Copyright © Alan Dipert and Micha Niskin. All rights reserved."))))
     (content-getting-started
       (grid/row
-        (grid/col2)
-        (grid/col8
-          (div :class "page-header" (h1 "Hello World"))
+        (grid/col6
+          (h1
+            "Getting Started" (br)
+            (small "Build a Hoplon application from scratch."))
+          (hr)
           (p "Hoplon is a set of libraries for making web pages."))
-        (grid/col2)) 
-      (grid/row
-        (grid/col2
-          :style "text-align:right"
-          (p (b "This is what the code does.")))
-        (grid/col8
-          (div
-            :class "panel panel-default"
-            (div :class "panel-heading" "Example:")
-            (div :class "panel-body"    "Foo bar.")) 
-          (code/xml
-            ;;{{
-            <script type="text/hoplon">
-              (page index.html)
-              
-              (defn my-list [& items]
-                (div
-                  :class "my-list"
-                  (apply ul (map #(li (div :class "my-list-item" %)) items))))
-
-              (def clicks (cell 0))
-            </script>
-                
-            <html>
-              <head>
-                <title>example page</title>
-              </head>
-              <body>
-                <h1>Hello, Hoplon</h1>
-                
-                <my-list>
-                  <span>first thing</span>
-                  <span>second thing</span>
-                </my-list>
-
-                <p><text>You've clicked ~{clicks} times, so far.</text></p>
-                <button on-click="{{ #(swap! clicks inc) }}">click me</button>
-              </body>
-            </html>
-            ;;}}
-            ) 
-          (hr) 
-          (footer :style "padding:30px 0px;" "Copyright 100"))
-        (grid/col2
-          (p "asdf"))))))
+        (grid/col6
+          (h2 :style "color:transparent;" "asdf")
+          (panel/default
+            (panel/heading
+              (panel/title "Omfg"))
+            (panel/body
+              (p "This is a test."))
+            )
+        ))
+      
+      )))
