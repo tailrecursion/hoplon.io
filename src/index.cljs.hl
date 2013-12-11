@@ -1,4 +1,5 @@
 (page "index.html"
+  (:refer-clojure :exclude [int])
   (:require-macros
     [bootstrap.code             :as code])
   (:require
@@ -30,14 +31,20 @@
     [(a :href "#/getting-started/" "Getting Started") (core/container)]
     [(a :href hoplon-url :target "_blank"   "GitHub") (core/container)]))
 
+(defelem gs-task [attr kids]
+  (panel/default :class "panel-primary"
+    (panel/heading
+      (panel/title (:title attr)))
+    (apply panel/body kids)))
+
 (defc example     1)
 (defc bmi-height  180)
 (defc bmi-weight  800)
 
 (defelem my-list [attrs children]
   (let [heading (b)
-        body    (ul)
-        widget  (div :class "my-list" (heading) (body))]
+         body    (ul)
+         widget  (div :class "my-list" (heading) (body))]
     (on-append! widget
       (fn [{:keys [title] :as attrs} children]
         (when title (do! heading :text title))
@@ -46,15 +53,93 @@
     (apply widget attrs children)))
 
 (defc= bmi
-  (let [h   (/ bmi-height 100)
-        w  (/ bmi-weight 10)]
+  (let [h (/ bmi-height 100)
+        w (/ bmi-weight 10)]
     (/ w (* h h))))
 
 (defc= bmi-msg
-  (cond (< bmi 18.5) ["underweight" "orange"]
-        (< bmi 25.0) ["normal"      "inherit"]
-        (< bmi 30.0) ["overweight"  "orange"]
-        :else        ["obese"       "red"]))
+  (cond
+    (< bmi 18.5) ["underweight" "orange"]
+    (< bmi 25.0) ["normal"      "inherit"]
+    (< bmi 30.0) ["overweight"  "orange"]
+    :else        ["obese"       "red"]))
+
+(def int js/parseInt)
+(def calc-op {"+" + "-" - "*" * "/" /})
+(defc calc-x 0)
+(defc calc-y 0)
+(defc calc-z +)
+
+(defn counter-ex []
+  (let [clicks (cell 0)]
+    (panel/default
+      (panel/body
+        (text "Clicks so far: ~{clicks} ")
+        (button :on-click #(swap! clicks inc) "click me!")))))
+
+(defn calc-code []
+  (code/highlight :clj
+    ;;{{
+    (page "index.html"
+      (:refer-clojure :exclude [int]))
+
+    (def int js/parseInt)
+    (def ops {"+" + "-" - "*" * "/" /})
+
+    (defc x 0)
+    (defc y 0)
+    (defc op +)
+
+    (html
+      (head)
+      (body
+        (input
+          :id "x"
+          :type "text"
+          :value "0"
+          :on-change #(reset! x (int (val-id "x"))))
+        (select
+          :id "op"
+          :on-change #(reset! op (ops (val-id "op")))
+          (option :value "+" :selected true "+")
+          (option :value "-" "-")
+          (option :value "*" "*")
+          (option :value "/" "/"))
+        (input
+          :id "y"
+          :type "text"
+          :value "0"
+          :on-change #(reset! y (int (val-id "y"))))
+        (text " = ~(op x y)")))
+    ;;}}
+    ))
+
+(defn calc-ex []
+  (let [x (cell 0)
+        y (cell 0)
+        op (cell +)
+        ops {"+" + "-" - "*" * "/" /}]
+    (panel/default
+      (panel/body
+        (input
+          :id "calc-x"
+          :type "text"
+          :value @x
+          :on-change #(reset! x (int (val-id "calc-x"))))
+        (select
+          :id "calc-op"
+          :style "margin-left:15px;margin-right:15px;"
+          :on-change #(reset! op (ops (val-id "calc-op")))
+          (option :value "+" :selected true "+")
+          (option :value "-" "-")
+          (option :value "*" "*")
+          (option :value "/" "/"))
+        (input
+          :id "calc-y"
+          :type "text"
+          :value @y
+          :on-change #(reset! y (int (val-id "calc-y"))))
+        (text " = ~(op x y)")))))
 
 (def video-dims         {:width 523 :height 392})
 (def video-url          "//www.youtube-nocookie.com/embed/XQu8TTBmGhA")
@@ -68,8 +153,7 @@
   (fn []
     (hyphenate!)))
 
-(html
-  :lang "en"
+(html :lang "en"
   (head
     (meta :charset "utf-8")
     (meta :name "viewport" :content "width=device-width, initial-scale=1.0") 
@@ -77,7 +161,9 @@
     (link :href "css/starter-template.css"  :rel "stylesheet" :media "screen"))
   (body
     (nav-bar)
-    (noscript (div :class "nojs-error" "This page uses JavaScript but it looks like you have it turned off."))
+    (noscript
+      (div :class "nojs-error"
+        "This page uses JavaScript but it looks like you have it turned off."))
     (content-home
       (core/jumbotron
         (core/container
@@ -88,69 +174,80 @@
         (grid/row
           (grid/col4
             (h2 "Clojure, everywhere.")
-            (p "Write everything in Clojure and ClojureScript, clientside and
+            (p
+              "Write everything in Clojure and ClojureScript, clientside and
                serverside. Even the page markup is ClojureScript that is
                evaluated to produce the DOM. Pages can still be written using
                the familiar HTML syntax if desired."))
           (grid/col4
             (h2 "Simplicity on the client.")
-            (p "Use a spreadsheet-like dataflow programming environment to
-               manage client state. Develop basic content-oriented pages and
-               complex thick-client applications without descending into
-               “callback hell”."))
+            (p
+              "Use a spreadsheet-like dataflow programming environment to manage
+               client state. Develop basic content-oriented pages and complex
+               thick-client applications without descending into “callback
+               hell”."))
           (grid/col4
             (h2 "Simplicity on the server.")
-            (p "Decouple business logic from HTTP-related concerns while
-               satisfying complex, fine-grained authorization requirements
-               with transparent, performant transfer of Clojure data between
-               server and client.")))
+            (p
+              "Decouple business logic from HTTP-related concerns while
+               satisfying complex, fine-grained authorization requirements with
+               transparent, performant transfer of Clojure data between server
+               and client.")))
         (hr)
         (grid/row
           (grid/col6
             (h2 "Overview " (small "Hoplon in a nutshell."))
-            (p "Hoplon provides a number of libraries promoting a simpler
-               model for web applications. The project can be divided into
-               three main components: the HTML evaluator, the clientside state
-               machine, and serverside RPC middleware. These components can be
-               used together as a full stack, or individually as a part of
-               another stack.")
-            (p "More concretely, Hoplon ships with a compiler for compiling
+            (p
+              "Hoplon provides a number of libraries promoting a simpler model
+               for web applications. The project can be divided into three main
+               components: the HTML evaluator, the clientside state machine, and
+               serverside RPC middleware. These components can be used together
+               as a full stack, or individually as a part of another stack.")
+            (p
+              "More concretely, Hoplon ships with a compiler for compiling
                Hoplon pages into HTML and JavaScript (implemented as a build 
                task for the "
-               (a :href boot-url :target "_blank" "boot")
-               " build tool), ClojureScript libraries for creating
+              (a :href boot-url :target "_blank" "boot")
+              " build tool), ClojureScript libraries for creating
                spreadsheet-like dataflow programs and wiring them to the DOM,
                and ClojureScript and Clojure libraries for RPC interaction
                between client and server.")
-            (p "The source code for Hoplon is hosted on "
-               (a :href hoplon-url :target "_blank" "GitHub")
-               " and Maven artifacts are deployed to "
-               (a :href hoplon-clojars-url :target "_blank" "Clojars")
-               ". Contributions of code, feedback, feature requests, etc. are
-               welcome. Please read the "
-               (a :style "text-decoration:line-through;" :href "javascript:void(0)" "Contributors")
-               " page for more information.")
-            (h2 "Web Apps " (small "Applications, not documents."))
-            (p "Web applications are not documents. Users need to be able to
+            (p
+              "The source code for Hoplon is hosted on "
+              (a :href hoplon-url :target "_blank" "GitHub")
+              " and Maven artifacts are deployed to "
+              (a :href hoplon-clojars-url :target "_blank" "Clojars")
+              ". Contributions of code, feedback, feature requests, etc. are
+                welcome. Please read the "
+              (a :style "text-decoration:line-through;" :href "javascript:void(0)" "Contributors")
+              " page for more information.")
+
+            (h2 "Web Apps " (small "Single-page applications, not documents."))
+            (p
+              "Web applications are not documents. Users need to be able to
                interact with them. They contain state. Through them the user
                communicates with backend systems to have some effect on the
-               real world. Of course they're composed of HTML, CSS, etc., but
-               any resemblance to trees of HTML documents is incidental;
-               conflating the two leads to an explosion of needless complexity.")
-            (p "Hoplon web apps are organized like applications. The Hoplon
+               real world.")
+            (p
+              "Hoplon web apps are organized like applications. The Hoplon
                compiler produces artifacts, not documents. These artifacts are
                equivalent to JAR files in Maven–their coordinates being the
-               URL on which they're deployed. The compilation unit is the page,
-               which produces a single compiled HTML file. This HTML file loads
-               a compiled JavaScript file, "
-               (em "main.js")
-               ", a dependency shared by all pages in the project.")
+               URL on which they're deployed. The compilation unit is the “page”,
+               which is compiled to produce an HTML file–a single-page app.")
+            (p
+              "Hoplon does not perform any serverside HTML rendering; it is
+               completely unnecessary, even for SEO purposes. (Reload this
+               page with JavaScript disabled and see how the content was
+               “prerendered” at compile-time.)")
+
             (h2 "HTML Evaluator " (small "Page markup is a program."))
-            (p "Web application user interfaces are specified as trees of
+            (p
+              "Web application user interfaces are specified as trees of
                nested elements in HTML markup, but this document-like
                appearance is misleading. Without JavaScript this markup cannot
                provide the dynamic behavior that web applications require.")
-            (p "It is at the boundary between the DOM and the JavaScript
+            (p
+              "It is at the boundary between the DOM and the JavaScript
                environment that the incindental complexities of web application
                UI development are found. There is a fundamental disconnect
                between the literal representation of the DOM (the HTML markup)
@@ -161,7 +258,8 @@
                environment from the markup. The browser's HTML evaluation model
                lacks a means of abstraction, preventing the development of new
                elements by composition.")
-            (p "Hoplon provides a HTML evaluator that closes the loop, unifying
+            (p
+              "Hoplon provides an HTML evaluator that closes the loop, unifying
                the page markup and the JavaScript environment. Page markup,
                expressed in either the standard HTML5 syntax or Clojure sexps,
                is evaluated as ClojureScript and the result becomes the DOM for
@@ -169,14 +267,17 @@
                Hoplon ships with all of the standard HTML5 primitives but the
                evaluation model now facilitates the use of custom compound
                elements defined in the environment, too.")
-            (p "Additionally, the unification of HTML and ClojureScript syntax,
+            (p
+              "Additionally, the unification of HTML and ClojureScript syntax,
                semantics, and namespace in the HTML evaluator facilitates the
                use of macros in markup.  This makes it possible to write
                powerful looping and control structures for use in the page's
                HTML markup itself, bringing the power and expressiveness of
                Lisp to HTML.")
+
             (h2 "Components " (small "First-class custom DOM elements."))
-            (p "While there is no shortage of templating systems to create
+            (p
+              "While there is no shortage of templating systems to create
                blobs of DOM elements, there is no mechanism to create custom
                elements that are composable in any meaningful way. Consider
                the situation where a template engine binds a DOM template to
@@ -185,7 +286,8 @@
                element? The child gets appended to, or attribute set on the
                outermost element of the filled template, generally not what is
                required for the composition semantic.")
-            (p "Hoplon provides facilities for creating real, first-class
+            (p
+              "Hoplon provides facilities for creating real, first-class
                components. That is to say, Hoplon components are first-class
                citizens in the DOM world–they are, essentially, user-defined
                custom DOM elements. They have a literal representation in the
@@ -197,51 +299,58 @@
                built by composing simpler components and those may be used as
                a basis for even more complex components, without running into
                the limitations of template composition.")
+            
             (h2 "Spreadsheets " (small "Client state made simple."))
-            (p "Remember how awesome spreadsheets are? You never think about
+            (p
+              "Remember how awesome spreadsheets are? You never think about
                state when you’re programming a spreadsheet. Instead, you focus
                on values and the formulas that define the relationships between
                them. When a new value is entered into a cell the rest of the 
                spreadsheet updates itself as necessary to maintain the
                correctness of the formulas.")
-            (p "After a spreadsheet is set up you can link its cells to charts
+            (p
+              "After a spreadsheet is set up you can link its cells to charts
                and forms to create a user interface that manages its own state,
                automatically. User input flows from forms to input cells.
                Formulas then recompute their values as necessary. These values
                then flow to charts and graphs for the user to view.")
-            (p "Hoplon applies this crazy, futuristic technology to frontend
-               web development. Forgoing the clunky grid metaphor and names
-               like " (em "A1") " and " (em "B27") ", Hoplon provides a cell
-               reference type. These cells, like cells in a spreadsheet, are
-               either updated directly (input cells), or automatically in
-               accordance with a formula.")
+            (p
+              "Hoplon applies this crazy, futuristic technology to frontend
+              web development. Forgoing the clunky grid metaphor and names
+              like " (em "A1") " and " (em "B27") ", Hoplon provides a cell
+              reference type. These cells, like cells in a spreadsheet, are
+              either updated directly (input cells), or automatically in
+              accordance with a formula.")
+
             (h2 "Charts and Forms " (small "Stateless, automatic UI."))
-            (p "The purpose of a program's user interface is to transmit input
-               from the user to the underlying state model and to present output
-               derived from the underlying state model to the user for viewing.")
-            (p "In a web application the user interface is derived from the page
-               markup. User input consists entirely of DOM events: "
-               (em "click") ", " (em "change") ", etc. Output is presented to
-               the user by manipulating the properties of DOM elements: adding
-               or removing CSS classes, changing the content of text nodes, 
-               etc.")
-            (p "Hoplon provides bindings that can be used to link DOM elements
-               to the underlying state model in the same way that charts and
-               forms are linked to cells in a spreadsheet. Once the structure
-               of the DOM and the linkages between the DOM and cells are
-               defined, the user interface manages itself.")
-            )
+            (p
+              "The purpose of a program's user interface is to transmit input
+              from the user to the underlying state model and to present output
+              derived from the underlying state model to the user for viewing.")
+            (p
+              "In a web application the user interface is derived from the page
+              markup. User input consists entirely of DOM events: "
+              (em "click") ", " (em "change") ", etc. Output is presented to
+              the user by manipulating the properties of DOM elements: adding
+              or removing CSS classes, changing the content of text nodes, 
+              etc.")
+            (p
+              "Hoplon provides bindings that can be used to link DOM elements
+              to the underlying state model in the same way that charts and
+              forms are linked to cells in a spreadsheet. Once the structure
+              of the DOM and the linkages between the DOM and cells are
+              defined, the user interface manages itself."))
           (grid/col6
             (h2 (small "Screencast"))
             (panel/default
               (panel/body
                 (iframe
-                  :class            "center-block"
-                  :width            (:width video-dims)
-                  :height           (:height video-dims)
-                  :src              video-url
-                  :frameborder      "0"
-                  :allowfullscreen  true)))
+                  :class "center-block"
+                  :width (:width video-dims)
+                  :height (:height video-dims)
+                  :src video-url
+                  :frameborder "0"
+                  :allowfullscreen true)))
             (h2 (small "Examples"))
             (list/divgroup
               (list/divitem
@@ -253,15 +362,16 @@
                   :do-toggle (cell= (= example 1))
                   (panel/title "Typical Page")
                   (hr)
-                  (p "The page can be coded in either ClojureScript or HTML
-                     syntax. The compiler can parse either one. It's easy to
-                     add a preprocessing step to parse HAML, etc. if desired.
-                     HTML is usually more verbose and noisy than ClojureScript,
-                     so most examples in this document will be using the latter
+                  (p
+                    "The page can be coded in either ClojureScript or HTML
+                     syntax. The compiler can parse either one. It's easy to add
+                     a preprocessing step to parse HAML, etc. if desired.  HTML
+                     is usually more verbose and noisy than ClojureScript, so
+                     most examples in this document will be using the latter
                      syntax.")
                   (hr)
                   (p :class "text-muted" "Using ClojureScript syntax:")
-                  (code/clj
+                  (code/highlight :clj
                     ;;{{
                     (page "foo/bar.html"
                       (:require [my.lib :as lib]))
@@ -279,7 +389,7 @@
                     ;;}}
                     )
                   (p :class "text-muted" "Using HTML syntax:")
-                  (code/xml
+                  (code/highlight :xml
                     ;;{{
                     <script type="text/hoplon">
                       (page "foo/bar.html"
@@ -302,9 +412,7 @@
                       </body>
                     </html>
                     ;;}}
-                    )
-                  )
-                )
+                    )))
               (list/divitem
                 :on-click #(reset! example 2)
                 (a :class "topfix" :do-scroll-to (cell= (= example 2)))
@@ -315,20 +423,20 @@
                   :do-toggle (cell= (= example 2))
                   (panel/title "BMI Calculator")
                   (hr)
-                  (p "This is an example of a spreadsheet-like application.
-                     The application's state is contained in "
-                     (em "cells")
-                     " which are wired up to the DOM. DOM events cause changes
-                     to the underlying cells and formula cells in turn cause
-                     changes to the DOM.")
+                  (p
+                    "This is an example of a spreadsheet-like application.
+                    The application's state is contained in "
+                    (em "cells")
+                    " which are wired up to the DOM. DOM events cause changes
+                    to the underlying cells and formula cells in turn cause
+                    changes to the DOM.")
                   (hr)
                   (p :class "text-muted" "The demo:")
                   (panel/default
                     (panel/body
                       (div
                         (form
-                          (div
-                            :class "form-group"
+                          (div :class "form-group"
                             (label (text "Height (~{bmi-height} cm)"))
                             (input 
                               :on-change #(reset! bmi-height (val-id "bmi-ht"))
@@ -338,8 +446,7 @@
                               :min    0
                               :max    250
                               :value  @bmi-height))
-                          (div
-                            :class "form-group"
+                          (div :class "form-group"
                             (label (text "Weight (~(.toFixed (/ bmi-weight 10) 1) kg)"))
                             (input 
                               :on-change #(reset! bmi-weight (val-id "bmi-wt"))
@@ -349,8 +456,7 @@
                               :min    0
                               :max    1500
                               :value  @bmi-weight))
-                          (div
-                            :class "form-group"
+                          (div :class "form-group"
                             (label
                               (text "BMI ~(.toFixed bmi 1) (~(first bmi-msg))"))
                             (input 
@@ -362,23 +468,23 @@
                               :max        500
                               :do-value   (cell= (* bmi 10))))))))
                   (p :class "text-muted" "The cells:")
-                  (code/clj
+                  (code/highlight :clj
                     ;;{{
                     (def height (cell 180)) ; height in cm
                     (def weight (cell 80))  ; weight in kg
 
-                    (def bmi ; body mass index, description, color
+                    (def bmi            ; body mass index, description, color
                       (cell=
                         (let [htm (/ height 100) ; height in meters
                               bmi (/ weight (* htm htm))]
                           (cond (< bmi 18.5) [bmi "underweight"  "orange"]
-                                (< bmi 25.0) [bmi "normal"      "inherit"]
-                                (< bmi 30.0) [bmi "overweight"   "orange"]
-                                :else        [bmi "obese"           "red"]))))
+                            (< bmi 25.0) [bmi "normal"      "inherit"]
+                            (< bmi 30.0) [bmi "overweight"   "orange"]
+                            :else        [bmi "obese"           "red"]))))
                     ;;}}
                     )
                   (p :class "text-muted" "The user interface:")
-                  (code/clj
+                  (code/highlight :clj
                     ;;{{
                     ;; Some details related to <input type="range">
                     ;; have been omitted for clarity.
@@ -401,8 +507,7 @@
                         :do-css (cell= {:background-color (nth bmi 2)})))
                     ;;}}
                     )))
-              (list/divitem
-                :on-click #(reset! example 3)
+              (list/divitem :on-click #(reset! example 3)
                 (a :class "topfix" :do-scroll-to (cell= (= example 3)))
                 (a
                   :do-toggle (cell= (not= example 3))
@@ -411,22 +516,24 @@
                   :do-toggle (cell= (= example 3))
                   (panel/title "List Component")
                   (hr)
-                  (p "This is an example of a custom element, or component. The "
-                     (em "on-append!")
-                     " function is used to provide the implementation for
-                     appending children and setting attributes. This ensures 
-                     that children are, in this case, properly wrapped in list
-                     item elements and appended to the inner unordered list
-                     instead of to the outermost element. A special "
-                     (em "title")
-                     " attribute is also implemented here that sets the text of
-                     the inner bold element.")
-                  (p "By implementing the HTML semantic this component becomes
-                     a first-class DOM element. It can be used in page markup
-                     and it can be passed around without any need for the
-                     recipient to understand its internal structure. It can be
-                     combined with other elements at any level to create more
-                     complex components.")
+                  (p
+                    "This is an example of a custom element, or component. The "
+                    (em "on-append!")
+                    " function is used to provide the implementation for
+                    appending children and setting attributes. This ensures 
+                    that children are, in this case, properly wrapped in list
+                    item elements and appended to the inner unordered list
+                    instead of to the outermost element. A special "
+                    (em "title")
+                    " attribute is also implemented here that sets the text of
+                    the inner bold element.")
+                  (p
+                    "By implementing the HTML semantic this component becomes
+                    a first-class DOM element. It can be used in page markup
+                    and it can be passed around without any need for the
+                    recipient to understand its internal structure. It can be
+                    combined with other elements at any level to create more
+                    complex components.")
                   (hr)
                   (p :class "text-muted" "The demo:")
                   (panel/default
@@ -434,18 +541,17 @@
                       (div
                         (p "See the list component below.")
                         (hr)
-                        (my-list
-                          :title "Items:"
+                        (my-list :title "Items:"
                           (span "item one")
                           (span "item two")
                           (span "item three")))))
                   (p :class "text-muted" "The component constructor:")
-                  (code/clj
+                  (code/highlight :clj
                     ;;{{
                     ;; Define custom element <my-list>.
                     (defelem my-list [attrs children]
-                      (let [head (b)  ; Obtain references to inner
-                            body (ul) ; container elements.
+                      (let [head (b)    ; Obtain references to inner
+                            body (ul)   ; container elements.
                             this (div :class "my-list" (head) (body))]
                         ;; Implement appendChild/setAttribute.
                         (on-append! this 
@@ -462,24 +568,20 @@
                     ;;}}
                     )
                   (p :class "text-muted" "The page markup:")
-                  (code/clj
+                  (code/highlight :clj
                     ;;{{
                     (div
                       (p "See the list component below.")
                       (hr)
-                      (my-list
-                        :title "Items:"
+                      (my-list :title "Items:"
                         (span "item one")
                         (span "item two")
                         (span "item three")))
                     ;;}}
-                    )
-                  )))))
+                    ))))))
         (hr)
-        (footer
-          :style "padding:30px 0px;"
-          (div
-            :style "text-align:center;"
+        (footer :style "padding:30px 0px;"
+          (div :style "text-align:center;"
             "Copyright © Alan Dipert and Micha Niskin. All rights reserved."))))
     (content-getting-started
       (grid/row
@@ -488,15 +590,265 @@
             "Getting Started" (br)
             (small "Build a Hoplon application from scratch."))
           (hr)
-          (p "Hoplon is a set of libraries for making web pages."))
+          (p
+            "This article will demonstrate how to build Hoplon applications.
+            A simple application will be developed incrementally. New features
+            will be added at each step, showing how different parts of Hoplon
+            are used.")
+
+          (br)
+          (panel/default :class "panel-info"
+            (panel/heading
+              (panel/title "System Requirements"))
+            (panel/body
+              (ul
+                (li "Java 7+")
+                (li "The " (a :href boot-url :target "_blank" "boot") " build tool."))))
+
+          (panel/default :class "panel-primary"
+            (panel/heading
+              (panel/title "Task 1: Create empty project."))
+            (panel/body
+              (p
+                "A typical project might have a directory structure that looks
+                something like this:")
+              (pre
+                (code
+                  ;;{{
+                  .
+                  ├── boot.edn
+                  ├── resources
+                  │   └── assets
+                  │       └── css
+                  │           └── main.css
+                  └── src
+                  └── index.cljs.hl
+                  ;;}}
+                  ))
+              (p
+                "To create a minimal Hoplon project just create a directory
+                for the project, and in this new directory create a "
+                (code "boot.edn")
+                " file with the following contents:")
+              (code/highlight :clj
+                ;;{{
+                {:dependencies  [[tailrecursion/boot.core   "1.0.0"]
+                                 [tailrecursion/boot.task   "1.0.0"]
+                                 [tailrecursion/hoplon      "4.0.6"]
+                                 [org.clojure/clojurescript "0.0-1934"]]
+                 :require-tasks #{[tailrecursion.boot.task    :refer :all]
+                                  [tailrecursion.hoplon.boot  :refer :all]}
+                 :public        "resources/public"
+                 :src-paths     #{"src"}
+                 :src-static    #{"resources/assets"}}
+                ;;}}
+                )
+              ))
+
+          (panel/default :class "panel-primary"
+            (panel/heading
+              (panel/title "Task 2: Create “Hello World” page."))
+            (panel/body
+              (p
+                "Create a "
+                (code "src/index.cljs.hl")
+                " file with the following contents:")
+              (code/highlight :clj
+                ;;{{
+                (page "index.html")
+
+                (html
+                  (head)
+                  (body
+                    (h1 "Hello, world!")))
+                ;;}}
+                )
+              (p "Your project directory should now look like this:")
+              (code/highlight :none
+                ;;{{
+                .
+                ├── boot.edn
+                └── src
+                └── index.cljs.hl
+                ;;}}
+                )))
+
+          (panel/default :class "panel-primary"
+            (panel/heading
+              (panel/title "Task 3: Compile the project."))
+            (panel/body
+              (p "In another terminal do the following in the project directory:")
+              (code/highlight :bash
+                ;;{{
+                $ JVM_OPTS="-Xmx1g" boot watch hoplon
+                ;;}}
+                )
+              (p
+                "This starts the Hoplon compiler in “watcher” mode–source
+                directories are monitored for changes and recompiled when
+                necessary. When it's finished compiling the project directory
+                should look something like this:")
+              (code/highlight :none
+                ;;{{
+                .
+                ├── boot.edn
+                ├── resources
+                │   └── public
+                │       ├── main.js
+                │       └── index.html
+                └── src
+                └── index.cljs.hl
+                ;;}}
+                )
+              (p
+                "Load "
+                (code "index.html")
+                " in a browser and enjoy a friendly greeting.")))
+
+          (panel/default :class "panel-primary"
+            (panel/heading
+              (panel/title "Task 4: Add a counter."))
+            (panel/body
+              (p
+                "Now we add a counter to the page that will keep track of how
+                many times a button was clicked. To do this we add an input
+                cell containing the click count to the environment, and link
+                it to UI elements for input and output interactions with the
+                user. Input will be click events on the button. Output will
+                be the contents of a text node displaying the current count.")
+              (p
+                "Button click events are wired up to the input cell with the "
+                (code ":on-click")
+                " attribute. The "
+                (code "text")
+                " macro does some string interpolation and wires the input
+                cell to the value of a text node such that it’s updated
+                whenever the cell’s value changes.")
+              (p
+                "Modify the "
+                (code "index.cljs.hl")
+                " page such that it contains the following:")
+              (code/highlight :clj
+                ;;{{
+                (page "index.html")
+
+                (defc clicks 0)
+
+                (html
+                  (head)
+                  (body
+                    (text "Clicks so far: ~{clicks} ")
+                    (button :on-click #(swap! clicks inc) "click me!")))
+                ;;}}
+                )
+              (p
+                "If the compiler is still running in another terminal the
+                application will be recompiled. Reload the page and click the
+                button a few times. You should see something like this:")
+              (counter-ex)))
+
+          (gs-task :title "Task 5: A simple calculator."
+            (p
+              "The next task is to build a simple calculator that can add,
+              subtract, multiply, or divide two integers. Modify the "
+              (code "index.cljs.hl")
+              " file to contain the following:")
+            (calc-code)
+            (p "Compile and reload the page. You should see something like this:")
+            (calc-ex)))
+
         (grid/col6
           (h2 :style "color:transparent;" "asdf")
-          (panel/default
+          (panel/default :class "panel-warning"
             (panel/heading
-              (panel/title "Omfg"))
+              (panel/title "Boot Configuration"))
             (panel/body
-              (p "This is a test."))
-            )
-        ))
+              (p
+                "There are a few keys in the "
+                (code "boot.edn")
+                " configuration file that are important when building Hoplon
+                applications. Understanding how these keys work will help you
+                to organize your Hoplon project in a way that works best for
+                your workflow and deployment situation.")
+              (dl :class "dl-horizontal"
+                (dt (tt ":public"))
+                (dd
+                  (p
+                    "The output directory for the Hoplon compiler. HTML and
+                    static content ends up here. This is where you point your
+                    webserver's document root."))
+                (dt (tt ":src-paths"))
+                (dd
+                  (p
+                    "A set of paths in which the build process looks for source
+                    files to compile. These directories can contain Hoplon,
+                    Clojure, ClojureScript, JavaScript, or any other type of
+                    source file. The various compilers generally dispatch on
+                    filename extension, so the directory structure is pretty
+                    much up to you. The file watcher monitors these directories
+                    for changes and recompiles the project when necessary."))
+                (dt (tt ":src-static"))
+                (dd
+                  (p
+                    "A set of paths containing the static content for the
+                    project. This may include external JavaScript files, CSS
+                    stylesheets, images, etc. The contents of these directories
+                    are merged into the "
+                    (tt ":public")
+                    " directory after compilation, and any subdirectory structure
+                    is overlayed.")))
+              (p
+                "Also, it's a good idea to set up your "
+                (code ".gitignore")
+                " file correctly, because the boot watch task uses your "
+                (tt "git(1)")
+                " configuration to determine which files will trigger
+                recompiling and which will be ignored.")))
+
+          (panel/default :class "panel-warning"
+            (panel/heading
+              (panel/title "Hoplon Source Files"))
+            (panel/body
+              (p
+                "Hoplon compiles files having the "
+                (code ".hl")
+                " filename extension. The file is expected to contain
+                ClojureScript forms, expressed in either HTML or s-expression
+                syntax. The first form in the file must be a namespace or 
+                page declaration.")))
+
+          (panel/default :class "panel-warning"
+            (panel/heading
+              (panel/title "Anatomy of a Hoplon Page"))
+            (panel/body
+              (p
+                "Hoplon page source files have three parts: the page
+                declaration, optional definitions and top-level forms, and
+                the page markup.")
+              (p :class "text-muted" "The page declaration:")
+              (code/highlight :clj
+                ;;{{
+                (page "index.html"
+                  (:require [clojure.string :as string]))
+                ;;}}
+                )
+              (p :class "text-muted" "Optional top-level forms and definitions:")
+              (code/highlight :clj
+                ;;{{
+                (def add1 [x] (+ 1 x))
+                ;;}}
+                )
+              (p :class "text-muted" "The page markup:")
+              (code/highlight :clj
+                ;;{{
+                (html
+                  (head)
+                  (body
+                    (h1 "hello, number " (str (add1 41)))))
+                ;;}}
+                )))))
       
-      )))
+      (hr)
+      (footer :style "padding:30px 0px;"
+        (div :style "text-align:center;"
+          "Copyright © Alan Dipert and Micha Niskin. All rights reserved.")))))
