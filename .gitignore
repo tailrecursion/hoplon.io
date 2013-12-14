@@ -16,8 +16,8 @@ hs_err_*
 .lein-deps-sum
 .lein-failures
 .lein-plugins
-.hoplon-work-dir
-.hoplon-lock
+.lein-repl-history
 .DS_Store
 .boot
+/boot
 /test/test.js
