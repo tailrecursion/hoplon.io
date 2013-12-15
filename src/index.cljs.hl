@@ -17,6 +17,7 @@
 
 (def route (hutil/route-cell 10 "#/home/"))
 
+(def cqrs-url           "http://martinfowler.com/bliki/CQRS.html")
 (def hoplon-url         "https://github.com/tailrecursion/hoplon")
 (def boot-url           "https://github.com/tailrecursion/boot")
 (def hoplon-clojars-url "https://clojars.org/tailrecursion/hoplon")
@@ -113,9 +114,10 @@
     (def int js/parseInt)
     (def ops {"+" + "-" - "*" * "/" /})
 
-    (defc x 0)
-    (defc y 0)
-    (defc op +)
+    (defc  x      0)
+    (defc  y      0)
+    (defc  op     +)
+    (defc= result (op x y))
 
     (html
       (head)
@@ -137,7 +139,7 @@
           :type "text"
           :value "0"
           :on-change #(reset! y (int (val-id "y"))))
-        (text " = ~(op x y)")))
+        (text " = ~{result}")))
     ;;}}
     ))
 
@@ -199,18 +201,23 @@
       (:require
        [clojure.string :refer [upper-case lower-case]]))
 
+    ;; State machine private
     (defc  uc?    false)
     (defc  things [{:text "one"} {:text "two"} {:text "three"}])
     (defc= case   (if uc? upper-case lower-case))
+    
+    ;; State machine public API
     (defc= state  (mapv #(update-in % [:text] case) things))
+    (defn toggle-case! [_] (swap! uc? not))
 
+    ;; Presentation (uses public API)
     (html
       (head)
       (body
         (ul
           (loop-tpl :bindings [{x :text} state]
             (li (text "~{x}"))))
-        (button :on-click #(swap! uc? not) "toggle case")))
+        (button :on-click toggle-case! "toggle case")))
     ;;}}
     ))
 
@@ -808,7 +815,16 @@
               (code "index.cljs.hl") " file to contain the following:")
             (calc-code)
             (p "Compile and reload the page. You should see something like this:")
-            (calc-ex))
+            (calc-ex)
+            (p
+              "Notice how the presentation (the page markup) is effectively
+              decoupled from the application state (the cells). The four cells
+              that contain the application's state could be defined in a
+              different namespace, distributed in a jar file, deployed to a Maven
+              repository, and used in a number of different pages. They form a
+              well-defined API for the frontend dev to hook into when developing 
+              the page markup. This decoupling of presentation and state is a
+              key component of the Hoplon model."))
 
           (gs-task :title "Task 6: Using the looping macro."
             (p
@@ -826,14 +842,19 @@
               the template. This is because " (code "x") " is actually bound to
               a cell that always contains the nth item of the collection cell
               and not to the item itself.")
-            (p "Here is a more interesting example:")
+            (p
+              "Here is a more interesting example that uses destructuring in
+              the " (code ":bindings") " attribute:")
             (loop-code2)
             (p "Now when you reload the page you should see something like this:")
             (loop-ex2)
             (p
-              "Notice that destructuring can be used in the " (code ":bindings")
-              " attribute (extracting the " (code ":text") " value from the item,
-              in this case, and binding it to the cell " (code "x") ").")
+              "Notice the organiztion of the public API for the page’s
+              underlying state machine: it consists of read-only formula cells
+              and state transition functions that modify the underlying input
+              cells as a side effect. This is known as the "
+              (a :href cqrs-url :target "_blank" "CQRS pattern") " and forms the
+              basic architecture of a Hoplon single-page app.")
             (p
               "Since " (code "loop-tpl") " is a macro that generates markup/code
               at compile time, it is essentially performing static allocation of
@@ -998,7 +1019,7 @@
             (p
               "Additionally, Hoplon provides semantics for anonymous tags in
               sexp markup. There is, of course, no such thing in HTML markup.
-              The same snipped can be expressed using an anonymous tag:")
+              The same snippet can be expressed using an anonymous tag:")
             (code/highlight :clj
               ;;{{
               ((div :id "greet" :class "active")
