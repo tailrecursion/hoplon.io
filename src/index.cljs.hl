@@ -905,7 +905,7 @@
                 .
                 ├── boot.edn
                 └── src
-                └── index.cljs.hl
+                    └── index.cljs.hl
                 ;;}}
                 )
               "index.html.hl"
@@ -914,7 +914,7 @@
                 .
                 ├── boot.edn
                 └── src
-                └── index.html.hl
+                    └── index.html.hl
                 ;;}}
                 )))
 
