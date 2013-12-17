@@ -21,6 +21,30 @@
 (def hoplon-url         "https://github.com/tailrecursion/hoplon")
 (def boot-url           "https://github.com/tailrecursion/boot")
 (def hoplon-clojars-url "https://clojars.org/tailrecursion/hoplon")
+(def bootstrap-url      "http://getbootstrap.com/getting-started/")
+
+(defn hyphenate! []
+  (.. (js/jQuery "p") (addClass "hyphenate") (css "text-align" "justify"))
+  (.run js/Hyphenator))
+
+(defelem active [{:keys [active?]} [elem]]
+  (elem :do-class (cell= {:active active?})))
+
+(defelem trigger [{:keys [for tab]} [elem]]
+  (active :active? (cell= (= for tab)) (elem :on-click #(reset! for tab))))
+
+(defelem content [{:keys [for tab]} [elem]]
+  (active :active? (cell= (= for tab)) elem))
+
+(defelem tabs [{:keys [state] :as attr :or {state (cell 0)}} kids]
+  (let [ctnr (div (dissoc attr :state))
+        [trigs conts] (->> kids (partition 2) (apply map list))
+        a-void #(a :href "javascript:void(0)" %)
+        mktrig #(trigger :for state :tab %1 (li (a-void %2)))
+        mkcont #(content :for state :tab %1 (%2 :class "tab-pane"))
+        tab-bar (ul :class "nav nav-tabs" (vec (map-indexed mktrig trigs)))
+        content (div :class "tab-content" (vec (map-indexed mkcont conts)))]
+    (div (dissoc attr :state) tab-bar content)))
 
 (def-values
   [page-setup nav-bar content-home content-getting-started content-about content-contact]
@@ -53,6 +77,8 @@
 (defc example     1)
 (defc bmi-height  180)
 (defc bmi-weight  800)
+
+(defc task2syntax 0)
 
 (defelem my-list [attrs children]
   (let [heading (b)
@@ -233,13 +259,123 @@
             (li (text "~{x}"))))
         (button :on-click #(swap! u? not) "toggle case")))))
 
+(defn tabs-code []
+  (code/highlight :clj
+    ;;{{
+    (ns ui.tabs)
+
+    (defelem active
+      [{:keys [active?]} [elem]]
+      (elem :do-class (cell= {:active active?})))
+
+    (defelem trigger
+      [{:keys [for tab]} [elem]]
+      (active :active? (cell= (= for tab))
+        (elem :on-click #(reset! for tab))))
+
+    (defelem content
+      [{:keys [for tab]} [elem]]
+      (active :active? (cell= (= for tab)) elem))
+
+    (defelem tabs
+      [{:keys [state] :as attr :or {state (cell 0)}} kids]
+      (let [ctnr (div (dissoc attr :state))
+            [trigs conts] (->> kids (partition 2) (apply map list))
+            a-void #(a :href "javascript:void(0)" %)
+            mktrig #(trigger :for state :tab %1 (li (a-void %2)))
+            mkcont #(content :for state :tab %1 (%2 :class "tab-pane"))]
+        (div (dissoc attr :state)
+          (ul :class "nav nav-tabs" (map-indexed mktrig trigs))
+          (div :class "tab-content" (map-indexed mkcont conts)))))
+    ;;}}
+    ))
+
+(defn tabs-code2 []
+  (code/highlight :clj
+    ;;{{
+    (page "index.html"
+      (:require [ui.tabs :as tabs]))
+
+    (html
+      (head
+        (link :rel "stylesheet" :href "css/bootstrap.css"))
+      (body
+        (tabs/tabs
+          (span "Zero")
+          (div
+            (h4 "Foo")
+            (p "Content for tab 0."))
+          (span "One")
+          (div
+            (h4 "Bar")
+            (p "Content for tab 1."))
+          (span "Two")
+          (div
+            (h4 "Baz")
+            (p "Content for tab 2.")))))
+    ;;}}
+    ))
+
+(defn tabs-code2h []
+  (code/highlight :xml
+    ;;{{
+    <script type="text/hoplon">
+      (page "index.html"
+        (:require [ui.tabs :as tabs]))
+    </script>
+
+    <html>
+      <head>
+        <link rel="stylesheet" href="css/bootstrap.css">
+      </head>
+      <body>
+        <tabs.tabs>
+          <span>Zero</span>
+          <div>
+            <h4>Foo</h4>
+            <p>Content for tab 0.</p>
+          </div>
+          <span>One</span>
+          <div>
+            <h4>Bar</h4>
+            <p>Content for tab 1.</p>
+          </div>
+          <span>Two</span>
+          <div>
+            <h4>Baz</h4>
+            <p>Content for tab 2.</p>
+          </div>
+        </tabs.tabs>
+      </body>
+    </html>
+    ;;}}
+    ))
+
+(defn tabs-ex []
+  (panel/default
+    (panel/body
+      (tabs
+        (span "Zero")
+        (div
+          (h4 "Foo")
+          (p "Content for tab 0."))
+        (span "One")
+        (div
+          (h4 "Bar")
+          (p "Content for tab 1."))
+        (span "Two")
+        (div
+          (h4 "Baz")
+          (p "Content for tab 2."))))))
+
 (def video-dims         {:width 523 :height 392})
 (def video-url          "//www.youtube-nocookie.com/embed/XQu8TTBmGhA")
 (def video-thumb-url    "http://img.youtube.com/vi/XQu8TTBmGhA/0.jpg")
 
-(defn hyphenate! []
-  (.. (js/jQuery "p") (addClass "hyphenate") (css "text-align" "justify"))
-  (.run js/Hyphenator))
+(defn copyright-footer []
+  (footer :style "padding:30px 0px;"
+    (div :style "text-align:center;"
+      "Copyright © Alan Dipert and Micha Niskin. All rights reserved.")))
 
 (add-initfn!
   (fn []
@@ -674,9 +810,8 @@
                     ;;}}
                     ))))))
         (hr)
-        (footer :style "padding:30px 0px;"
-          (div :style "text-align:center;"
-            "Copyright © Alan Dipert and Micha Niskin. All rights reserved."))))
+        (copyright-footer)))
+
     (content-getting-started
       (grid/row
         (grid/col6
@@ -726,35 +861,70 @@
                :require-tasks #{[tailrecursion.boot.task    :refer :all]
                                 [tailrecursion.hoplon.boot  :refer :all]}
                :public        "resources/public"
-               :src-paths     #{"src"}
-               :src-static    #{"resources/assets"}}
+               :src-paths     #{"src"}}
               ;;}}
               ))
 
           (gs-task :title "Task 2: Create “Hello World” page."
             (p
-              "Create a "
-              (code "src/index.cljs.hl")
-              " file with the following contents:")
-            (code/highlight :clj
-              ;;{{
-              (page "index.html")
+              "Create a " (code "src/index.cljs.hl") " or "
+              (code "src/index.html.hl") " file with the following contents:")
+            (tabs :state task2syntax
+              "index.cljs.hl"
+              (code/highlight :clj
+                ;;{{
+                (page "index.html")
 
-              (html
-                (head)
-                (body
-                  (h1 "Hello, world!")))
-              ;;}}
+                (html
+                  (head)
+                  (body
+                    (h1 "Hello, world!")))
+                ;;}}
+                )
+              "index.html.hl"
+              (code/highlight :xml
+                ;;{{
+                <script type="text/hoplon">
+                  (page "index.html")
+                </script>
+
+                <html>
+                  <head></head>
+                  <body>
+                    <h1>Hello, world!</h1>
+                  </body>
+                </html>
+                ;;}}
+                )
               )
             (p "Your project directory should now look like this:")
-            (code/highlight :none
-              ;;{{
-              .
-              ├── boot.edn
-              └── src
-                  └── index.cljs.hl
-              ;;}}
-              ))
+            (tabs :state task2syntax
+              "index.cljs.hl"
+              (code/highlight :none
+                ;;{{
+                .
+                ├── boot.edn
+                └── src
+                └── index.cljs.hl
+                ;;}}
+                )
+              "index.html.hl"
+              (code/highlight :none
+                ;;{{
+                .
+                ├── boot.edn
+                └── src
+                └── index.html.hl
+                ;;}}
+                )))
+
+          (gs-info :title "Note"
+            (p
+              "To simplify things we will use " (code "index.cljs.hl") " and "
+              (code "index.html.hl") " interchangably in the examples below.
+              It should be understood that HTML and CLJS syntaxes are
+              equivalent–examples in CLJS syntax can be easily rewritten in
+              HTML syntax and vice versa."))
 
           (gs-task :title "Task 3: Compile the project."
             (p "In another terminal do the following in the project directory:")
@@ -865,6 +1035,63 @@
               the need to manage these resources explicitly. (DOM elements, like
               file descriptors, are not subject to garbage collection and must
               be explicitly removed from the DOM when no longer needed.)"))
+
+          (gs-task :title "Task 7: Add static resources."
+            (p
+              "Now it’s time to add some static resources to the project. For
+              example, adding the "
+              (a :href bootstrap-url :target "_blank" "Twitter Bootstrap")
+              " CSS stylesheets might help to get things looking fancy. Modify
+              the " (code "boot.edn") " file such that it contains the following:")
+            (code/highlight :clj
+              ;;{{
+              :src-static #{"resources/assets"}
+              ;;}}
+              )
+            (p
+              "Download Bootstrap and copy the CSS files into the directory. The
+              project directory should be organized something like this now:")
+            (code/highlight :none
+              ;;{{
+              .
+              ├── boot.edn
+              ├── resources
+              │   ├── assets
+              │   │   └── css
+              │   │       ├── bootstrap-theme.css
+              │   │       └── bootstrap.css
+              │   └── public
+              │       ├── index.html
+              │       └── main.js
+              └── src
+                  └── index.cljs.hl
+              ;;}}
+              )
+            (p
+              "Restart the compiler and see how the " (code "css") " directory
+              is copied over into the output directory automatically (and
+              whenever anything in there changes)."))
+
+          (gs-task :title "Task 8: Create a “tabs” abstraction."
+            (p
+              "This task demonstrates how to create a UI kit library that can be
+              used in multiple pages. UI kits contain custom tags representing
+              user interface abstractions. One commonly used abstraction is the
+              “tabs” metaphor that everyone is familiar with.")
+            (p
+              "Create a new Hoplon source file, " (code "src/ui/tabs.cljs.hl")
+              " with the following contents:")
+            (tabs-code)
+            (p
+              "Then modify " (code "index.cljs.hl") " such that it looks like
+              this:")
+            (tabs
+              "index.cljs.hl"
+              (tabs-code2)
+              "index.html.hl"
+              (tabs-code2h))
+            (p "Compile and reload the page. You should see something like this:")
+            (tabs-ex))
           )
 
         (grid/col6
@@ -915,7 +1142,7 @@
             (p "The first form in the file must be a page or namespace
                declaration. Page declarations specify the output HTML file
                path relative to the " (code ":public") " directory configured in
-               the project " (em "boot.clj") " file. Namespace declarations are
+               the project " (code "boot.edn") " file. Namespace declarations are
                the same as in ClojureScript.")
             (p
               "In both cases, however, the Hoplon compiler refers vars and
@@ -1150,6 +1377,4 @@
           ))
       
       (hr)
-      (footer :style "padding:30px 0px;"
-        (div :style "text-align:center;"
-          "Copyright © Alan Dipert and Micha Niskin. All rights reserved.")))))
+      (copyright-footer))))

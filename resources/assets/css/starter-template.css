@@ -25,6 +25,12 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Bree Serif', serif;
 }
 
+div.highlight pre {
+  overflow-x: auto;
+  overflow-wrap: normal;
+  white-space: pre;
+}
+
 .nojs-error {
   position: fixed;
   top: 0px;
