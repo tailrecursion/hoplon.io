@@ -458,7 +458,7 @@
               (a :href hoplon-clojars-url :target "_blank" "Clojars")
               ". Contributions of code, feedback, feature requests, etc. are
                 welcome. Please read the "
-              (strike (a :href "javascript:void(0)" "Contributors"))
+              (a :href "#/community/" "Community")
               " page for more information.")
 
             (h2 "Web Apps " (small "Single-page applications, not documents."))
