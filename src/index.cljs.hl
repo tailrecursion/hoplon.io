@@ -21,20 +21,23 @@
 (def hoplon-url         "https://github.com/tailrecursion/hoplon")
 (def boot-url           "https://github.com/tailrecursion/boot")
 (def hoplon-clojars-url "https://clojars.org/tailrecursion/hoplon")
+(def hoplon-demos-url   "https://github.com/tailrecursion/hoplon-demos")
 (def bootstrap-url      "http://getbootstrap.com/getting-started/")
+(def hoplon-group-url   "https://groups.google.com/forum/#!forum/hoplon")
+(def hoplon-issues-url  "https://github.com/tailrecursion/hoplon/issues")
 
 (defn hyphenate! []
   (.. (js/jQuery "p") (addClass "hyphenate") (css "text-align" "justify"))
   (.run js/Hyphenator))
 
-(defelem active [{:keys [active?]} [elem]]
-  (elem :do-class (cell= {:active active?})))
+(defelem active [{:keys [state]} [elem]]
+  (elem :do-class (cell= {:active state})))
 
 (defelem trigger [{:keys [for tab]} [elem]]
-  (active :active? (cell= (= for tab)) (elem :on-click #(reset! for tab))))
+  (active :state (cell= (= for tab)) (elem :on-click #(reset! for tab))))
 
 (defelem content [{:keys [for tab]} [elem]]
-  (active :active? (cell= (= for tab)) elem))
+  (active :state (cell= (= for tab)) elem))
 
 (defelem tabs [{:keys [state type] :as attr
                 :or {state (cell 0) type :tabs}} kids]
@@ -44,18 +47,23 @@
         a-void #(a :href "javascript:void(0)" %)
         mktrig #(trigger :for state :tab %1 (li (a-void %2)))
         mkcont #(content :for state :tab %1 (%2 :class "tab-pane"))
-        tab-bar (ul :class tclass (vec (map-indexed mktrig trigs)))
-        content (div :class "tab-content" (vec (map-indexed mkcont conts)))]
+        tab-bar (ul :class tclass (map-indexed mktrig trigs))
+        content (div :class "tab-content" (map-indexed mkcont conts))]
     (div (dissoc attr :state) tab-bar content)))
 
 (def-values
-  [page-setup nav-bar content-home content-getting-started content-about content-contact]
+  [page-setup nav-bar
+   content-home
+   content-getting-started
+   content-community
+   content-github]
   (page/navbar-fixed-top
     route         
     "Hoplon"
     "Hoplon"
     [(a :href "#/home/"                       "Home") (div)]
     [(a :href "#/getting-started/" "Getting Started") (core/container)]
+    [(a :href "#/community/"             "Community") (core/container)]
     [(a :href hoplon-url :target "_blank"   "GitHub") (core/container)]))
 
 (defelem gs-task [attr kids]
@@ -219,7 +227,7 @@
     (panel/default
       (panel/body
         (ul
-          (loop-tpl :bindings [x xs]
+          (loop-tpl :size 3 :bindings [x xs]
             (li @x)))))))
 
 (defn loop-code2 []
@@ -257,7 +265,7 @@
     (panel/default
       (panel/body
         (ul
-          (loop-tpl :bindings [{x :text} st]
+          (loop-tpl :size 3 :bindings [{x :text} st]
             (li (text "~{x}"))))
         (button :on-click #(swap! u? not) "toggle case")))))
 
@@ -267,25 +275,25 @@
     (ns ui.tabs)
 
     (defelem active
-      [{:keys [active?]} [elem]]
-      (elem :do-class (cell= {:active active?})))
+      [{:keys [state]} [elem]]
+      (elem :do-class (cell= {:active state})))
 
     (defelem trigger
-      [{:keys [for tab]} [elem]]
-      (active :active? (cell= (= for tab))
-        (elem :on-click #(reset! for tab))))
+      [{:keys [state tab]} [elem]]
+      (active :state (cell= (= state tab))
+        (elem :on-click #(reset! state tab))))
 
     (defelem content
-      [{:keys [for tab]} [elem]]
-      (active :active? (cell= (= for tab)) elem))
+      [{:keys [state tab]} [elem]]
+      (active :state (cell= (= state tab)) elem))
 
     (defelem tabs
       [{:keys [state] :as attr :or {state (cell 0)}} kids]
       (let [ctnr (div (dissoc attr :state))
             [trigs conts] (->> kids (partition 2) (apply map list))
             a-void #(a :href "javascript:void(0)" %)
-            mktrig #(trigger :for state :tab %1 (li (a-void %2)))
-            mkcont #(content :for state :tab %1 (%2 :class "tab-pane"))]
+            mktrig #(trigger :state state :tab %1 (li (a-void %2)))
+            mkcont #(content :state state :tab %1 (%2 :class "tab-pane"))]
         (div (dissoc attr :state)
           (ul :class "nav nav-tabs" (map-indexed mktrig trigs))
           (div :class "tab-content" (map-indexed mkcont conts)))))
@@ -572,16 +580,17 @@
               of the DOM and the linkages between the DOM and cells are
               defined, the user interface manages itself."))
           (grid/col6
-            (h2 (small "Screencast"))
-            (panel/default
-              (panel/body
-                (iframe
-                  :class "center-block"
-                  :width (:width video-dims)
-                  :height (:height video-dims)
-                  :src video-url
-                  :frameborder "0"
-                  :allowfullscreen true)))
+            (comment
+              (h2 (small "Screencast"))
+              (panel/default
+                (panel/body
+                  (iframe
+                    :class "center-block"
+                    :width (:width video-dims)
+                    :height (:height video-dims)
+                    :src video-url
+                    :frameborder "0"
+                    :allowfullscreen true))))
             (h2 (small "Examples"))
             (list/divgroup
               (list/divitem
@@ -825,13 +834,23 @@
             "This article will demonstrate how to build Hoplon applications.
             A simple application will be developed incrementally. New features
             will be added at each step, showing how different parts of Hoplon
-            are used.")
+            are used. After running through the basics here, check out the "
+            (a :href hoplon-demos-url :target "_blank" "hoplon demos")
+            " repository to see some complete, self-contained example
+            applications.")
 
           (br)
-          (gs-info :title "System Requirements"
+          (gs-info :title "System Requirements (Compiler)"
             (ul
               (li "Java 7+")
               (li "The " (a :href boot-url :target "_blank" "boot") " build tool.")))
+
+          (gs-info :title "Browser Compatibility"
+            (ul
+              (li "Chrome")
+              (li "Safari")
+              (li "Firefox")
+              (li "Internet Explorer 8+")))
 
           (gs-task :title "Task 1: Create empty project."
             (p
@@ -856,9 +875,9 @@
               " file with the following contents:")
             (code/highlight :clj
               ;;{{
-              {:dependencies  [[tailrecursion/boot.core   "1.0.0"]
+              {:dependencies  [[tailrecursion/boot.core   "1.1.0"]
                                [tailrecursion/boot.task   "1.0.0"]
-                               [tailrecursion/hoplon      "4.0.6"]
+                               [tailrecursion/hoplon      "4.0.7"]
                                [org.clojure/clojurescript "0.0-1934"]]
                :require-tasks #{[tailrecursion.boot.task    :refer :all]
                                 [tailrecursion.hoplon.boot  :refer :all]}
@@ -871,7 +890,7 @@
             (p
               "Create a " (code "src/index.cljs.hl") " or "
               (code "src/index.html.hl") " file with the following contents:")
-            (tabs :type :pills :state task2syntax
+            (tabs :state task2syntax
               "index.cljs.hl"
               (code/highlight :clj
                 ;;{{
@@ -900,7 +919,7 @@
                 )
               )
             (p "Your project directory should now look like this:")
-            (tabs :type :pills :state task2syntax
+            (tabs :state task2syntax
               "index.cljs.hl"
               (code/highlight :none
                 ;;{{
@@ -1081,13 +1100,29 @@
               user interface abstractions. One commonly used abstraction is the
               “tabs” metaphor that everyone is familiar with.")
             (p
-              "Create a new Hoplon source file, " (code "src/ui/tabs.cljs.hl")
+              "The new UI library should live in a separate namespace and
+              contain custom DOM elements to use in the application pages.
+              Create a new Hoplon source file, " (code "src/ui/tabs.cljs.hl")
               " with the following contents:")
             (tabs-code)
             (p
+              "The " (code "defelem") " macro defines a function whose arguments
+              are “normalized” for the HTML markup semantic. It takes a vector
+              if bindings and a number of body expressions. The bindings vector
+              should bind the attribute map as the first argument and a sequence
+              of children as the second. This removes the need to explicitly
+              parse the arguments when the function is called in the page markup
+              with key/value args as attributes, etc.")
+            (p
+              "Notice how there is no need to " (code ":refer") " any of the
+              Hoplon or Javelin vars in the namespace declaration. The Hoplon
+              compiler does that automatically so you can just use "
+              (code "defelem") ", " (code "div") ", " (code "span") ", etc. in
+              the namespace without explicitly requiring them.")
+            (p
               "Then modify " (code "index.cljs.hl") " such that it looks like
-              this:")
-            (tabs :type :pills
+              this, using the newly created " (code "tabs") " custom tag:")
+            (tabs 
               "index.cljs.hl"
               (tabs-code2)
               "index.html.hl"
@@ -1288,7 +1323,25 @@
             (p
               "The result is equivalent to the previous snippets, but more
               general. These “custom tags” can be used in the page markup like 
-              any of the built-in tags."))
+              any of the built-in tags.")
+            (p
+              "Finally, sequences or vectors can be used to splice children
+              into the parent similar to how the " (code "unquote-splicing")
+              " form works in Clojure. For instance this,")
+            (code/highlight :clj
+              ;;{{
+              (ul :class "my-list"
+                (map #(li :class "my-item" %) ["item1" "item2"]))
+              ;;}}
+              )
+            (p "is equivalent to this:")
+            (code/highlight :clj
+              ;;{{
+              (apply (ul :class "my-list")
+                (map #(li :class "my-item" %) ["item1" "item2"]))
+              ;;}}
+              ))
+
           (gs-tip :title "Wiring Up The DOM"
             (p
               "DOM interactions can be can be divided into two categories:
@@ -1379,4 +1432,32 @@
           ))
       
       (hr)
-      (copyright-footer))))
+      (copyright-footer))
+
+    (content-community
+      (grid/row
+        (grid/col3)
+        (grid/col6
+          (h1 "Community")
+          (hr)
+          (dl :class "dl-horizontal"
+            (dt "Source")
+            (dd (a :href hoplon-url :target "_blank" hoplon-url))
+            (dt "Issues")
+            (dd (a :href hoplon-issues-url :target "_blank" hoplon-issues-url))
+            (dt "Mailing List")
+            (dd (a :href hoplon-group-url :target "_blank" hoplon-group-url))
+            (dt "Freenode IRC")
+            (dd (tt "#hoplon")))
+          (hr)
+          (h3 "Special Thanks To")
+          (dl :class "dl-horizontal"
+            (dt "Ray Willig")
+            (dd (a :href "https://github.com/rwillig" :target "_blank" "https://github.com/rwillig"))
+            (dt "Alexander Solovyov")
+            (dd (a :href "https://github.com/piranha" :target "_blank" "https://github.com/piranha"))
+            (dt "Kevin Lynagh")
+            (dd (a :href "http://github.com/lynaghk" :target "_blank" "http://github.com/lynaghk")))
+          (hr)
+          (copyright-footer))
+        (grid/col3)))))
