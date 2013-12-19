@@ -9,6 +9,7 @@
     [bootstrap.meta             :as meta]
     [bootstrap.list             :as list]
     [bootstrap.page             :as page]
+    [bootstrap.tabs             :as tabs]
     [bootstrap.glyph            :as glyph]
     [bootstrap.panel            :as panel]
     [bootstrap.button           :as button]
@@ -30,27 +31,6 @@
   (.. (js/jQuery "p") (addClass "hyphenate") (css "text-align" "justify"))
   (.run js/Hyphenator))
 
-(defelem active [{:keys [state]} [elem]]
-  (elem :do-class (cell= {:active state})))
-
-(defelem trigger [{:keys [for tab]} [elem]]
-  (active :state (cell= (= for tab)) (elem :on-click #(reset! for tab))))
-
-(defelem content [{:keys [for tab]} [elem]]
-  (active :state (cell= (= for tab)) elem))
-
-(defelem tabs [{:keys [state type] :as attr
-                :or {state (cell 0) type :tabs}} kids]
-  (let [ctnr (div (dissoc attr :state))
-        [trigs conts] (->> kids (partition 2) (apply map list))
-        tclass (str "nav nav-" (name type))
-        a-void #(a :href "javascript:void(0)" %)
-        mktrig #(trigger :for state :tab %1 (li (a-void %2)))
-        mkcont #(content :for state :tab %1 (%2 :class "tab-pane"))
-        tab-bar (ul :class tclass (map-indexed mktrig trigs))
-        content (div :class "tab-content" (map-indexed mkcont conts))]
-    (div (dissoc attr :state) tab-bar content)))
-
 (def-values
   [page-setup nav-bar
    content-home
@@ -66,23 +46,31 @@
     [(a :href "#/community/"             "Community") (core/container)]
     [(a :href hoplon-url :target "_blank"   "GitHub") (core/container)]))
 
-(defelem gs-task [attr kids]
-  (panel/default :class "panel-primary"
+(def indexed (partial map-indexed list))
+
+(defc gs-tasks {:cur 0 :toc []})
+(defc gs-tips  {:cur 0 :toc []})
+
+(defelem table-of-contents [{:keys [size toc]} _]
+  (let [toc* (cell= (indexed (:toc toc)))]
+    (ul :class "list-unstyled"
+      (loop-tpl :size size :bindings [[i title] toc*]
+        (li (a :on-click #(swap! toc assoc :cur (inc @i)) (text "~{title}")))))))
+
+(defelem gs-block [{:keys [toc type title]} kids]
+  (when toc (swap! toc update-in [:toc] conj title))
+  (panel/default :class (str "panel-" (name type))
+    (when toc
+      (a
+        :class "topfix"
+        :do-scroll-to (cell= (= ~(count (:toc @toc)) (:cur toc)))))
     (panel/heading
-      (panel/title (:title attr)))
+      (panel/title title))
     (apply panel/body kids)))
 
-(defelem gs-tip [attr kids]
-  (panel/default :class "panel-warning"
-    (panel/heading
-      (panel/title (:title attr)))
-    (apply panel/body kids)))
-
-(defelem gs-info [attr kids]
-  (panel/default :class "panel-info"
-    (panel/heading
-      (panel/title (:title attr)))
-    (apply panel/body kids)))
+(def gs-info (partial gs-block :type :info))
+(def gs-task (partial gs-block :toc gs-tasks :type :primary))
+(def gs-tip  (partial gs-block :toc gs-tips  :type :warning))
 
 (defc example     1)
 (defc bmi-height  180)
@@ -364,7 +352,7 @@
 (defn tabs-ex []
   (panel/default
     (panel/body
-      (tabs
+      (tabs/tabs
         (span "Zero")
         (div
           (h4 "Foo")
@@ -841,6 +829,16 @@
             applications.")
 
           (br)
+          (panel/default
+            (panel/heading
+              (panel/title "Table of Contents"))
+            (panel/body
+              (grid/row
+                (grid/col6
+                  (table-of-contents :size 10 :toc gs-tasks))
+                (grid/col6
+                  (table-of-contents :size 10 :toc gs-tips)))))
+
           (gs-info :title "System Requirements (Compiler)"
             (ul
               (li "Java 7+")
@@ -891,7 +889,7 @@
             (p
               "Create a " (code "src/index.cljs.hl") " or "
               (code "src/index.html.hl") " file with the following contents:")
-            (tabs :state task2syntax
+            (tabs/tabs :state task2syntax
               "index.cljs.hl"
               (code/highlight :clj
                 ;;{{
@@ -920,7 +918,7 @@
                 )
               )
             (p "Your project directory should now look like this:")
-            (tabs :state task2syntax
+            (tabs/tabs :state task2syntax
               "index.cljs.hl"
               (code/highlight :none
                 ;;{{
@@ -1123,7 +1121,7 @@
             (p
               "Then modify " (code "index.cljs.hl") " such that it looks like
               this, using the newly created " (code "tabs") " custom tag:")
-            (tabs 
+            (tabs/tabs 
               "index.cljs.hl"
               (tabs-code2)
               "index.html.hl"

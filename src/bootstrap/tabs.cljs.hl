@@ -1,0 +1,22 @@
+(ns bootstrap.tabs)
+
+(defelem active [{:keys [state]} [elem]]
+  (elem :do-class (cell= {:active state})))
+
+(defelem trigger [{:keys [for tab]} [elem]]
+  (active :state (cell= (= for tab)) (elem :on-click #(reset! for tab))))
+
+(defelem content [{:keys [for tab]} [elem]]
+  (active :state (cell= (= for tab)) elem))
+
+(defelem tabs [{:keys [state type] :as attr
+                :or {state (cell 0) type :tabs}} kids]
+  (let [ctnr (div (dissoc attr :state))
+        [trigs conts] (->> kids (partition 2) (apply map list))
+        tclass (str "nav nav-" (name type))
+        a-void #(a :href "javascript:void(0)" %)
+        mktrig #(trigger :for state :tab %1 (li (a-void %2)))
+        mkcont #(content :for state :tab %1 (%2 :class "tab-pane"))
+        tab-bar (ul :class tclass (map-indexed mktrig trigs))
+        content (div :class "tab-content" (map-indexed mkcont conts))]
+    (div (dissoc attr :state) tab-bar content)))
