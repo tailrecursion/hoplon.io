@@ -54,8 +54,11 @@
 (defelem table-of-contents [{:keys [size toc]} _]
   (let [toc* (cell= (indexed (:toc toc)))]
     (ul :class "list-unstyled"
-      (loop-tpl :size size :bindings [[i title] toc*]
-        (li (a :on-click #(swap! toc assoc :cur (inc @i)) (text "~{title}")))))))
+      (loop-tpl :size size
+                :bindings [[i title] toc*]
+        (li (a :style "cursor:pointer;"
+               :on-click #(swap! toc assoc :cur (inc @i))
+               (text "~{title}")))))))
 
 (defelem gs-block [{:keys [toc type title]} kids]
   (when toc (swap! toc update-in [:toc] conj title))
