@@ -945,7 +945,7 @@
           (gs-info :title "Note"
             (p
               "To simplify things we will use " (code "index.cljs.hl") " and "
-              (code "index.html.hl") " interchangably in the examples below.
+              (code "index.html.hl") " interchangeably in the examples below.
               It should be understood that HTML and CLJS syntaxes are
               equivalent–examples in CLJS syntax can be easily rewritten in
               HTML syntax and vice versa."))
@@ -1012,13 +1012,14 @@
             (calc-ex)
             (p
               "Notice how the presentation (the page markup) is effectively
-              decoupled from the application state (the cells). The four cells
-              that contain the application's state could be defined in a
-              different namespace, distributed in a jar file, deployed to a Maven
-              repository, and used in a number of different pages. They form a
-              well-defined API for the frontend dev to hook into when developing
-              the page markup. This decoupling of presentation and state is a
-              key component of the Hoplon model."))
+              decoupled from the application state (the cells). The
+              four cells that contain the application's state could be
+              defined in a different namespace, distributed in a jar
+              file, deployed to a Maven repository, and used in a
+              number of different pages. They form a well-defined API
+              for the frontend developer to hook into when developing
+              the page markup. This decoupling of presentation and
+              state is a key component of the Hoplon model."))
 
           (gs-task :title "Task 6: Using the looping macro."
             (p
@@ -1043,7 +1044,7 @@
             (p "Now when you reload the page you should see something like this:")
             (loop-ex2)
             (p
-              "Notice the organiztion of the public API for the page’s
+              "Notice the organization of the public API for the page’s
               underlying state machine: it consists of read-only formula cells
               and state transition functions that modify the underlying input
               cells as a side effect. This is known as the "
@@ -1115,7 +1116,7 @@
               should bind the attribute map as the first argument and a sequence
               of children as the second. This removes the need to explicitly
               parse the arguments when the function is called in the page markup
-              with key/value args as attributes, etc.")
+              with key/value arguments as attributes, etc.")
             (p
               "Notice how there is no need to " (code ":refer") " any of the
               Hoplon or Javelin vars in the namespace declaration. The Hoplon
