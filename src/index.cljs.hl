@@ -386,9 +386,12 @@
 (html :lang "en"
   (head
     (meta :charset "utf-8")
-    (meta :name "viewport" :content "width=device-width, initial-scale=1.0")
+    (meta :name "viewport"    :content "width=device-width, initial-scale=1.0")
+    (meta :name "keywords"    :content "clojure, clojurescript, cqrs, castra, cljson, spa")
+    (meta :name "description" :content "Hoplon provides a number of libraries promoting a simpler model for Clojure/ClojureScript web applications.")
     (link :href "css/bootstrap.min.css"     :rel "stylesheet" :media "screen")
-    (link :href "css/starter-template.css"  :rel "stylesheet" :media "screen"))
+    (link :href "css/starter-template.css"  :rel "stylesheet" :media "screen")
+    (title "Hoplon • A simpler way to program the web with Clojure and ClojureScript"))
   (body
     (nav-bar)
     (a :class "topfix" :do-scroll-to (cell= route))
