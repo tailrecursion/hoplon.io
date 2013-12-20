@@ -38,7 +38,7 @@
    content-community
    content-github]
   (page/navbar-fixed-top
-    route         
+    route
     "Hoplon"
     "Hoplon"
     [(a :href "#/home/"                       "Home") (div)]
@@ -229,7 +229,7 @@
     (defc  uc?    false)
     (defc  things [{:text "one"} {:text "two"} {:text "three"}])
     (defc= case   (if uc? upper-case lower-case))
-    
+
     ;; State machine public API
     (defc= state  (mapv #(update-in % [:text] case) things))
     (defn toggle-case! [_] (swap! uc? not))
@@ -383,8 +383,8 @@
 (html :lang "en"
   (head
     (meta :charset "utf-8")
-    (meta :name "viewport" :content "width=device-width, initial-scale=1.0") 
-    (link :href "css/bootstrap.min.css"     :rel "stylesheet" :media "screen") 
+    (meta :name "viewport" :content "width=device-width, initial-scale=1.0")
+    (link :href "css/bootstrap.min.css"     :rel "stylesheet" :media "screen")
     (link :href "css/starter-template.css"  :rel "stylesheet" :media "screen"))
   (body
     (nav-bar)
@@ -433,7 +433,7 @@
                as a full stack, or individually as a part of another stack.")
             (p
               "More concretely, Hoplon ships with a compiler for compiling
-               Hoplon pages into HTML and JavaScript (implemented as a build 
+               Hoplon pages into HTML and JavaScript (implemented as a build
                task for the "
               (a :href boot-url :target "_blank" "boot")
               " build tool), ClojureScript libraries for creating
@@ -476,7 +476,7 @@
                provide the dynamic behavior that web applications require.")
             (p
               "It is at the boundary between the DOM and the JavaScript
-               environment that the incindental complexities of web application
+               environment that the incidental complexities of web application
                UI development are found. There is a fundamental disconnect
                between the literal representation of the DOM (the HTML markup)
                and the dynamic environment (the JavaScript VM). The page markup
@@ -527,13 +527,13 @@
                built by composing simpler components and those may be used as
                a basis for even more complex components, without running into
                the limitations of template composition.")
-            
+
             (h2 "Spreadsheets " (small "Client state made simple."))
             (p
               "Remember how awesome spreadsheets are? You never think about
                state when you’re programming a spreadsheet. Instead, you focus
                on values and the formulas that define the relationships between
-               them. When a new value is entered into a cell the rest of the 
+               them. When a new value is entered into a cell the rest of the
                spreadsheet updates itself as necessary to maintain the
                correctness of the formulas.")
             (p
@@ -560,7 +560,7 @@
               markup. User input consists entirely of DOM events: "
               (em "click") ", " (em "change") ", etc. Output is presented to
               the user by manipulating the properties of DOM elements: adding
-              or removing CSS classes, changing the content of text nodes, 
+              or removing CSS classes, changing the content of text nodes,
               etc.")
             (p
               "Hoplon provides bindings that can be used to link DOM elements
@@ -667,7 +667,7 @@
                         (form
                           (div :class "form-group"
                             (label (text "Height (~{bmi-height} cm)"))
-                            (input 
+                            (input
                               :on-change #(reset! bmi-height (val-id "bmi-ht"))
                               :id     "bmi-ht"
                               :class  "form-control"
@@ -677,7 +677,7 @@
                               :value  @bmi-height))
                           (div :class "form-group"
                             (label (text "Weight (~(.toFixed (/ bmi-weight 10) 1) kg)"))
-                            (input 
+                            (input
                               :on-change #(reset! bmi-weight (val-id "bmi-wt"))
                               :id     "bmi-wt"
                               :class  "form-control"
@@ -688,7 +688,7 @@
                           (div :class "form-group"
                             (label
                               (text "BMI ~(.toFixed bmi 1) (~(first bmi-msg))"))
-                            (input 
+                            (input
                               :do-css (cell= {:background-color (second bmi-msg)})
                               :readonly   true
                               :class      "form-control"
@@ -750,7 +750,7 @@
                     "This is an example of a custom element, or component. The "
                     (em "on-append!")
                     " function is used to provide the implementation for
-                    appending children and setting attributes. This ensures 
+                    appending children and setting attributes. This ensures
                     that children are, in this case, properly wrapped in list
                     item elements and appended to the inner unordered list
                     instead of to the outermost element. A special "
@@ -784,7 +784,7 @@
                             body (ul)   ; container elements.
                             this (div :class "my-list" (head) (body))]
                         ;; Implement appendChild/setAttribute.
-                        (on-append! this 
+                        (on-append! this
                           (fn [{:keys [title] :as attrs} children]
                             ;; The "title" attribute sets title text.
                             (when title (do! head :text title))
@@ -1012,7 +1012,7 @@
               that contain the application's state could be defined in a
               different namespace, distributed in a jar file, deployed to a Maven
               repository, and used in a number of different pages. They form a
-              well-defined API for the frontend dev to hook into when developing 
+              well-defined API for the frontend dev to hook into when developing
               the page markup. This decoupling of presentation and state is a
               key component of the Hoplon model."))
 
@@ -1121,7 +1121,7 @@
             (p
               "Then modify " (code "index.cljs.hl") " such that it looks like
               this, using the newly created " (code "tabs") " custom tag:")
-            (tabs/tabs 
+            (tabs/tabs
               "index.cljs.hl"
               (tabs-code2)
               "index.html.hl"
@@ -1167,7 +1167,7 @@
             (p
               "Also, it's a good idea to set up your " (code ".gitignore")
               " file correctly, because the boot watch task uses your "
-              (tt "git(1)") " configuration to determine which files will 
+              (tt "git(1)") " configuration to determine which files will
               trigger recompiling and which will be ignored."))
 
           (gs-tip :title "Hoplon Source Files"
@@ -1321,7 +1321,7 @@
               )
             (p
               "The result is equivalent to the previous snippets, but more
-              general. These “custom tags” can be used in the page markup like 
+              general. These “custom tags” can be used in the page markup like
               any of the built-in tags.")
             (p
               "Finally, sequences or vectors can be used to splice children
@@ -1352,7 +1352,7 @@
             (p
               "In a Hoplon page input is accepted via the special "
               (code ":on-" (em "event")) " attributes set on DOM elements. All
-              JQuery events are supported, including custom events. The value
+              jQuery events are supported, including custom events. The value
               of this attribute is the event handler. For example:")
             (code/highlight :clj
               ;;{{
@@ -1389,7 +1389,7 @@
               ;;}}
               )
             (p
-              "This creates a pargraph whose text content is linked to the
+              "This creates a paragraph whose text content is linked to the
               interpolated string.")
             (p
               "Output and input wiring can also be done programmatically using
@@ -1423,13 +1423,13 @@
             (p
               "Event handlers are normally set just once, so formula cells don’t
               usually make sense in combination with the " (code "on!")
-              " method. This illustrates the I/O model in Hoplon: output 
+              " method. This illustrates the I/O model in Hoplon: output
               reactively updates the DOM in relation to the underlying state via
               formula cells, while input updates the underlying state via events
               emitted by the DOM.")
             )
           ))
-      
+
       (hr)
       (copyright-footer))
 
