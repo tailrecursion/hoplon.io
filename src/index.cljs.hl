@@ -397,7 +397,7 @@
         "This page uses JavaScript but it looks like you have it turned off."))
     (content-home
       (core/jumbotron
-        (div :class "lambda"
+        (core/container :class "lambda"
           (core/container
             (h1 "Hoplon")
             (p "A simpler way to program the web.")
