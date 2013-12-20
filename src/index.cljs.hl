@@ -397,10 +397,11 @@
         "This page uses JavaScript but it looks like you have it turned off."))
     (content-home
       (core/jumbotron
-        (core/container
-          (h1 "Hoplon")
-          (p "A simpler way to program the web.")
-          (p (button/start :href "#/getting-started/" "Get started »"))))
+        (div :class "lambda"
+          (core/container
+            (h1 "Hoplon")
+            (p "A simpler way to program the web.")
+            (p (button/start :href "#/getting-started/" "Get started »")))))
       (core/container
         (grid/row
           (grid/col4
