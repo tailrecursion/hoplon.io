@@ -1342,10 +1342,10 @@
             (p "Or in HTML markup in the page, even:")
             (code/highlight :xml
               ;;{{
-              <active id="greet">
+              <div class="active" id="greet">
                 <h1>Hello, world!</h1>
                 <p>I'm new here.</p>
-              </active>
+              </div>
               ;;}}
               )
             (p
