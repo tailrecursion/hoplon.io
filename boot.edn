@@ -12,7 +12,7 @@
  :description   "Hoplon UI kit for Twitter Bootstrap."
  :license       {:name "Eclipse Public License"
                  :url "http://www.eclipse.org/legal/epl-v10.html"}
- :dependencies  [[tailrecursion/boot.core   "1.1.0"]
+ :dependencies  [[tailrecursion/boot.core   "1.1.1"]
                  [tailrecursion/boot.task   "1.0.0"]
                  [tailrecursion/hoplon      "4.0.7"]
                  [org.clojure/clojurescript "0.0-1934"]]

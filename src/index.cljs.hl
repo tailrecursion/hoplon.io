@@ -48,8 +48,11 @@
 
 (def indexed (partial map-indexed list))
 
-(defc gs-tasks {:cur 0 :toc []})
-(defc gs-tips  {:cur 0 :toc []})
+(defc gs-tasks {:cur nil :toc []})
+(defc gs-tips  {:cur nil :toc []})
+
+(defelem jump-to-toc [{:keys [tocs]} _]
+  (a :class "topfix" :do-scroll-to (cell= (some zero? (map :cur tocs)))))
 
 (defelem table-of-contents [{:keys [size toc]} _]
   (let [toc* (cell= (indexed (:toc toc)))]
@@ -69,7 +72,13 @@
         :do-scroll-to (cell= (= ~(count (:toc @toc)) (:cur toc)))))
     (panel/heading
       (panel/title title))
-    (apply panel/body kids)))
+    (panel/body
+      kids
+      (when toc
+        (div :style "text-align:center"
+          (a :on-click #(do (swap! toc assoc :cur nil)
+                            (swap! toc assoc :cur 0))
+            "back to top"))))))
 
 (def gs-info (partial gs-block :type :info))
 (def gs-task (partial gs-block :toc gs-tasks :type :primary))
@@ -836,6 +845,7 @@
             applications.")
 
           (br)
+          (jump-to-toc :tocs (cell= [gs-tasks gs-tips]))
           (panel/default
             (panel/heading
               (panel/title "Table of Contents"))
