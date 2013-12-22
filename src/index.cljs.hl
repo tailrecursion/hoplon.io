@@ -824,7 +824,18 @@
                         (span "item two")
                         (span "item three")))
                     ;;}}
-                    ))))))
+                    ))))
+            (panel/default
+              (panel/heading
+                (panel/title "Architecture"))
+              (panel/body
+                (tabs/tabs
+                  (span "Fig 1")
+                  (img :width "523px" :src "img/arch-full.png")
+                  (span "Fig 2")
+                  (img :width "523px" :src "img/arch-client.jpg")
+                  )))
+            ))
         (hr)
         (copyright-footer)))
 
@@ -858,7 +869,7 @@
 
           (gs-info :title "System Requirements (Compiler)"
             (ul
-              (li "Java 7+")
+              (li "Java 6+")
               (li "The " (a :href boot-url :target "_blank" "boot") " build tool.")))
 
           (gs-info :title "Browser Compatibility"
@@ -891,7 +902,7 @@
               " file with the following contents:")
             (code/highlight :clj
               ;;{{
-              {:dependencies  [[tailrecursion/boot.core   "1.1.0"]
+              {:dependencies  [[tailrecursion/boot.core   "1.1.1"]
                                [tailrecursion/boot.task   "1.0.0"]
                                [tailrecursion/hoplon      "4.0.7"]
                                [org.clojure/clojurescript "0.0-1934"]]
