@@ -1,37 +1,37 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="keywords" content="clojure, clojurescript, cqrs, castra, cljson, spa"><meta name="description" content="Hoplon provides a number of libraries promoting a simpler model for Clojure/ClojureScript web applications."><link href="css/bootstrap.min.css" rel="stylesheet" media="screen"><link href="css/starter-template.css" rel="stylesheet" media="screen"><title>Hoplon • A simpler way to program the web with Clojure and ClojureScript</title></head><body><div class="navbar navbar-inverse navbar-fixed-top"><div class="container"><div class="navbar-header"><a shape="rect" class="navbar-brand" href="#/home/">Hoplon</a></div><div class="collapse navbar-collapse"><ul class="nav navbar-nav"><li class="active"><a shape="rect" href="#/home/">Home</a></li><li><a shape="rect" href="#/getting-started/">Getting Started</a></li><li><a shape="rect" href="#/community/">Community</a></li><li><a shape="rect" href="https://github.com/tailrecursion/hoplon" target="_blank">GitHub</a></li></ul></div></div></div><a shape="rect" class="topfix"></a><noscript><div class="nojs-error">This page uses JavaScript but it looks like you have it turned off.</div></noscript><div style="display: block; "><div class="jumbotron" style="background-color:#ffcc33"><div class="container lambda"><div class="container"><h1>Hoplon</h1><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">A simpler way to program the web.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; "><a shape="rect" class="btn btn-large btn-primary Hyphenator988hide" href="#/getting-started/">Get started »</a></p></div></div></div><div class="container"><div class="row"><div class="col-md-4"><h2>Clojure, everywhere.</h2><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Write everything in Clojure and ClojureScript, clientside and
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="keywords" content="clojure, clojurescript, cqrs, castra, cljson, spa"><meta name="description" content="Hoplon provides a number of libraries promoting a simpler model for Clojure/ClojureScript web applications."><link href="css/bootstrap.min.css" rel="stylesheet" media="screen"><link href="css/starter-template.css" rel="stylesheet" media="screen"><title>Hoplon • A simpler way to program the web with Clojure and ClojureScript</title></head><body><div class="navbar navbar-inverse navbar-fixed-top"><div class="container"><div class="navbar-header"><a shape="rect" class="navbar-brand" href="#/home/">Hoplon</a></div><div class="collapse navbar-collapse"><ul class="nav navbar-nav"><li class="active"><a shape="rect" href="#/home/">Home</a></li><li><a shape="rect" href="#/getting-started/">Getting Started</a></li><li><a shape="rect" href="#/community/">Community</a></li><li><a shape="rect" href="https://github.com/tailrecursion/hoplon" target="_blank">GitHub</a></li></ul></div></div></div><a shape="rect" class="topfix"></a><noscript><div class="nojs-error">This page uses JavaScript but it looks like you have it turned off.</div></noscript><div style="display: block; "><div class="jumbotron" style="background-color:#ffcc33"><div class="container lambda"><div class="container"><h1>Hoplon</h1><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">A simpler way to program the web.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; "><a shape="rect" class="btn btn-large btn-primary Hyphenator252hide" href="#/getting-started/">Get started »</a></p></div></div></div><div class="container"><div class="row"><div class="col-md-4"><h2>Clojure, everywhere.</h2><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Write everything in Clojure and ClojureScript, clientside and
                serverside. Even the page markup is ClojureScript that is
                evaluated to produce the DOM. Pages can still be written using
-               the familiar HTML syntax if desired.</p></div><div class="col-md-4"><h2>Simplicity on the client.</h2><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Use a spreadsheet-like dataflow programming environment to manage
+               the familiar HTML syntax if desired.</p></div><div class="col-md-4"><h2>Simplicity on the client.</h2><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Use a spreadsheet-like dataflow programming environment to manage
                client state. Develop basic content-oriented pages and complex
                thick-client applications without descending into “callback
-               hell”.</p></div><div class="col-md-4"><h2>Simplicity on the server.</h2><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Decouple business logic from HTTP-related concerns while
+               hell”.</p></div><div class="col-md-4"><h2>Simplicity on the server.</h2><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Decouple business logic from HTTP-related concerns while
                satisfying complex, fine-grained authorization requirements with
                transparent, performant transfer of Clojure data between server
-               and client.</p></div></div><hr><div class="row"><div class="col-md-6"><h2>Overview <small>Hoplon in a nutshell.</small></h2><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Hoplon provides a number of libraries promoting a simpler model
+               and client.</p></div></div><hr><div class="row"><div class="col-md-6"><h2>Overview <small>Hoplon in a nutshell.</small></h2><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Hoplon provides a number of libraries promoting a simpler model
                for web applications. The project can be divided into three main
                components: the HTML evaluator, the clientside state machine, and
                serverside RPC middleware. These components can be used together
-               as a full stack, or individually as a part of another stack.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">More concretely, Hoplon ships with a compiler for compiling
+               as a full stack, or individually as a part of another stack.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">More concretely, Hoplon ships with a compiler for compiling
                Hoplon pages into HTML and JavaScript (implemented as a build
-               task for the <a shape="rect" class="Hyphenator988hide" href="https://github.com/tailrecursion/boot" target="_blank">boot</a> build tool), ClojureScript libraries for creating
+               task for the <a shape="rect" class="Hyphenator252hide" href="https://github.com/tailrecursion/boot" target="_blank">boot</a> build tool), ClojureScript libraries for creating
                spreadsheet-like dataflow programs and wiring them to the DOM,
                and ClojureScript and Clojure libraries for RPC interaction
-               between client and server.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">The source code for Hoplon is hosted on <a shape="rect" class="Hyphenator988hide" href="https://github.com/tailrecursion/hoplon" target="_blank">GitHub</a> and Maven artifacts are deployed to <a shape="rect" class="Hyphenator988hide" href="https://clojars.org/tailrecursion/hoplon" target="_blank">Clojars</a>. Contributions of code, feedback, feature requests, etc. are
-                welcome. Please read the <a shape="rect" class="Hyphenator988hide" href="#/community/">Community</a> page for more information.</p><h2>Web Apps <small>Single-page applications, not documents.</small></h2><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Web applications are not documents. Users need to be able to
+               between client and server.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">The source code for Hoplon is hosted on <a shape="rect" class="Hyphenator252hide" href="https://github.com/tailrecursion/hoplon" target="_blank">GitHub</a> and Maven artifacts are deployed to <a shape="rect" class="Hyphenator252hide" href="https://clojars.org/tailrecursion/hoplon" target="_blank">Clojars</a>. Contributions of code, feedback, feature requests, etc. are
+                welcome. Please read the <a shape="rect" class="Hyphenator252hide" href="#/community/">Community</a> page for more information.</p><h2>Web Apps <small>Single-page applications, not documents.</small></h2><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Web applications are not documents. Users need to be able to
                interact with them. They contain state. Through them the user
                communicates with backend systems to have some effect on the
-               real world.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Hoplon web apps are organized like applications. The Hoplon
+               real world.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Hoplon web apps are organized like applications. The Hoplon
                compiler produces artifacts, not documents. These artifacts are
                equivalent to JAR files in Maven–their coordinates being the
                URL on which they're deployed. The compilation unit is the “page”,
-               which is compiled to produce an HTML file–a single-page app.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Hoplon does not perform any serverside HTML rendering; it is
+               which is compiled to produce an HTML file–a single-page app.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Hoplon does not perform any serverside HTML rendering; it is
                completely unnecessary, even for SEO purposes. (Reload this
                page with JavaScript disabled and see how the content was
-               “prerendered” at compile time.)</p><h2>HTML Evaluator <small>Page markup is a program.</small></h2><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Web application user interfaces are specified as trees of
+               “prerendered” at compile time.)</p><h2>HTML Evaluator <small>Page markup is a program.</small></h2><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Web application user interfaces are specified as trees of
                nested elements in HTML markup, but this document-like
                appearance is misleading. Without JavaScript this markup cannot
-               provide the dynamic behavior that web applications require.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">It is at the boundary between the DOM and the JavaScript
+               provide the dynamic behavior that web applications require.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">It is at the boundary between the DOM and the JavaScript
                environment that the incidental complexities of web application
                UI development are found. There is a fundamental disconnect
                between the literal representation of the DOM (the HTML markup)
@@ -41,19 +41,19 @@
                no way to refer to objects created dynamically in the JavaScript
                environment from the markup. The browser's HTML evaluation model
                lacks a means of abstraction, preventing the development of new
-               elements by composition.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Hoplon provides an HTML evaluator that closes the loop, unifying
+               elements by composition.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Hoplon provides an HTML evaluator that closes the loop, unifying
                the page markup and the JavaScript environment. Page markup,
                expressed in either the standard HTML5 syntax or Clojure sexps,
                is evaluated as ClojureScript and the result becomes the DOM for
                the page. HTML tags are simply ClojureScript vars. Of course,
                Hoplon ships with all of the standard HTML5 primitives but the
                evaluation model now facilitates the use of custom compound
-               elements defined in the environment, too.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Additionally, the unification of HTML and ClojureScript syntax,
+               elements defined in the environment, too.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Additionally, the unification of HTML and ClojureScript syntax,
                semantics, and namespace in the HTML evaluator facilitates the
                use of macros in markup.  This makes it possible to write
                powerful looping and control structures for use in the page's
                HTML markup itself, bringing the power and expressiveness of
-               Lisp to HTML.</p><h2>Components <small>First-class custom DOM elements.</small></h2><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">While there is no shortage of templating systems to create
+               Lisp to HTML.</p><h2>Components <small>First-class custom DOM elements.</small></h2><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">While there is no shortage of templating systems to create
                blobs of DOM elements, there is no mechanism to create custom
                elements that are composable in any meaningful way. Consider
                the situation where a template engine binds a DOM template to
@@ -61,7 +61,7 @@
                when you append a child to, or set an attribute on that DOM
                element? The child gets appended to, or attribute set on the
                outermost element of the filled template, generally not what is
-               required for the composition semantic.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Hoplon provides facilities for creating real, first-class
+               required for the composition semantic.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Hoplon provides facilities for creating real, first-class
                components. That is to say, Hoplon components are first-class
                citizens in the DOM world–they are, essentially, user-defined
                custom DOM elements. They have a literal representation in the
@@ -72,36 +72,36 @@
                instead of the built-in DOM one. In this way components can be
                built by composing simpler components and those may be used as
                a basis for even more complex components, without running into
-               the limitations of template composition.</p><h2>Spreadsheets <small>Client state made simple.</small></h2><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Remember how awesome spreadsheets are? You never think about
+               the limitations of template composition.</p><h2>Spreadsheets <small>Client state made simple.</small></h2><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Remember how awesome spreadsheets are? You never think about
                state when you’re programming a spreadsheet. Instead, you focus
                on values and the formulas that define the relationships between
                them. When a new value is entered into a cell the rest of the
                spreadsheet updates itself as necessary to maintain the
-               correctness of the formulas.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">After a spreadsheet is set up you can link its cells to charts
+               correctness of the formulas.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">After a spreadsheet is set up you can link its cells to charts
                and forms to create a user interface that manages its own state,
                automatically. User input flows from forms to input cells.
                Formulas then recompute their values as necessary. These values
-               then flow to charts and graphs for the user to view.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Hoplon applies this crazy, futuristic technology to frontend
+               then flow to charts and graphs for the user to view.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Hoplon applies this crazy, futuristic technology to frontend
               web development. Forgoing the clunky grid metaphor and names
-              like <em class="Hyphenator988hide">A1</em> and <em class="Hyphenator988hide">B27</em>, Hoplon provides a cell
+              like <em class="Hyphenator252hide">A1</em> and <em class="Hyphenator252hide">B27</em>, Hoplon provides a cell
               reference type. These cells, like cells in a spreadsheet, are
               either updated directly (input cells), or automatically in
-              accordance with a formula.</p><h2>Charts and Forms <small>Stateless, automatic UI.</small></h2><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">The purpose of a program's user interface is to transmit input
+              accordance with a formula.</p><h2>Charts and Forms <small>Stateless, automatic UI.</small></h2><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">The purpose of a program's user interface is to transmit input
               from the user to the underlying state model and to present output
-              derived from the underlying state model to the user for viewing.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">In a web application the user interface is derived from the page
-              markup. User input consists entirely of DOM events: <em class="Hyphenator988hide">click</em>, <em class="Hyphenator988hide">change</em>, etc. Output is presented to
+              derived from the underlying state model to the user for viewing.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">In a web application the user interface is derived from the page
+              markup. User input consists entirely of DOM events: <em class="Hyphenator252hide">click</em>, <em class="Hyphenator252hide">change</em>, etc. Output is presented to
               the user by manipulating the properties of DOM elements: adding
               or removing CSS classes, changing the content of text nodes,
-              etc.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Hoplon provides bindings that can be used to link DOM elements
+              etc.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Hoplon provides bindings that can be used to link DOM elements
               to the underlying state model in the same way that charts and
               forms are linked to cells in a spreadsheet. Once the structure
               of the DOM and the linkages between the DOM and cells are
-              defined, the user interface manages itself.</p></div><div class="col-md-6"><h2><small>Examples</small></h2><div class="list-group"><div class="list-group-item"><a shape="rect" style="display: none; "></a><h3 class="panel-title">Typical Page</h3><div style="display: block; "><h3 class="panel-title">Typical Page</h3><hr><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">The page can be coded in either ClojureScript or HTML
+              defined, the user interface manages itself.</p></div><div class="col-md-6"><h2><small>Examples</small></h2><div class="list-group"><div class="list-group-item"><a shape="rect" style="display: none; "></a><h3 class="panel-title">Typical Page</h3><div style="display: block; "><h3 class="panel-title">Typical Page</h3><hr><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">The page can be coded in either ClojureScript or HTML
                      syntax. The compiler can parse either one. It's easy to add
                      a preprocessing step to parse HAML, etc. if desired.  HTML
                      is usually more verbose and noisy than ClojureScript, so
                      most examples in this document will be using the latter
-                     syntax.</p><hr><p class="text-muted hyphenate Hyphenator988hide" style="text-align: justify; ">Using ClojureScript syntax:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">page</span> <span class="s">"foo/bar.html"</span>
+                     syntax.</p><hr><p class="text-muted hyphenate Hyphenator252hide" style="text-align: justify; ">Using ClojureScript syntax:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">page</span> <span class="s">"foo/bar.html"</span>
   <span class="p">(</span><span class="ss">:require</span> <span class="p">[</span><span class="nv">my.lib</span> <span class="ss">:as</span> <span class="nv">lib</span><span class="p">]))</span>
 
 <span class="p">(</span><span class="nf">defc</span> <span class="nv">clicks</span> <span class="mi">0</span><span class="p">)</span>
@@ -114,7 +114,7 @@
     <span class="p">(</span><span class="nf">lib/heading-large</span> <span class="s">"Hello, world!"</span><span class="p">)</span>
     <span class="p">(</span><span class="nf">p</span> <span class="p">(</span><span class="nf">text</span> <span class="s">"You've clicked ~{clicks} times."</span><span class="p">))</span>
     <span class="p">(</span><span class="nf">button</span> <span class="ss">:on-click</span> <span class="o">#</span><span class="p">(</span><span class="nf">swap!</span> <span class="nv">clicks</span> <span class="nv">inc</span><span class="p">)</span> <span class="s">"Click me!"</span><span class="p">)))</span>
-</pre></div><p class="text-muted hyphenate Hyphenator988hide" style="text-align: justify; ">Using HTML syntax:</p><div class="highlight"><pre><span class="nt">&lt;script</span> <span class="na">type=</span><span class="s">"text/hoplon"</span><span class="nt">&gt;</span>
+</pre></div><p class="text-muted hyphenate Hyphenator252hide" style="text-align: justify; ">Using HTML syntax:</p><div class="highlight"><pre><span class="nt">&lt;script</span> <span class="na">type=</span><span class="s">"text/hoplon"</span><span class="nt">&gt;</span>
   (page "foo/bar.html"
     (:require [my.lib :as lib]))
 
@@ -134,10 +134,10 @@
     <span class="nt">&lt;/button&gt;</span>
   <span class="nt">&lt;/body&gt;</span>
 <span class="nt">&lt;/html&gt;</span>
-</pre></div></div></div><div class="list-group-item"><a shape="rect" class="topfix"></a><a shape="rect" style="display: inline; "></a><h3 class="panel-title">BMI Calculator</h3><div style="display: none; "><h3 class="panel-title">BMI Calculator</h3><hr><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">This is an example of a spreadsheet-like application.
-                    The application's state is contained in <em class="Hyphenator988hide">cells</em> which are wired up to the DOM. DOM events cause changes
+</pre></div></div></div><div class="list-group-item"><a shape="rect" class="topfix"></a><a shape="rect" style="display: inline; "></a><h3 class="panel-title">BMI Calculator</h3><div style="display: none; "><h3 class="panel-title">BMI Calculator</h3><hr><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">This is an example of a spreadsheet-like application.
+                    The application's state is contained in <em class="Hyphenator252hide">cells</em> which are wired up to the DOM. DOM events cause changes
                     to the underlying cells and formula cells in turn cause
-                    changes to the DOM.</p><hr><p class="text-muted hyphenate Hyphenator988hide" style="text-align: justify; ">The demo:</p><div class="panel panel-default"><div class="panel-body"><div><form enctype="application/x-www-form-urlencoded" method="get"><div class="form-group"><label>Height (180 cm)</label><input type="range" class="form-control" id="bmi-ht" min="0" max="250" value="180"></div><div class="form-group"><label>Weight (80.0 kg)</label><input type="range" class="form-control" id="bmi-wt" min="0" max="1500" value="800"></div><div class="form-group"><label>BMI 24.7 (normal)</label><input readonly="readonly" type="range" class="form-control" min="0" max="500" style="background-color: inherit; "></div></form></div></div></div><p class="text-muted hyphenate Hyphenator988hide" style="text-align: justify; ">The cells:</p><div class="highlight"><pre><span class="p">(</span><span class="k">def </span><span class="nv">height</span> <span class="p">(</span><span class="nf">cell</span> <span class="mi">180</span><span class="p">))</span> <span class="c1">; height in cm</span>
+                    changes to the DOM.</p><hr><p class="text-muted hyphenate Hyphenator252hide" style="text-align: justify; ">The demo:</p><div class="panel panel-default"><div class="panel-body"><div><form enctype="application/x-www-form-urlencoded" method="get"><div class="form-group"><label>Height (180 cm)</label><input type="range" class="form-control" id="bmi-ht" min="0" max="250" value="180"></div><div class="form-group"><label>Weight (80.0 kg)</label><input type="range" class="form-control" id="bmi-wt" min="0" max="1500" value="800"></div><div class="form-group"><label>BMI 24.7 (normal)</label><input readonly="readonly" type="range" class="form-control" min="0" max="500" style="background-color: inherit; "></div></form></div></div></div><p class="text-muted hyphenate Hyphenator252hide" style="text-align: justify; ">The cells:</p><div class="highlight"><pre><span class="p">(</span><span class="k">def </span><span class="nv">height</span> <span class="p">(</span><span class="nf">cell</span> <span class="mi">180</span><span class="p">))</span> <span class="c1">; height in cm</span>
 <span class="p">(</span><span class="k">def </span><span class="nv">weight</span> <span class="p">(</span><span class="nf">cell</span>  <span class="mi">80</span><span class="p">))</span> <span class="c1">; weight in kg</span>
 
 <span class="p">(</span><span class="k">def </span><span class="nv">bmi</span> <span class="c1">; formula: [bmi, description, color]</span>
@@ -149,7 +149,7 @@
         <span class="p">(</span><span class="nb">&lt; </span><span class="nv">bmi</span> <span class="mf">25.0</span><span class="p">)</span> <span class="p">[</span><span class="nv">bmi</span> <span class="s">"normal"</span>      <span class="s">"inherit"</span><span class="p">]</span>
         <span class="p">(</span><span class="nb">&lt; </span><span class="nv">bmi</span> <span class="mf">30.0</span><span class="p">)</span> <span class="p">[</span><span class="nv">bmi</span> <span class="s">"overweight"</span>   <span class="s">"orange"</span><span class="p">]</span>
         <span class="ss">:else</span>        <span class="p">[</span><span class="nv">bmi</span> <span class="s">"obese"</span>           <span class="s">"red"</span><span class="p">]))))</span>
-</pre></div><p class="text-muted hyphenate Hyphenator988hide" style="text-align: justify; ">The user interface:</p><div class="highlight"><pre><span class="c1">;; Some details related to &lt;input type="range"&gt;</span>
+</pre></div><p class="text-muted hyphenate Hyphenator252hide" style="text-align: justify; ">The user interface:</p><div class="highlight"><pre><span class="c1">;; Some details related to &lt;input type="range"&gt;</span>
 <span class="c1">;; have been omitted for clarity.</span>
 <span class="p">(</span><span class="nf">form</span>
   <span class="p">(</span><span class="nf">label</span> <span class="p">(</span><span class="nf">text</span> <span class="s">"Height (~{height} cm)"</span><span class="p">))</span>
@@ -168,17 +168,17 @@
   <span class="p">(</span><span class="nf">input</span>
     <span class="ss">:do-value</span> <span class="p">(</span><span class="nf">cell=</span> <span class="p">(</span><span class="nb">first </span><span class="nv">bmi</span><span class="p">))</span>
     <span class="ss">:do-css</span> <span class="p">(</span><span class="nf">cell=</span> <span class="p">{</span><span class="ss">:background-color</span> <span class="p">(</span><span class="nb">nth </span><span class="nv">bmi</span> <span class="mi">2</span><span class="p">)})))</span>
-</pre></div></div></div><div class="list-group-item"><a shape="rect" class="topfix"></a><a shape="rect" style="display: inline; "></a><h3 class="panel-title">List Component</h3><div style="display: none; "><h3 class="panel-title">List Component</h3><hr><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">This is an example of a custom element, or component. The <em class="Hyphenator988hide">on-append!</em> function is used to provide the implementation for
+</pre></div></div></div><div class="list-group-item"><a shape="rect" class="topfix"></a><a shape="rect" style="display: inline; "></a><h3 class="panel-title">List Component</h3><div style="display: none; "><h3 class="panel-title">List Component</h3><hr><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">This is an example of a custom element, or component. The <em class="Hyphenator252hide">on-append!</em> function is used to provide the implementation for
                     appending children and setting attributes. This ensures
                     that children are, in this case, properly wrapped in list
                     item elements and appended to the inner unordered list
-                    instead of to the outermost element. A special <em class="Hyphenator988hide">title</em> attribute is also implemented here that sets the text of
-                    the inner bold element.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">By implementing the HTML semantic this component becomes
+                    instead of to the outermost element. A special <em class="Hyphenator252hide">title</em> attribute is also implemented here that sets the text of
+                    the inner bold element.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">By implementing the HTML semantic this component becomes
                     a first-class DOM element. It can be used in page markup
                     and it can be passed around without any need for the
                     recipient to understand its internal structure. It can be
                     combined with other elements at any level to create more
-                    complex components.</p><hr><p class="text-muted hyphenate Hyphenator988hide" style="text-align: justify; ">The demo:</p><div class="panel panel-default"><div class="panel-body"><div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">See the list component below.</p><hr><div class="my-list"><b>Items:</b><ul><li><span>item one</span></li><li><span>item two</span></li><li><span>item three</span></li></ul></div></div></div></div><p class="text-muted hyphenate Hyphenator988hide" style="text-align: justify; ">The component constructor:</p><div class="highlight"><pre><span class="c1">;; Define custom element &lt;my-list&gt;.</span>
+                    complex components.</p><hr><p class="text-muted hyphenate Hyphenator252hide" style="text-align: justify; ">The demo:</p><div class="panel panel-default"><div class="panel-body"><div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">See the list component below.</p><hr><div class="my-list"><b>Items:</b><ul><li><span>item one</span></li><li><span>item two</span></li><li><span>item three</span></li></ul></div></div></div></div><p class="text-muted hyphenate Hyphenator252hide" style="text-align: justify; ">The component constructor:</p><div class="highlight"><pre><span class="c1">;; Define custom element &lt;my-list&gt;.</span>
 <span class="p">(</span><span class="nf">defelem</span> <span class="nv">my-list</span> <span class="p">[</span><span class="nv">attrs</span> <span class="nv">children</span><span class="p">]</span>
   <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">head</span> <span class="p">(</span><span class="nf">b</span><span class="p">)</span>    <span class="c1">; Obtain references to inner</span>
         <span class="nv">body</span> <span class="p">(</span><span class="nf">ul</span><span class="p">)</span>   <span class="c1">; container elements.</span>
@@ -195,18 +195,18 @@
         <span class="p">(</span><span class="nb">apply </span><span class="nv">body</span> <span class="p">(</span><span class="nb">map </span><span class="nv">li</span> <span class="nv">children</span><span class="p">))))</span>
     <span class="c1">;; Initialize element.</span>
     <span class="p">(</span><span class="nb">apply </span><span class="nv">this</span> <span class="nv">attrs</span> <span class="nv">children</span><span class="p">)))</span>
-</pre></div><p class="text-muted hyphenate Hyphenator988hide" style="text-align: justify; ">The page markup:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">div</span>
+</pre></div><p class="text-muted hyphenate Hyphenator252hide" style="text-align: justify; ">The page markup:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">div</span>
   <span class="p">(</span><span class="nf">p</span> <span class="s">"See the list component below."</span><span class="p">)</span>
   <span class="p">(</span><span class="nf">hr</span><span class="p">)</span>
   <span class="p">(</span><span class="nf">my-list</span> <span class="ss">:title</span> <span class="s">"Items:"</span>
     <span class="p">(</span><span class="nf">span</span> <span class="s">"item one"</span><span class="p">)</span>
     <span class="p">(</span><span class="nf">span</span> <span class="s">"item two"</span><span class="p">)</span>
     <span class="p">(</span><span class="nf">span</span> <span class="s">"item three"</span><span class="p">)))</span>
-</pre></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Architecture</h3></div><div class="panel-body"><div><ul class="nav nav-tabs"><li class="active"><a shape="rect" href="javascript:void(0)"><span>Fig 1</span></a></li><li><a shape="rect" href="javascript:void(0)"><span>Fig 2</span></a></li></ul><div class="tab-content"><img class="tab-pane active" width="523px" src="img/arch-full.png"><img class="tab-pane" width="523px" src="img/arch-client.jpg"></div></div></div></div></div></div><hr><footer style="padding:30px 0px;"><div style="text-align:center;">Copyright © Alan Dipert and Micha Niskin. All rights reserved.</div></footer></div></div><div class="container" style="display: none; "><div class="row"><div class="col-md-6"><h1>Getting Started<br clear="none"><small>Build a Hoplon application from scratch.</small></h1><hr><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">This article will demonstrate how to build Hoplon applications.
+</pre></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Architecture</h3></div><div class="panel-body"><div><ul class="nav nav-tabs"><li class="active"><a shape="rect" href="javascript:void(0)"><span>Fig 1</span></a></li><li><a shape="rect" href="javascript:void(0)"><span>Fig 2</span></a></li></ul><div class="tab-content"><img class="tab-pane active" width="523px" src="img/arch-full.png"><img class="tab-pane" width="523px" src="img/arch-client.jpg"></div></div></div></div></div></div><hr><footer style="padding:30px 0px;"><div style="text-align:center;">Copyright © Alan Dipert and Micha Niskin. All rights reserved.</div></footer></div></div><div class="container" style="display: none; "><div class="row"><div class="col-md-6"><h1>Getting Started<br clear="none"><small>Build a Hoplon application from scratch.</small></h1><hr><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">This article will demonstrate how to build Hoplon applications.
             A simple application will be developed incrementally. New features
             will be added at each step, showing how different parts of Hoplon
-            are used. After running through the basics here, check out the <a shape="rect" class="Hyphenator988hide" href="https://github.com/tailrecursion/hoplon-demos" target="_blank">hoplon demos</a> repository to see some complete, self-contained example
-            applications.</p><br clear="none"><a shape="rect" class="topfix"></a><div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Table of Contents</h3></div><div class="panel-body"><div class="row"><div class="col-md-6"><ul class="list-unstyled"><li><a shape="rect" style="cursor:pointer;">Task 1: Create empty project.</a></li><li><a shape="rect" style="cursor:pointer;">Task 2: Create “Hello World” page.</a></li><li><a shape="rect" style="cursor:pointer;">Task 3: Compile the project.</a></li><li><a shape="rect" style="cursor:pointer;">Task 4: Add a counter.</a></li><li><a shape="rect" style="cursor:pointer;">Task 5: A simple calculator.</a></li><li><a shape="rect" style="cursor:pointer;">Task 6: Using the looping macro.</a></li><li><a shape="rect" style="cursor:pointer;">Task 7: Add static resources.</a></li><li><a shape="rect" style="cursor:pointer;">Task 8: Create a “tabs” abstraction.</a></li><li><a shape="rect" style="cursor:pointer;"></a></li><li><a shape="rect" style="cursor:pointer;"></a></li></ul></div><div class="col-md-6"><ul class="list-unstyled"><li><a shape="rect" style="cursor:pointer;">Boot Configuration</a></li><li><a shape="rect" style="cursor:pointer;">Hoplon Source Files</a></li><li><a shape="rect" style="cursor:pointer;">Anatomy of a Hoplon Page</a></li><li><a shape="rect" style="cursor:pointer;">Sexp Markup Syntax</a></li><li><a shape="rect" style="cursor:pointer;">Wiring Up The DOM</a></li><li><a shape="rect" style="cursor:pointer;"></a></li><li><a shape="rect" style="cursor:pointer;"></a></li><li><a shape="rect" style="cursor:pointer;"></a></li><li><a shape="rect" style="cursor:pointer;"></a></li><li><a shape="rect" style="cursor:pointer;"></a></li></ul></div></div></div></div><div class="panel panel-default panel-info"><div class="panel-heading"><h3 class="panel-title">System Requirements (Compiler)</h3></div><div class="panel-body"><ul><li>Java 6+</li><li>The <a shape="rect" href="https://github.com/tailrecursion/boot" target="_blank">boot</a> build tool.</li></ul></div></div><div class="panel panel-default panel-info"><div class="panel-heading"><h3 class="panel-title">Browser Compatibility</h3></div><div class="panel-body"><ul><li>Chrome</li><li>Safari</li><li>Firefox</li><li>Internet Explorer 8+</li></ul></div></div><div class="panel panel-default panel-primary"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Task 1: Create empty project.</h3></div><div class="panel-body"><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">A typical project might have a directory structure that looks
+            are used. After running through the basics here, check out the <a shape="rect" class="Hyphenator252hide" href="https://github.com/tailrecursion/hoplon-demos" target="_blank">hoplon demos</a> repository to see some complete, self-contained example
+            applications.</p><br clear="none"><a shape="rect" class="topfix"></a><div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Table of Contents</h3></div><div class="panel-body"><div class="row"><div class="col-md-6"><ul class="list-unstyled"><li><a shape="rect" style="cursor:pointer;">Task 1: Create empty project.</a></li><li><a shape="rect" style="cursor:pointer;">Task 2: Create “Hello World” page.</a></li><li><a shape="rect" style="cursor:pointer;">Task 3: Compile the project.</a></li><li><a shape="rect" style="cursor:pointer;">Task 4: Add a counter.</a></li><li><a shape="rect" style="cursor:pointer;">Task 5: A simple calculator.</a></li><li><a shape="rect" style="cursor:pointer;">Task 6: Using the looping macro.</a></li><li><a shape="rect" style="cursor:pointer;">Task 7: Add static resources.</a></li><li><a shape="rect" style="cursor:pointer;">Task 8: Create a “tabs” abstraction.</a></li><li><a shape="rect" style="cursor:pointer;"></a></li><li><a shape="rect" style="cursor:pointer;"></a></li></ul></div><div class="col-md-6"><ul class="list-unstyled"><li><a shape="rect" style="cursor:pointer;">Boot Configuration</a></li><li><a shape="rect" style="cursor:pointer;">Hoplon Source Files</a></li><li><a shape="rect" style="cursor:pointer;">Anatomy of a Hoplon Page</a></li><li><a shape="rect" style="cursor:pointer;">Sexp Markup Syntax</a></li><li><a shape="rect" style="cursor:pointer;">Wiring Up The DOM</a></li><li><a shape="rect" style="cursor:pointer;"></a></li><li><a shape="rect" style="cursor:pointer;"></a></li><li><a shape="rect" style="cursor:pointer;"></a></li><li><a shape="rect" style="cursor:pointer;"></a></li><li><a shape="rect" style="cursor:pointer;"></a></li></ul></div></div></div></div><div class="panel panel-default panel-info"><div class="panel-heading"><h3 class="panel-title">System Requirements (Compiler)</h3></div><div class="panel-body"><ul><li>Java 6+</li><li>The <a shape="rect" href="https://github.com/tailrecursion/boot" target="_blank">boot</a> build tool.</li></ul></div></div><div class="panel panel-default panel-info"><div class="panel-heading"><h3 class="panel-title">Browser Compatibility</h3></div><div class="panel-body"><ul><li>Chrome</li><li>Safari</li><li>Firefox</li><li>Internet Explorer 8+</li></ul></div></div><div class="panel panel-default panel-primary"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Task 1: Create empty project.</h3></div><div class="panel-body"><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">A typical project might have a directory structure that looks
               something like this:</p><pre><code>.
 ├── boot.edn
 ├── resources
@@ -214,7 +214,7 @@
 │       └── css
 │           └── main.css
 └── src
-    └── index.cljs.hl</code></pre><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">To create a minimal Hoplon project just create a directory
+    └── index.cljs.hl</code></pre><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">To create a minimal Hoplon project just create a directory
               for the project, and in this new directory create a <code>boot.edn</code> file with the following contents:</p><div class="highlight"><pre><span class="p">{</span><span class="ss">:dependencies</span>  <span class="p">[[</span><span class="nv">tailrecursion/boot.core</span>   <span class="s">"1.1.1"</span><span class="p">]</span>
                  <span class="p">[</span><span class="nv">tailrecursion/boot.task</span>   <span class="s">"1.0.0"</span><span class="p">]</span>
                  <span class="p">[</span><span class="nv">tailrecursion/hoplon</span>      <span class="s">"4.0.7"</span><span class="p">]</span>
@@ -223,7 +223,7 @@
                   <span class="p">[</span><span class="nv">tailrecursion.hoplon.boot</span>  <span class="ss">:refer</span> <span class="ss">:all</span><span class="p">]}</span>
  <span class="ss">:public</span>        <span class="s">"resources/public"</span>
  <span class="ss">:src-paths</span>     <span class="o">#</span><span class="p">{</span><span class="s">"src"</span><span class="p">}}</span>
-</pre></div><div style="text-align:center"><a shape="rect">back to top</a></div></div></div><div class="panel panel-default panel-primary"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Task 2: Create “Hello World” page.</h3></div><div class="panel-body"><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Create a <code>src/index.cljs.hl</code> or <code>src/index.html.hl</code> file with the following contents:</p><div><ul class="nav nav-tabs"><li class="active"><a shape="rect" href="javascript:void(0)">index.cljs.hl</a></li><li><a shape="rect" href="javascript:void(0)">index.html.hl</a></li></ul><div class="tab-content"><div class="highlight tab-pane active"><pre><span class="p">(</span><span class="nf">page</span> <span class="s">"index.html"</span><span class="p">)</span>
+</pre></div><div style="text-align:center"><a shape="rect">back to top</a></div></div></div><div class="panel panel-default panel-primary"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Task 2: Create “Hello World” page.</h3></div><div class="panel-body"><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Create a <code>src/index.cljs.hl</code> or <code>src/index.html.hl</code> file with the following contents:</p><div><ul class="nav nav-tabs"><li class="active"><a shape="rect" href="javascript:void(0)">index.cljs.hl</a></li><li><a shape="rect" href="javascript:void(0)">index.html.hl</a></li></ul><div class="tab-content"><div class="highlight tab-pane active"><pre><span class="p">(</span><span class="nf">page</span> <span class="s">"index.html"</span><span class="p">)</span>
 
 <span class="p">(</span><span class="nf">html</span>
   <span class="p">(</span><span class="nf">head</span><span class="p">)</span>
@@ -239,17 +239,17 @@
     <span class="nt">&lt;h1&gt;</span>Hello, world!<span class="nt">&lt;/h1&gt;</span>
   <span class="nt">&lt;/body&gt;</span>
 <span class="nt">&lt;/html&gt;</span>
-</pre></div></div></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Your project directory should now look like this:</p><div><ul class="nav nav-tabs"><li class="active"><a shape="rect" href="javascript:void(0)">index.cljs.hl</a></li><li><a shape="rect" href="javascript:void(0)">index.html.hl</a></li></ul><div class="tab-content"><pre class="tab-pane active"><code>.
+</pre></div></div></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Your project directory should now look like this:</p><div><ul class="nav nav-tabs"><li class="active"><a shape="rect" href="javascript:void(0)">index.cljs.hl</a></li><li><a shape="rect" href="javascript:void(0)">index.html.hl</a></li></ul><div class="tab-content"><pre class="tab-pane active"><code>.
 ├── boot.edn
 └── src
     └── index.cljs.hl</code></pre><pre class="tab-pane"><code>.
 ├── boot.edn
 └── src
-    └── index.html.hl</code></pre></div></div><div style="text-align:center"><a shape="rect">back to top</a></div></div></div><div class="panel panel-default panel-info"><div class="panel-heading"><h3 class="panel-title">Note</h3></div><div class="panel-body"><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">To simplify things we will use <code>index.cljs.hl</code> and <code>index.html.hl</code> interchangeably in the examples below.
+    └── index.html.hl</code></pre></div></div><div style="text-align:center"><a shape="rect">back to top</a></div></div></div><div class="panel panel-default panel-info"><div class="panel-heading"><h3 class="panel-title">Note</h3></div><div class="panel-body"><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">To simplify things we will use <code>index.cljs.hl</code> and <code>index.html.hl</code> interchangeably in the examples below.
               It should be understood that HTML and CLJS syntaxes are
               equivalent–examples in CLJS syntax can be easily rewritten in
-              HTML syntax and vice versa.</p></div></div><div class="panel panel-default panel-primary"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Task 3: Compile the project.</h3></div><div class="panel-body"><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">In another terminal do the following in the project directory:</p><div class="highlight"><pre><span class="nv">$ </span>boot watch hoplon
-</pre></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">This starts the Hoplon compiler in “watcher” mode–source
+              HTML syntax and vice versa.</p></div></div><div class="panel panel-default panel-primary"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Task 3: Compile the project.</h3></div><div class="panel-body"><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">In another terminal do the following in the project directory:</p><div class="highlight"><pre><span class="nv">$ </span>boot watch hoplon
+</pre></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">This starts the Hoplon compiler in “watcher” mode–source
               directories are monitored for changes and recompiled when
               necessary. When it's finished compiling the project directory
               should look something like this:</p><pre><code>.
@@ -259,16 +259,16 @@
 │       ├── main.js
 │       └── index.html
 └── src
-    └── index.cljs.hl</code></pre><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Load <code>index.html</code> in a browser and enjoy a friendly
-              greeting.</p><div style="text-align:center"><a shape="rect">back to top</a></div></div></div><div class="panel panel-default panel-primary"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Task 4: Add a counter.</h3></div><div class="panel-body"><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Now we add a counter to the page that will keep track of how
+    └── index.cljs.hl</code></pre><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Load <code>index.html</code> in a browser and enjoy a friendly
+              greeting.</p><div style="text-align:center"><a shape="rect">back to top</a></div></div></div><div class="panel panel-default panel-primary"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Task 4: Add a counter.</h3></div><div class="panel-body"><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Now we add a counter to the page that will keep track of how
               many times a button was clicked. To do this we add an input
               cell containing the click count to the environment, and link
               it to UI elements for input and output interactions with the
               user. Input will be click events on the button. Output will
-              be the contents of a text node displaying the current count.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Button click events are wired up to the input cell with the <code>:on-click</code> attribute. The <code>text</code> macro does
+              be the contents of a text node displaying the current count.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Button click events are wired up to the input cell with the <code>:on-click</code> attribute. The <code>text</code> macro does
               some string interpolation and wires the input cell to the value
               of a text node such that it’s updated whenever the cell’s value
-              changes.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Modify the <code>index.cljs.hl</code> page such that it contains
+              changes.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Modify the <code>index.cljs.hl</code> page such that it contains
               the following:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">page</span> <span class="s">"index.html"</span><span class="p">)</span>
 
 <span class="p">(</span><span class="nf">defc</span> <span class="nv">clicks</span> <span class="mi">0</span><span class="p">)</span>
@@ -278,9 +278,9 @@
   <span class="p">(</span><span class="nf">body</span>
     <span class="p">(</span><span class="nf">text</span> <span class="s">"Clicks so far: ~{clicks} "</span><span class="p">)</span>
     <span class="p">(</span><span class="nf">button</span> <span class="ss">:on-click</span> <span class="o">#</span><span class="p">(</span><span class="nf">swap!</span> <span class="nv">clicks</span> <span class="nv">inc</span><span class="p">)</span> <span class="s">"click me!"</span><span class="p">)))</span>
-</pre></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">If the compiler is still running in another terminal the
+</pre></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">If the compiler is still running in another terminal the
               application will be recompiled. Reload the page and click the
-              button a few times. You should see something like this:</p><div class="panel panel-default"><div class="panel-body">Clicks so far: 0 <button type="submit">click me!</button></div></div><div style="text-align:center"><a shape="rect">back to top</a></div></div></div><div class="panel panel-default panel-primary"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Task 5: A simple calculator.</h3></div><div class="panel-body"><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">The next task is to build a simple calculator that can add,
+              button a few times. You should see something like this:</p><div class="panel panel-default"><div class="panel-body">Clicks so far: 0 <button type="submit">click me!</button></div></div><div style="text-align:center"><a shape="rect">back to top</a></div></div></div><div class="panel panel-default panel-primary"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Task 5: A simple calculator.</h3></div><div class="panel-body"><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">The next task is to build a simple calculator that can add,
               subtract, multiply, or divide two integers. Modify the <code>index.cljs.hl</code> file to contain the following:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">page</span> <span class="s">"index.html"</span>
   <span class="p">(</span><span class="ss">:refer-clojure</span> <span class="ss">:exclude</span> <span class="p">[</span><span class="nv">int</span><span class="p">]))</span>
 
@@ -313,7 +313,7 @@
       <span class="ss">:value</span> <span class="s">"0"</span>
       <span class="ss">:on-change</span> <span class="o">#</span><span class="p">(</span><span class="nf">reset!</span> <span class="nv">y</span> <span class="p">(</span><span class="nb">int </span><span class="p">(</span><span class="nf">val-id</span> <span class="s">"y"</span><span class="p">))))</span>
     <span class="p">(</span><span class="nf">text</span> <span class="s">" = ~{result}"</span><span class="p">)))</span>
-</pre></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Compile and reload the page. You should see something like this:</p><div class="panel panel-default"><div class="panel-body"><input type="text" id="calc-x" value="0"><select id="calc-op" style="margin-left:15px;margin-right:15px;"><option selected="selected" value="+">+</option><option value="-">-</option><option value="*">*</option><option value="/">/</option></select><input type="text" id="calc-y" value="0"> = 0</div></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Notice how the presentation (the page markup) is effectively
+</pre></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Compile and reload the page. You should see something like this:</p><div class="panel panel-default"><div class="panel-body"><input type="text" id="calc-x" value="0"><select id="calc-op" style="margin-left:15px;margin-right:15px;"><option selected="selected" value="+">+</option><option value="-">-</option><option value="*">*</option><option value="/">/</option></select><input type="text" id="calc-y" value="0"> = 0</div></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Notice how the presentation (the page markup) is effectively
               decoupled from the application state (the cells). The
               four cells that contain the application's state could be
               defined in a different namespace, distributed in a jar
@@ -321,7 +321,7 @@
               number of different pages. They form a well-defined API
               for the frontend developer to hook into when developing
               the page markup. This decoupling of presentation and
-              state is a key component of the Hoplon model.</p><div style="text-align:center"><a shape="rect">back to top</a></div></div></div><div class="panel panel-default panel-primary"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Task 6: Using the looping macro.</h3></div><div class="panel-body"><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Most applications have sequential collections that need to be
+              state is a key component of the Hoplon model.</p><div style="text-align:center"><a shape="rect">back to top</a></div></div></div><div class="panel panel-default panel-primary"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Task 6: Using the looping macro.</h3></div><div class="panel-body"><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Most applications have sequential collections that need to be
               displayed to the user in some kind of template. Hoplon provides
               the <code>loop-tpl</code> macro that can be used in the page
               markup to iterate over the collection.</p><div class="highlight"><pre><span class="p">(</span><span class="nf">page</span> <span class="s">"index.html"</span><span class="p">)</span>
@@ -334,11 +334,11 @@
     <span class="p">(</span><span class="nf">ul</span>
       <span class="p">(</span><span class="nf">loop-tpl</span> <span class="ss">:bindings</span> <span class="p">[</span><span class="nv">x</span> <span class="nv">things</span><span class="p">]</span>
         <span class="p">(</span><span class="nf">li</span> <span class="o">@</span><span class="nv">x</span><span class="p">)))))</span>
-</pre></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Compile and reload the page. You should see something like this:</p><div class="panel panel-default"><div class="panel-body"><ul><li>one</li><li>two</li><li>three</li></ul></div></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Note how <code>loop-tpl</code> iterates over the <code>things</code> cell, binding each item to <code>x</code>, in turn. However,
+</pre></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Compile and reload the page. You should see something like this:</p><div class="panel panel-default"><div class="panel-body"><ul><li>one</li><li>two</li><li>three</li></ul></div></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Note how <code>loop-tpl</code> iterates over the <code>things</code> cell, binding each item to <code>x</code>, in turn. However,
               notice that <code>x</code> needs to be dereferenced to be used in
               the template. This is because <code>x</code> is actually bound to
               a cell that always contains the nth item of the collection cell
-              and not to the item itself.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Here is a more interesting example that uses destructuring in
+              and not to the item itself.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Here is a more interesting example that uses destructuring in
               the <code>:bindings</code> attribute:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">page</span> <span class="s">"index.html"</span>
   <span class="p">(</span><span class="ss">:require</span>
    <span class="p">[</span><span class="nv">clojure.string</span> <span class="ss">:refer</span> <span class="p">[</span><span class="nv">upper-case</span> <span class="nv">lower-case</span><span class="p">]]))</span>
@@ -360,11 +360,11 @@
       <span class="p">(</span><span class="nf">loop-tpl</span> <span class="ss">:bindings</span> <span class="p">[{</span><span class="nv">x</span> <span class="ss">:text</span><span class="p">}</span> <span class="nv">state</span><span class="p">]</span>
         <span class="p">(</span><span class="nf">li</span> <span class="p">(</span><span class="nf">text</span> <span class="s">"~{x}"</span><span class="p">))))</span>
     <span class="p">(</span><span class="nf">button</span> <span class="ss">:on-click</span> <span class="nv">toggle-case!</span> <span class="s">"toggle case"</span><span class="p">)))</span>
-</pre></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Now when you reload the page you should see something like this:</p><div class="panel panel-default"><div class="panel-body"><ul><li>one</li><li>two</li><li>three</li></ul><button type="submit">toggle case</button></div></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Notice the organization of the public API for the page’s
+</pre></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Now when you reload the page you should see something like this:</p><div class="panel panel-default"><div class="panel-body"><ul><li>one</li><li>two</li><li>three</li></ul><button type="submit">toggle case</button></div></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Notice the organization of the public API for the page’s
               underlying state machine: it consists of read-only formula cells
               and state transition functions that modify the underlying input
-              cells as a side effect. This is known as the <a shape="rect" class="Hyphenator988hide" href="http://martinfowler.com/bliki/CQRS.html" target="_blank">CQRS pattern</a> and forms the
-              basic architecture of a Hoplon single-page app.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Since <code>loop-tpl</code> is a macro that generates markup/code
+              cells as a side effect. This is known as the <a shape="rect" class="Hyphenator252hide" href="http://martinfowler.com/bliki/CQRS.html" target="_blank">CQRS pattern</a> and forms the
+              basic architecture of a Hoplon single-page app.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Since <code>loop-tpl</code> is a macro that generates markup/code
               at compile time, it is essentially performing static allocation of
               DOM elements. This is a key concept in the Hoplon model. In Hoplon
               the DOM is strictly an I/O mechanism. As always, it turns out that
@@ -372,10 +372,10 @@
               reducing the complexity of the application's state, eliminating
               the need to manage these resources explicitly. (DOM elements, like
               file descriptors, are not subject to garbage collection and must
-              be explicitly removed from the DOM when no longer needed.)</p><div style="text-align:center"><a shape="rect">back to top</a></div></div></div><div class="panel panel-default panel-primary"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Task 7: Add static resources.</h3></div><div class="panel-body"><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Now it’s time to add some static resources to the project. For
-              example, adding the <a shape="rect" class="Hyphenator988hide" href="http://getbootstrap.com/getting-started/" target="_blank">Twitter Bootstrap</a> CSS stylesheets might help to get things looking fancy. Modify
+              be explicitly removed from the DOM when no longer needed.)</p><div style="text-align:center"><a shape="rect">back to top</a></div></div></div><div class="panel panel-default panel-primary"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Task 7: Add static resources.</h3></div><div class="panel-body"><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Now it’s time to add some static resources to the project. For
+              example, adding the <a shape="rect" class="Hyphenator252hide" href="http://getbootstrap.com/getting-started/" target="_blank">Twitter Bootstrap</a> CSS stylesheets might help to get things looking fancy. Modify
               the <code>boot.edn</code> file such that it contains the following:</p><div class="highlight"><pre><span class="ss">:src-static</span> <span class="o">#</span><span class="p">{</span><span class="s">"resources/assets"</span><span class="p">}</span>
-</pre></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Download Bootstrap and copy the CSS files into the directory. The
+</pre></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Download Bootstrap and copy the CSS files into the directory. The
               project directory should be organized something like this now:</p><pre><code>.
 ├── boot.edn
 ├── resources
@@ -387,12 +387,12 @@
 │       ├── index.html
 │       └── main.js
 └── src
-    └── index.cljs.hl</code></pre><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Restart the compiler and see how the <code>css</code> directory
+    └── index.cljs.hl</code></pre><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Restart the compiler and see how the <code>css</code> directory
               is copied over into the output directory automatically (and
-              whenever anything in there changes).</p><div style="text-align:center"><a shape="rect">back to top</a></div></div></div><div class="panel panel-default panel-primary"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Task 8: Create a “tabs” abstraction.</h3></div><div class="panel-body"><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">This task demonstrates how to create a UI kit library that can be
+              whenever anything in there changes).</p><div style="text-align:center"><a shape="rect">back to top</a></div></div></div><div class="panel panel-default panel-primary"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Task 8: Create a “tabs” abstraction.</h3></div><div class="panel-body"><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">This task demonstrates how to create a UI kit library that can be
               used in multiple pages. UI kits contain custom tags representing
               user interface abstractions. One commonly used abstraction is the
-              “tabs” metaphor that everyone is familiar with.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">The new UI library should live in a separate namespace and
+              “tabs” metaphor that everyone is familiar with.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">The new UI library should live in a separate namespace and
               contain custom DOM elements to use in the application pages.
               Create a new Hoplon source file, <code>src/ui/tabs.cljs.hl</code> with the following contents:</p><div class="highlight"><pre><span class="p">(</span><span class="kd">ns </span><span class="nv">ui.tabs</span><span class="p">)</span>
 
@@ -419,16 +419,16 @@
     <span class="p">(</span><span class="nf">div</span> <span class="p">(</span><span class="nb">dissoc </span><span class="nv">attr</span> <span class="ss">:state</span><span class="p">)</span>
       <span class="p">(</span><span class="nf">ul</span> <span class="ss">:class</span> <span class="s">"nav nav-tabs"</span> <span class="p">(</span><span class="nf">map-indexed</span> <span class="nv">mktrig</span> <span class="nv">trigs</span><span class="p">))</span>
       <span class="p">(</span><span class="nf">div</span> <span class="ss">:class</span> <span class="s">"tab-content"</span> <span class="p">(</span><span class="nf">map-indexed</span> <span class="nv">mkcont</span> <span class="nv">conts</span><span class="p">)))))</span>
-</pre></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">The <code>defelem</code> macro defines a function whose arguments
+</pre></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">The <code>defelem</code> macro defines a function whose arguments
               are “normalized” for the HTML markup semantic. It takes a vector
               of bindings and a number of body expressions. The bindings vector
               should bind the attribute map as the first argument and a sequence
               of children as the second. This removes the need to explicitly
               parse the arguments when the function is called in the page markup
-              with key/value arguments as attributes, etc.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Notice how there is no need to <code>:refer</code> any of the
+              with key/value arguments as attributes, etc.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Notice how there is no need to <code>:refer</code> any of the
               Hoplon or Javelin vars in the namespace declaration. The Hoplon
               compiler does that automatically so you can just use <code>defelem</code>, <code>div</code>, <code>span</code>, etc. in
-              the namespace without explicitly requiring them.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Then modify <code>index.cljs.hl</code> such that it looks like
+              the namespace without explicitly requiring them.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Then modify <code>index.cljs.hl</code> such that it looks like
               this, using the newly created <code>tabs</code> custom tag:</p><div><ul class="nav nav-tabs"><li class="active"><a shape="rect" href="javascript:void(0)">index.cljs.hl</a></li><li><a shape="rect" href="javascript:void(0)">index.html.hl</a></li></ul><div class="tab-content"><div class="highlight tab-pane active"><pre><span class="p">(</span><span class="nf">page</span> <span class="s">"index.html"</span>
   <span class="p">(</span><span class="ss">:require</span> <span class="p">[</span><span class="nv">ui.tabs</span> <span class="ss">:as</span> <span class="nv">tabs</span><span class="p">]))</span>
 
@@ -478,36 +478,36 @@
     <span class="nt">&lt;/tabs.tabs&gt;</span>
   <span class="nt">&lt;/body&gt;</span>
 <span class="nt">&lt;/html&gt;</span>
-</pre></div></div></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Compile and reload the page. You should see something like this:</p><div class="panel panel-default"><div class="panel-body"><div><ul class="nav nav-tabs"><li class="active"><a shape="rect" href="javascript:void(0)"><span>Zero</span></a></li><li><a shape="rect" href="javascript:void(0)"><span>One</span></a></li><li><a shape="rect" href="javascript:void(0)"><span>Two</span></a></li></ul><div class="tab-content"><div class="tab-pane active"><h4>Foo</h4><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Content for tab 0.</p></div><div class="tab-pane"><h4>Bar</h4><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Content for tab 1.</p></div><div class="tab-pane"><h4>Baz</h4><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Content for tab 2.</p></div></div></div></div></div><div style="text-align:center"><a shape="rect">back to top</a></div></div></div></div><div class="col-md-6"><h2 style="color:transparent;">asdf</h2><div class="panel panel-default panel-warning"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Boot Configuration</h3></div><div class="panel-body"><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">There are a few keys in the <code>boot.edn</code> configuration
+</pre></div></div></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Compile and reload the page. You should see something like this:</p><div class="panel panel-default"><div class="panel-body"><div><ul class="nav nav-tabs"><li class="active"><a shape="rect" href="javascript:void(0)"><span>Zero</span></a></li><li><a shape="rect" href="javascript:void(0)"><span>One</span></a></li><li><a shape="rect" href="javascript:void(0)"><span>Two</span></a></li></ul><div class="tab-content"><div class="tab-pane active"><h4>Foo</h4><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Content for tab 0.</p></div><div class="tab-pane"><h4>Bar</h4><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Content for tab 1.</p></div><div class="tab-pane"><h4>Baz</h4><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Content for tab 2.</p></div></div></div></div></div><div style="text-align:center"><a shape="rect">back to top</a></div></div></div></div><div class="col-md-6"><h2 style="color:transparent;">asdf</h2><div class="panel panel-default panel-warning"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Boot Configuration</h3></div><div class="panel-body"><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">There are a few keys in the <code>boot.edn</code> configuration
               file that are important when building Hoplon applications.
               Understanding how these keys work will help you to organize your
               Hoplon project in a way that works best for your workflow and
-              deployment situation.</p><dl class="dl-horizontal"><dt><tt>:public</tt></dt><dd><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">The output directory for the Hoplon compiler. HTML and
+              deployment situation.</p><dl class="dl-horizontal"><dt><tt>:public</tt></dt><dd><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">The output directory for the Hoplon compiler. HTML and
                   static content ends up here. This is where you point your
-                  webserver's document root.</p></dd><dt><tt>:src-paths</tt></dt><dd><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">A set of paths in which the build process looks for source
+                  webserver's document root.</p></dd><dt><tt>:src-paths</tt></dt><dd><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">A set of paths in which the build process looks for source
                   files to compile. These directories can contain Hoplon,
                   Clojure, ClojureScript, JavaScript, or any other type of
                   source file. The various compilers generally dispatch on
                   filename extension, so the directory structure is pretty
                   much up to you. The file watcher monitors these directories
-                  for changes and recompiles the project when necessary.</p></dd><dt><tt>:src-static</tt></dt><dd><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">A set of paths containing the static content for the
+                  for changes and recompiles the project when necessary.</p></dd><dt><tt>:src-static</tt></dt><dd><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">A set of paths containing the static content for the
                   project. This may include external JavaScript files, CSS
                   stylesheets, images, etc. The contents of these directories
-                  are merged into the <tt class="Hyphenator988hide">:public</tt> directory after
-                  compilation, and any subdirectory structure is overlayed.</p></dd></dl><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Also, it's a good idea to set up your <code>.gitignore</code> file correctly, because the boot watch task uses your <tt class="Hyphenator988hide">git(1)</tt> configuration to determine which files will
-              trigger recompiling and which will be ignored.</p><div style="text-align:center"><a shape="rect">back to top</a></div></div></div><div class="panel panel-default panel-warning"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Hoplon Source Files</h3></div><div class="panel-body"><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Hoplon compiles files having the <code>.hl</code> filename
+                  are merged into the <tt class="Hyphenator252hide">:public</tt> directory after
+                  compilation, and any subdirectory structure is overlayed.</p></dd></dl><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Also, it's a good idea to set up your <code>.gitignore</code> file correctly, because the boot watch task uses your <tt class="Hyphenator252hide">git(1)</tt> configuration to determine which files will
+              trigger recompiling and which will be ignored.</p><div style="text-align:center"><a shape="rect">back to top</a></div></div></div><div class="panel panel-default panel-warning"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Hoplon Source Files</h3></div><div class="panel-body"><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Hoplon compiles files having the <code>.hl</code> filename
               extension. These files may be Hoplon pages, which will be compiled
-              to single-page apps, or ClojureScript namespaces.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">The first form in the file must be a page or namespace
+              to single-page apps, or ClojureScript namespaces.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">The first form in the file must be a page or namespace
                declaration. Page declarations specify the output HTML file
                path relative to the <code>:public</code> directory configured in
                the project <code>boot.edn</code> file. Namespace declarations are
-               the same as in ClojureScript.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">In both cases, however, the Hoplon compiler refers vars and
+               the same as in ClojureScript.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">In both cases, however, the Hoplon compiler refers vars and
                macros from the Hoplon and Javelin namespaces into the file
                namespace so that adding <code>:refer</code> clauses for things
                like <code>div</code>, <code>span</code>, etc. are not
                necessary. A special <code>:refer-hoplon</code> clause can be
                used to selectively exclude vars that are to be redefined in the
-               file.</p><p class="text-muted hyphenate Hyphenator988hide" style="text-align: justify; ">Example page declaration:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">page</span> <span class="s">"foo/bar.html"</span>
+               file.</p><p class="text-muted hyphenate Hyphenator252hide" style="text-align: justify; ">Example page declaration:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">page</span> <span class="s">"foo/bar.html"</span>
   <span class="p">(</span><span class="ss">:refer-hoplon</span> <span class="ss">:exclude</span> <span class="p">[</span><span class="nv">div</span> <span class="nv">span</span><span class="p">])</span>
   <span class="p">(</span><span class="ss">:refer-clojure</span> <span class="ss">:exclude</span> <span class="p">[</span><span class="nv">int</span><span class="p">])</span>
   <span class="p">(</span><span class="ss">:require</span>
@@ -515,7 +515,7 @@
    <span class="p">[</span><span class="nv">clojure.string</span> <span class="ss">:as</span> <span class="nv">string</span><span class="p">])</span>
   <span class="p">(</span><span class="ss">:require-macros</span>
    <span class="p">[</span><span class="nv">foo.bar.baz</span> <span class="ss">:as</span> <span class="nv">baz</span> <span class="ss">:refer</span> <span class="p">[</span><span class="nv">quux</span><span class="p">]]))</span>
-</pre></div><p class="text-muted hyphenate Hyphenator988hide" style="text-align: justify; ">Example namespace declaration:</p><div class="highlight"><pre><span class="p">(</span><span class="kd">ns </span><span class="nv">foo.bar</span>
+</pre></div><p class="text-muted hyphenate Hyphenator252hide" style="text-align: justify; ">Example namespace declaration:</p><div class="highlight"><pre><span class="p">(</span><span class="kd">ns </span><span class="nv">foo.bar</span>
   <span class="p">(</span><span class="ss">:refer-hoplon</span> <span class="ss">:exclude</span> <span class="p">[</span><span class="nv">div</span> <span class="nv">span</span><span class="p">])</span>
   <span class="p">(</span><span class="ss">:refer-clojure</span> <span class="ss">:exclude</span> <span class="p">[</span><span class="nv">int</span><span class="p">])</span>
   <span class="p">(</span><span class="ss">:require</span>
@@ -523,16 +523,16 @@
    <span class="p">[</span><span class="nv">clojure.string</span> <span class="ss">:as</span> <span class="nv">string</span><span class="p">])</span>
   <span class="p">(</span><span class="ss">:require-macros</span>
    <span class="p">[</span><span class="nv">foo.bar.baz</span> <span class="ss">:as</span> <span class="nv">baz</span> <span class="ss">:refer</span> <span class="p">[</span><span class="nv">quux</span><span class="p">]]))</span>
-</pre></div><div style="text-align:center"><a shape="rect">back to top</a></div></div></div><div class="panel panel-default panel-warning"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Anatomy of a Hoplon Page</h3></div><div class="panel-body"><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Hoplon page source files have three parts: the page
+</pre></div><div style="text-align:center"><a shape="rect">back to top</a></div></div></div><div class="panel panel-default panel-warning"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Anatomy of a Hoplon Page</h3></div><div class="panel-body"><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Hoplon page source files have three parts: the page
               declaration, optional definitions and top-level forms, and
-              the page markup.</p><p class="text-muted hyphenate Hyphenator988hide" style="text-align: justify; ">The page declaration:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">page</span> <span class="s">"index.html"</span>
+              the page markup.</p><p class="text-muted hyphenate Hyphenator252hide" style="text-align: justify; ">The page declaration:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">page</span> <span class="s">"index.html"</span>
   <span class="p">(</span><span class="ss">:require</span> <span class="p">[</span><span class="nv">clojure.string</span> <span class="ss">:as</span> <span class="nv">string</span><span class="p">]))</span>
-</pre></div><p class="text-muted hyphenate Hyphenator988hide" style="text-align: justify; ">Optional top-level forms and definitions:</p><div class="highlight"><pre><span class="p">(</span><span class="k">def </span><span class="nv">add1</span> <span class="p">[</span><span class="nv">x</span><span class="p">]</span> <span class="p">(</span><span class="nb">+ </span><span class="mi">1</span> <span class="nv">x</span><span class="p">))</span>
-</pre></div><p class="text-muted hyphenate Hyphenator988hide" style="text-align: justify; ">The page markup:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">html</span>
+</pre></div><p class="text-muted hyphenate Hyphenator252hide" style="text-align: justify; ">Optional top-level forms and definitions:</p><div class="highlight"><pre><span class="p">(</span><span class="k">def </span><span class="nv">add1</span> <span class="p">[</span><span class="nv">x</span><span class="p">]</span> <span class="p">(</span><span class="nb">+ </span><span class="mi">1</span> <span class="nv">x</span><span class="p">))</span>
+</pre></div><p class="text-muted hyphenate Hyphenator252hide" style="text-align: justify; ">The page markup:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">html</span>
   <span class="p">(</span><span class="nf">head</span><span class="p">)</span>
   <span class="p">(</span><span class="nf">body</span>
     <span class="p">(</span><span class="nf">h1</span> <span class="s">"hello, number "</span> <span class="p">(</span><span class="nb">str </span><span class="p">(</span><span class="nf">add1</span> <span class="mi">41</span><span class="p">)))))</span>
-</pre></div><div style="text-align:center"><a shape="rect">back to top</a></div></div></div><div class="panel panel-default panel-warning"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Sexp Markup Syntax</h3></div><div class="panel-body"><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Hoplon's HTML evaluator provides a sexp-based HTML syntax and
+</pre></div><div style="text-align:center"><a shape="rect">back to top</a></div></div></div><div class="panel panel-default panel-warning"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Sexp Markup Syntax</h3></div><div class="panel-body"><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Hoplon's HTML evaluator provides a sexp-based HTML syntax and
               semantic. Elements in sexp markup are parenthesized lists, the
               same as Lisp expressions. The form in function position is the
               element’s HTML tag. Hoplon adds semantics for setting attributes
@@ -540,69 +540,69 @@
   <span class="nt">&lt;h1&gt;</span>Hello, world!<span class="nt">&lt;/h1&gt;</span>
   <span class="nt">&lt;p&gt;</span>I'm new here.<span class="nt">&lt;/p&gt;</span>
 <span class="nt">&lt;/div&gt;</span>
-</pre></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">This snippet can be expressed in sexp markup like this:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">div</span> <span class="ss">:id</span> <span class="s">"greet"</span> <span class="ss">:class</span> <span class="s">"active"</span>
+</pre></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">This snippet can be expressed in sexp markup like this:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">div</span> <span class="ss">:id</span> <span class="s">"greet"</span> <span class="ss">:class</span> <span class="s">"active"</span>
   <span class="p">(</span><span class="nf">h1</span> <span class="s">"Hello, world!"</span><span class="p">)</span>
   <span class="p">(</span><span class="nf">p</span> <span class="s">"I'm new here."</span><span class="p">))</span>
-</pre></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Notice how attributes can be set by passing them in first as
+</pre></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Notice how attributes can be set by passing them in first as
               alternating keyword/string pairs. The rest of the arguments are
-              appended to the element (the div in this case) as children.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Sometimes it’s more convenient to specify the attributes as a
+              appended to the element (the div in this case) as children.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Sometimes it’s more convenient to specify the attributes as a
                map, like this:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">div</span> <span class="p">{</span><span class="ss">:id</span> <span class="s">"greet"</span> <span class="ss">:class</span> <span class="s">"active"</span><span class="p">}</span>
   <span class="p">(</span><span class="nf">h1</span> <span class="s">"Hello, world!"</span><span class="p">)</span>
   <span class="p">(</span><span class="nf">p</span> <span class="s">"I'm new here."</span><span class="p">))</span>
-</pre></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Additionally, Hoplon provides semantics for anonymous tags in
+</pre></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Additionally, Hoplon provides semantics for anonymous tags in
               sexp markup. There is, of course, no such thing in HTML markup.
               The same snippet can be expressed using an anonymous tag:</p><div class="highlight"><pre><span class="p">((</span><span class="nf">div</span> <span class="ss">:id</span> <span class="s">"greet"</span> <span class="ss">:class</span> <span class="s">"active"</span><span class="p">)</span>
  <span class="p">(</span><span class="nf">h1</span> <span class="s">"Hello, world!"</span><span class="p">)</span>
  <span class="p">(</span><span class="nf">p</span> <span class="s">"I'm new here."</span><span class="p">))</span>
-</pre></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">It’s important to understand that the <code>div</code>, <code>h1</code>, and <code>p</code> forms are ClojureScript
+</pre></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">It’s important to understand that the <code>div</code>, <code>h1</code>, and <code>p</code> forms are ClojureScript
               functions that return DOM elements. DOM elements implement the <code>IFn</code> protocol to achieve the HTML semantic. This means
               that they can be used to form abstractions:</p><div class="highlight"><pre><span class="p">(</span><span class="kd">defn </span><span class="nv">active</span> <span class="p">[</span><span class="o">&amp;</span> <span class="nv">kids</span><span class="p">]</span>
   <span class="p">(</span><span class="nb">apply </span><span class="p">(</span><span class="nf">div</span> <span class="ss">:class</span> <span class="s">"active"</span><span class="p">)</span> <span class="nv">kids</span><span class="p">))</span>
-</pre></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">And then, in the page markup or in a function:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">active</span> <span class="ss">:id</span> <span class="s">"greet"</span>
+</pre></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">And then, in the page markup or in a function:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">active</span> <span class="ss">:id</span> <span class="s">"greet"</span>
   <span class="p">(</span><span class="nf">h1</span> <span class="s">"Hello, world!"</span><span class="p">)</span>
   <span class="p">(</span><span class="nf">p</span> <span class="s">"I'm new here."</span><span class="p">))</span>
-</pre></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Or in HTML markup in the page, even:</p><div class="highlight"><pre><span class="nt">&lt;active</span> <span class="na">id=</span><span class="s">"greet"</span><span class="nt">&gt;</span>
+</pre></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Or in HTML markup in the page, even:</p><div class="highlight"><pre><span class="nt">&lt;active</span> <span class="na">id=</span><span class="s">"greet"</span><span class="nt">&gt;</span>
   <span class="nt">&lt;h1&gt;</span>Hello, world!<span class="nt">&lt;/h1&gt;</span>
   <span class="nt">&lt;p&gt;</span>I'm new here.<span class="nt">&lt;/p&gt;</span>
 <span class="nt">&lt;/active&gt;</span>
-</pre></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">The result is equivalent to the previous snippets, but more
+</pre></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">The result is equivalent to the previous snippets, but more
               general. These “custom tags” can be used in the page markup like
-              any of the built-in tags.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Finally, sequences or vectors can be used to splice children
+              any of the built-in tags.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Finally, sequences or vectors can be used to splice children
               into the parent similar to how the <code>unquote-splicing</code> form works in Clojure. For instance this,</p><div class="highlight"><pre><span class="p">(</span><span class="nf">ul</span> <span class="ss">:class</span> <span class="s">"my-list"</span>
   <span class="p">(</span><span class="nb">map </span><span class="o">#</span><span class="p">(</span><span class="nf">li</span> <span class="ss">:class</span> <span class="s">"my-item"</span> <span class="nv">%</span><span class="p">)</span> <span class="p">[</span><span class="s">"item1"</span> <span class="s">"item2"</span><span class="p">]))</span>
-</pre></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">is equivalent to this:</p><div class="highlight"><pre><span class="p">(</span><span class="nb">apply </span><span class="p">(</span><span class="nf">ul</span> <span class="ss">:class</span> <span class="s">"my-list"</span><span class="p">)</span>
+</pre></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">is equivalent to this:</p><div class="highlight"><pre><span class="p">(</span><span class="nb">apply </span><span class="p">(</span><span class="nf">ul</span> <span class="ss">:class</span> <span class="s">"my-list"</span><span class="p">)</span>
   <span class="p">(</span><span class="nb">map </span><span class="o">#</span><span class="p">(</span><span class="nf">li</span> <span class="ss">:class</span> <span class="s">"my-item"</span> <span class="nv">%</span><span class="p">)</span> <span class="p">[</span><span class="s">"item1"</span> <span class="s">"item2"</span><span class="p">]))</span>
-</pre></div><div style="text-align:center"><a shape="rect">back to top</a></div></div></div><div class="panel panel-default panel-warning"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Wiring Up The DOM</h3></div><div class="panel-body"><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">DOM interactions can be divided into two categories: input and
+</pre></div><div style="text-align:center"><a shape="rect">back to top</a></div></div></div><div class="panel panel-default panel-warning"><a shape="rect" class="topfix"></a><div class="panel-heading"><h3 class="panel-title">Wiring Up The DOM</h3></div><div class="panel-body"><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">DOM interactions can be divided into two categories: input and
               output. Input is how the user initiates changes to the state of
-              the application, consisting of DOM events like <em class="Hyphenator988hide">click</em>, <em class="Hyphenator988hide">change</em>, etc. Output is how the state of
+              the application, consisting of DOM events like <em class="Hyphenator252hide">click</em>, <em class="Hyphenator252hide">change</em>, etc. Output is how the state of
               the application is conveyed to the user, consisting of setting
-              element attributes, properties, and the contents of text nodes.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">In a Hoplon page input is accepted via the special <code>:on-<em>event</em></code> attributes set on DOM elements. All
+              element attributes, properties, and the contents of text nodes.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">In a Hoplon page input is accepted via the special <code>:on-<em>event</em></code> attributes set on DOM elements. All
               jQuery events are supported, including custom events. The value
               of this attribute is the event handler. For example:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">button</span>
   <span class="ss">:on-click</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">event</span><span class="p">]</span> <span class="p">(</span><span class="nf">handle!</span> <span class="nv">event</span><span class="p">))</span>
   <span class="s">"click this button"</span><span class="p">)</span>
-</pre></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Output is displayed via the special <code>:do-<em>action</em></code> attributes set on DOM elements. The value of these attributes is
+</pre></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Output is displayed via the special <code>:do-<em>action</em></code> attributes set on DOM elements. The value of these attributes is
               a formula cell whose value forms the argument to the action. For
               example:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">div</span> <span class="ss">:do-class</span> <span class="p">(</span><span class="nf">cell=</span> <span class="p">{</span><span class="ss">:active</span> <span class="p">(</span><span class="nb">= </span><span class="mi">20</span> <span class="nv">page</span><span class="p">)})</span>
   <span class="p">(</span><span class="nf">h2</span> <span class="s">"Page 20"</span><span class="p">)</span>
   <span class="p">(</span><span class="nf">p</span> <span class="s">"This is the content for page 20."</span><span class="p">))</span>
-</pre></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">The <code>:do-class</code> example above adds or removes the <em class="Hyphenator988hide">“active”</em> class, depending on whether the <code>page</code> cell’s value is equal to 20 or not, respectively. This
+</pre></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">The <code>:do-class</code> example above adds or removes the <em class="Hyphenator252hide">“active”</em> class, depending on whether the <code>page</code> cell’s value is equal to 20 or not, respectively. This
               relationship is maintained automatically, reactively keeping the
-              element’s class in sync with the formula.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">The <code>text</code> macro creates DOM text nodes whose content
+              element’s class in sync with the formula.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">The <code>text</code> macro creates DOM text nodes whose content
               automatically updates itself, interpolating cell values and/or
               formulas in the argument string. For example:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">p</span> <span class="p">(</span><span class="nf">text</span> <span class="s">"the value of x is ~{x}"</span><span class="p">))</span>
-</pre></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">This creates a paragraph whose text content is linked to the
-              interpolated string.</p><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Output and input wiring can also be done programmatically using
+</pre></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">This creates a paragraph whose text content is linked to the
+              interpolated string.</p><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Output and input wiring can also be done programmatically using
               the <code>do!</code> and <code>on!</code> multimethods. For
-              instance, to set the <em class="Hyphenator988hide">“active”</em> class on element <code>elem</code>, one would do:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">do!</span> <span class="nv">elem</span> <span class="ss">:class</span> <span class="p">{</span><span class="ss">:active</span> <span class="nv">true</span><span class="p">})</span>
-</pre></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">And to add a handler for the <em class="Hyphenator988hide">click</em> event one would do:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">on!</span> <span class="nv">elem</span> <span class="ss">:click</span> <span class="o">#</span><span class="p">(</span><span class="nf">handle!</span> <span class="nv">%</span><span class="p">))</span>
-</pre></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">It's important to note the these are not reactive. They're just
+              instance, to set the <em class="Hyphenator252hide">“active”</em> class on element <code>elem</code>, one would do:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">do!</span> <span class="nv">elem</span> <span class="ss">:class</span> <span class="p">{</span><span class="ss">:active</span> <span class="nv">true</span><span class="p">})</span>
+</pre></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">And to add a handler for the <em class="Hyphenator252hide">click</em> event one would do:</p><div class="highlight"><pre><span class="p">(</span><span class="nf">on!</span> <span class="nv">elem</span> <span class="ss">:click</span> <span class="o">#</span><span class="p">(</span><span class="nf">handle!</span> <span class="nv">%</span><span class="p">))</span>
+</pre></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">It's important to note the these are not reactive. They're just
               regular functions operating on regular data, not cells. To achieve
               the reactive behavior of the <code>:do-class</code> example above
               the expression can be used as the formula of an anonymous cell
               (anonymous because output is only for side-effects–mutating the
               DOM in this case):</p><div class="highlight"><pre><span class="p">(</span><span class="nf">cell=</span> <span class="p">(</span><span class="nf">do!</span> <span class="nv">elem</span> <span class="ss">:class</span> <span class="p">{</span><span class="ss">:active</span> <span class="p">(</span><span class="nb">= </span><span class="mi">20</span> <span class="nv">page</span><span class="p">)}))</span>
-</pre></div><p class="hyphenate Hyphenator988hide" style="text-align: justify; ">Event handlers are normally set just once, so formula cells don’t
+</pre></div><p class="hyphenate Hyphenator252hide" style="text-align: justify; ">Event handlers are normally set just once, so formula cells don’t
               usually make sense in combination with the <code>on!</code> method. This illustrates the I/O model in Hoplon: output
               reactively updates the DOM in relation to the underlying state via
               formula cells, while input updates the underlying state via events
