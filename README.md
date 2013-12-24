@@ -2,13 +2,11 @@
 
 Source code for the [Hoplon documentation site][1].
 
-* development:
 ```bash
+# build for development
 $ boot watch development
-```
 
-* production:
-```bash
+# build for production
 $ boot production
 ```
 
