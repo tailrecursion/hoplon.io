@@ -1372,9 +1372,9 @@
 
           (gs-tip :title "Wiring Up The DOM"
             (p
-              "DOM interactions can be can be divided into two categories:
-              input and output. Input is how the user initiates changes to the
-              state of the application, consisting of DOM events like "
+              "DOM interactions can be divided into two categories: input and
+              output. Input is how the user initiates changes to the state of
+              the application, consisting of DOM events like "
               (em "click") ", " (em "change") ", etc. Output is how the state of
               the application is conveyed to the user, consisting of setting
               element attributes, properties, and the contents of text nodes.")
