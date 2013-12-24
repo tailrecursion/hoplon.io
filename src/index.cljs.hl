@@ -1250,9 +1250,12 @@
                                :main [:hoplon {:optimizations :advanced}]}}}
               ;;}}
               )
-            (p
-              "After adding these tasks to the " (code "boot.edn") " file they
-              will appear in the list of tasks that are displayed.")
+            (code/markdown
+              ;;{{
+              After adding these tasks to the `boot.edn` file they will appear
+              in the list of tasks that are displayed.
+              ;;}}
+              )
             (code/highlight :bash
               ;;{{
               # display list of available tasks
@@ -1267,22 +1270,21 @@
               ))
 
           (gs-tip :title "External JS Libs And Extern Files"
-            (p
-              "External JavaScript libraries can be prepended to the "
-              (code "main.js") " file emitted by the ClojureScript compiler
-              and extern files for them can be included in the compilation of
-              the application code by placing the files in a source directory
-              and using a special naming convention.")
-            (ul
-              (li
-                "External JS files should have the " (code ".inc.js") " file
-                extension")
-              (li
-                "Extern files for the Google Closure compiler should have the "
-                (code ".ext.js") " file extension"))
-            (p
-              "External JS files will be prepended to the " (code "main.js")
-              " file in alphabetical order by filename."))
+            (code/markdown
+              ;;{{
+              External JavaScript libraries can be prepended to the `main.js`
+              file emitted by the ClojureScript compiler and extern files for
+              them can be included in the compilation of the application code
+              by placing the files in a source directory and using a special
+              naming convention.
+
+              * External JS files use the `.inc.js` extension
+              * Extern files for GClosure use the `.ext.js` extension
+
+              External JS files will be prepended to the `main.js` file in 
+              alphabetical order.
+              ;;}}
+              ))
 
           (gs-tip :title "Hoplon Source Files"
             (code/markdown
