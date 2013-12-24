@@ -1266,6 +1266,24 @@
               ;;}}
               ))
 
+          (gs-tip :title "External JS Libs And Extern Files"
+            (p
+              "External JavaScript libraries can be prepended to the "
+              (code "main.js") " file emitted by the ClojureScript compiler
+              and extern files for them can be included in the compilation of
+              the application code by placing the files in a source directory
+              and using a special naming convention.")
+            (ul
+              (li
+                "External JS files should have the " (code ".inc.js") " file
+                extension")
+              (li
+                "Extern files for the Google Closure compiler should have the "
+                (code ".ext.js") " file extension"))
+            (p
+              "External JS files will be prepended to the " (code "main.js")
+              " file in alphabetical order by filename."))
+
           (gs-tip :title "Hoplon Source Files"
             (p
               "Hoplon compiles files having the " (code ".hl") " filename
