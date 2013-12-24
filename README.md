@@ -8,6 +8,9 @@ $ boot watch development
 
 # build for production
 $ boot production
+
+# deploy to gh-pages
+$ make deploy
 ```
 
 [1]: http://hoplon.io
