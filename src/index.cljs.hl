@@ -1285,23 +1285,24 @@
               " file in alphabetical order by filename."))
 
           (gs-tip :title "Hoplon Source Files"
-            (p
-              "Hoplon compiles files having the " (code ".hl") " filename
-              extension. These files may be Hoplon pages, which will be compiled
-              to single-page apps, or ClojureScript namespaces.")
-            (p "The first form in the file must be a page or namespace
-               declaration. Page declarations specify the output HTML file
-               path relative to the " (code ":public") " directory configured in
-               the project " (code "boot.edn") " file. Namespace declarations are
-               the same as in ClojureScript.")
-            (p
-              "In both cases, however, the Hoplon compiler refers vars and
-               macros from the Hoplon and Javelin namespaces into the file
-               namespace so that adding " (code ":refer") " clauses for things
-               like " (code "div") ", " (code "span") ", etc. are not
-               necessary. A special " (code ":refer-hoplon") " clause can be
-               used to selectively exclude vars that are to be redefined in the
-               file.")
+            (code/markdown
+              ;;{{
+              Hoplon compiles files having the `.hl` filename extension. These
+              files may be Hoplon pages, which will be compiles to single-page
+              apps, or ClojureScript namespaces.
+
+              The first form in the file must be a page or namespace declaration.
+              Page declarations specify the output HTML file path relative to
+              the `:public` directory configured in the project `boot.edn` file.
+              Namespace declarations are the same as in ClojureScript.
+
+              In both cases, however, the Hoplon compiler refers vars and macros
+              from the Hoplon and Javelin namespaces into the file namespace so
+              that adding `:refer` clauses for things like `div`, `span`, etc.
+              are not necessary. A special `:refer-hoplon` clause can be used to
+              selectively exclude vars that are to be redefined in the file.
+              ;;}}
+              )
             (p :class "text-muted" "Example page declaration:")
             (code/highlight :clj
               ;;{{

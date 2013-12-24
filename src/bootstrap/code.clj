@@ -2,6 +2,7 @@
   (:require
     [clojure.java.shell                     :refer [sh]]
     [clojure.string                         :refer [join]]
+    [markdown.core                          :refer [md-to-html-string]]
     [tailrecursion.hoplon.compiler.tagsoup  :refer [parse-snip]]))
 
 (create-ns 'tailrecursion.hoplon)
@@ -15,12 +16,11 @@
   (or (and (not= "none" lexer) (do-pygments lexer body))
       `(tailrecursion.hoplon/pre (tailrecursion.hoplon/code ~body))))
 
-(defmacro highlight
-  [lang body]
+(defn do-markdown [body]
+  (parse-snip (str "<div>" (md-to-html-string body) "</div>")))
+
+(defmacro highlight [lang body]
   (do-highlight (name lang) body))
 
-(defmacro clj   [body] (do-highlight "clj"  body))
-(defmacro html  [body] (do-highlight "html" body))
-(defmacro xml   [body] (do-highlight "xml"  body))
-(defmacro bash  [body] (do-highlight "bash" body))
-
+(defmacro markdown [body]
+  (do-markdown body))
