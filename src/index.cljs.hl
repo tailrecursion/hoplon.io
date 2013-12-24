@@ -1199,6 +1199,73 @@
               (tt "git(1)") " configuration to determine which files will
               trigger recompiling and which will be ignored."))
 
+          (gs-tip :title "Hoplon Boot Options"
+            (p
+              "Hoplon source files are compiled by the Hoplon compiler. The
+              easiest way to do this is to use the " (code "hoplon") " boot
+              task. Options to boot tasks can be specified by wrapping the
+              task name and arguments in a vector. (Boot reads in the command
+              line arguments as an EDN string.) The " (code "hoplon") " task
+              takes a single command line argument–a map of key/value options.")
+            (p
+              "The options map may include options to be passed to the 
+              ClojureScript compiler (" (code ":optimizations") ", "
+              (code ":source-map") ", etc.). Setting the " (code ":prerender")
+              " key to false will disable the “prerendering” of
+              DOM content in " (tt "phantomjs(1)") ", which speeds up the
+              compilation process at the expense of SEO (handy when developing
+              but probably not ideal for production builds).")
+            (p
+              "A typical development build invocation could look something like
+              this:")
+            (code/highlight :bash
+              ;;{{
+              $ boot watch [hoplon {:prerender false :optimizations :whitespace :pretty-print true}]
+              ;;}}
+              )
+            (p "Production builds could look something like this:")
+            (code/highlight :bash
+              ;;{{
+              $ boot [hoplon {:optimizations :advanced}]
+              ;;}}
+              )
+            (p
+              "Command line arguments can be specified in the project "
+              (code "boot.edn") " file as their own tasks by adding entries to
+              the " (code ":tasks") " key. The above examples could be added as 
+              tasks like this:")
+            (code/highlight :clj
+              ;;{{
+              ; boot.edn
+              {:dependencies  ...
+               :require-tasks ...
+               :public        ...
+               :src-paths     ...
+               :tasks
+               {:development  {:doc  "Build project for development."
+                               :main [:hoplon {:prerender     false
+                                               :optimizations :whitespace
+                                               :pretty-print  true}]}
+                :production   {:doc  "Build project for production."
+                               :main [:hoplon {:optimizations :advanced}]}}}
+              ;;}}
+              )
+            (p
+              "After adding these tasks to the " (code "boot.edn") " file they
+              will appear in the list of tasks that are displayed.")
+            (code/highlight :bash
+              ;;{{
+              # display list of available tasks
+              $ boot help
+
+              # build for development
+              $ boot watch development
+
+              # build for production
+              $ boot production
+              ;;}}
+              ))
+
           (gs-tip :title "Hoplon Source Files"
             (p
               "Hoplon compiles files having the " (code ".hl") " filename
