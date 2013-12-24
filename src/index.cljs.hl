@@ -57,11 +57,14 @@
 (defelem table-of-contents [{:keys [size toc]} _]
   (let [toc* (cell= (indexed (:toc toc)))]
     (ul :class "list-unstyled"
-      (loop-tpl :size size
-                :bindings [[i title] toc*]
-        (li (a :style "cursor:pointer;"
-               :on-click #(swap! toc assoc :cur (inc @i))
-               (text "~{title}")))))))
+      (loop-tpl
+        :size size
+        :bindings [[i title] toc*]
+        (li (a
+              :style "cursor:pointer;"
+              :on-click #(do (swap! toc assoc :cur nil)
+                             (swap! toc assoc :cur (inc @i)))
+              (text "~{title}")))))))
 
 (defelem gs-block [{:keys [toc type title]} kids]
   (when toc (swap! toc update-in [:toc] conj title))
@@ -1455,6 +1458,25 @@
               ;;{{
               (apply (ul :class "my-list")
                 (map #(li :class "my-item" %) ["item1" "item2"]))
+              ;;}}
+              ))
+
+          (gs-tip :title "Reader Support For Multiline Strings"
+            (code/markdown
+              ;;{{
+              As described above, text nodes are expressed as strings in sexp
+              syntax markup, and as text contents of HTML nodes in HTML syntax.
+              This is sometimes inconvenient, especially with preformatted text, 
+              because of issues with indentation and escaping reserved characters.
+
+              The Hoplon compiler adds a multiline string delimited mode to the
+              reader as a preprocessor pass. Lines in the source file containing
+              only whitespace and `;;{{` or `;;}}` denote the start and end,
+              respectively, of multiline text blocks. These text blocks will be
+              transformed to strings which will be passed on to the reader with
+              proper escaping and with leading whitespace indentation removed.
+              The indentation level is set by the indentation of the initial
+              `;;{{` delimiter.
               ;;}}
               ))
 
