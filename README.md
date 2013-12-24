@@ -10,4 +10,4 @@ $ boot watch development
 $ boot production
 ```
 
-[1] http://hoplon.io
+[1]: http://hoplon.io
