@@ -1136,7 +1136,7 @@
             (p
               "The " (code "defelem") " macro defines a function whose arguments
               are “normalized” for the HTML markup semantic. It takes a vector
-              if bindings and a number of body expressions. The bindings vector
+              of bindings and a number of body expressions. The bindings vector
               should bind the attribute map as the first argument and a sequence
               of children as the second. This removes the need to explicitly
               parse the arguments when the function is called in the page markup
