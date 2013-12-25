@@ -874,6 +874,7 @@
           (gs-info :title "System Requirements (Compiler)"
             (ul
               (li "Java 6+")
+              (li "Leiningen 2")
               (li "The " (a :href boot-url :target "_blank" "boot") " build tool.")))
 
           (gs-info :title "Browser Compatibility"
@@ -883,102 +884,29 @@
               (li "Firefox")
               (li "Internet Explorer 8+")))
 
-          (gs-task :title "Task 1: Create empty project."
+          (gs-task :title "Task 1: Create a new project."
             (p
-              "A typical project might have a directory structure that looks
-              something like this:")
+              "The Hoplon Leiningen template can be used to create a simple
+              “hello world” project:")
+            (code/highlight :bash
+              ;;{{
+              $ lein new hoplon my-project
+              ;;}}
+              )
+            (p
+              "The new project directory should look like this:")
             (code/highlight :none
               ;;{{
               .
+              ├── README.md
               ├── boot.edn
-              ├── resources
-              │   └── assets
-              │       └── css
-              │           └── main.css
               └── src
                   └── index.cljs.hl
               ;;}}
               )
-            (p
-              "To create a minimal Hoplon project just create a directory
-              for the project, and in this new directory create a "
-              (code "boot.edn")
-              " file with the following contents:")
-            (code/highlight :clj
-              ;;{{
-              {:dependencies  [[tailrecursion/boot.core   "1.1.1"]
-                               [tailrecursion/boot.task   "1.0.0"]
-                               [tailrecursion/hoplon      "4.0.7"]
-                               [org.clojure/clojurescript "0.0-1934"]]
-               :require-tasks #{[tailrecursion.boot.task    :refer :all]
-                                [tailrecursion.hoplon.boot  :refer :all]}
-               :public        "resources/public"
-               :src-paths     #{"src"}}
-              ;;}}
-              ))
+            )
 
-          (gs-task :title "Task 2: Create “Hello World” page."
-            (p
-              "Create a " (code "src/index.cljs.hl") " or "
-              (code "src/index.html.hl") " file with the following contents:")
-            (tabs/tabs :state task2syntax
-              "index.cljs.hl"
-              (code/highlight :clj
-                ;;{{
-                (page "index.html")
-
-                (html
-                  (head)
-                  (body
-                    (h1 "Hello, world!")))
-                ;;}}
-                )
-              "index.html.hl"
-              (code/highlight :xml
-                ;;{{
-                <script type="text/hoplon">
-                  (page "index.html")
-                </script>
-
-                <html>
-                  <head></head>
-                  <body>
-                    <h1>Hello, world!</h1>
-                  </body>
-                </html>
-                ;;}}
-                )
-              )
-            (p "Your project directory should now look like this:")
-            (tabs/tabs :state task2syntax
-              "index.cljs.hl"
-              (code/highlight :none
-                ;;{{
-                .
-                ├── boot.edn
-                └── src
-                    └── index.cljs.hl
-                ;;}}
-                )
-              "index.html.hl"
-              (code/highlight :none
-                ;;{{
-                .
-                ├── boot.edn
-                └── src
-                    └── index.html.hl
-                ;;}}
-                )))
-
-          (gs-info :title "Note"
-            (p
-              "To simplify things we will use " (code "index.cljs.hl") " and "
-              (code "index.html.hl") " interchangeably in the examples below.
-              It should be understood that HTML and CLJS syntaxes are
-              equivalent–examples in CLJS syntax can be easily rewritten in
-              HTML syntax and vice versa."))
-
-          (gs-task :title "Task 3: Compile the project."
+          (gs-task :title "Task 2: Compile the project."
             (p "In another terminal do the following in the project directory:")
             (code/highlight :bash
               ;;{{
@@ -993,6 +921,7 @@
             (code/highlight :none
               ;;{{
               .
+              ├── README.md
               ├── boot.edn
               ├── resources
               │   └── public
@@ -1015,7 +944,7 @@
               "Load " (code "index.html") " in a browser and enjoy a friendly
               greeting."))
 
-          (gs-task :title "Task 4: Add a counter."
+          (gs-task :title "Task 3: Add a counter."
             (p
               "Now we add a counter to the page that will keep track of how
               many times a button was clicked. To do this we add an input
@@ -1039,7 +968,7 @@
               button a few times. You should see something like this:")
             (counter-ex))
 
-          (gs-task :title "Task 5: A simple calculator."
+          (gs-task :title "Task 4: A simple calculator."
             (p
               "The next task is to build a simple calculator that can add,
               subtract, multiply, or divide two integers. Modify the "
@@ -1058,7 +987,7 @@
               the page markup. This decoupling of presentation and
               state is a key component of the Hoplon model."))
 
-          (gs-task :title "Task 6: Using the looping macro."
+          (gs-task :title "Task 5: Using the looping macro."
             (p
               "Most applications have sequential collections that need to be
               displayed to the user in some kind of template. Hoplon provides
@@ -1098,7 +1027,7 @@
               file descriptors, are not subject to garbage collection and must
               be explicitly removed from the DOM when no longer needed.)"))
 
-          (gs-task :title "Task 7: Add static resources."
+          (gs-task :title "Task 6: Add static resources."
             (p
               "Now it’s time to add some static resources to the project. For
               example, adding the "
@@ -1134,7 +1063,7 @@
               is copied over into the output directory automatically (and
               whenever anything in there changes)."))
 
-          (gs-task :title "Task 8: Create a “tabs” abstraction."
+          (gs-task :title "Task 7: Create a “tabs” abstraction."
             (p
               "This task demonstrates how to create a UI kit library that can be
               used in multiple pages. UI kits contain custom tags representing
