@@ -18,14 +18,15 @@
 
 (def route (hutil/route-cell 10 "#/home/"))
 
-(def cqrs-url           "http://martinfowler.com/bliki/CQRS.html")
-(def hoplon-url         "https://github.com/tailrecursion/hoplon")
-(def boot-url           "https://github.com/tailrecursion/boot")
-(def hoplon-clojars-url "https://clojars.org/tailrecursion/hoplon")
-(def hoplon-demos-url   "https://github.com/tailrecursion/hoplon-demos")
-(def bootstrap-url      "http://getbootstrap.com/getting-started/")
-(def hoplon-group-url   "https://groups.google.com/forum/#!forum/hoplon")
-(def hoplon-issues-url  "https://github.com/tailrecursion/hoplon/issues")
+(def cqrs-url             "http://martinfowler.com/bliki/CQRS.html")
+(def hoplon-url           "https://github.com/tailrecursion/hoplon")
+(def boot-url             "https://github.com/tailrecursion/boot")
+(def hoplon-clojars-url   "https://clojars.org/tailrecursion/hoplon")
+(def hoplon-demos-url     "https://github.com/tailrecursion/hoplon-demos")
+(def bootstrap-url        "http://getbootstrap.com/getting-started/")
+(def hoplon-group-url     "https://groups.google.com/forum/#!forum/hoplon")
+(def hoplon-issues-url    "https://github.com/tailrecursion/hoplon/issues")
+(def hoplon-discourse-url "http://hoplon.discoursehosting.net")
 
 (defn hyphenate! []
   (.. (js/jQuery "p") (addClass "hyphenate") (css "text-align" "justify"))
@@ -1594,6 +1595,8 @@
             (dd (a :href hoplon-issues-url :target "_blank" hoplon-issues-url))
             (dt "Mailing List")
             (dd (a :href hoplon-group-url :target "_blank" hoplon-group-url))
+            (dt "Discussion")
+            (dd (a :href hoplon-discourse-url :target "_blank" hoplon-discourse-url))
             (dt "Freenode IRC")
             (dd (tt "#hoplon")))
           (hr)
