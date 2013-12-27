@@ -12,14 +12,13 @@
  :description   "Hoplon UI kit for Twitter Bootstrap."
  :license       {:name "Eclipse Public License"
                  :url "http://www.eclipse.org/legal/epl-v10.html"}
- :dependencies  [[tailrecursion/boot.core   "1.1.1"]
-                 [tailrecursion/boot.task   "1.0.0"]
-                 [tailrecursion/hoplon      "4.0.7"]
-                 [org.clojure/clojurescript "0.0-1934"]
+ :dependencies  [[tailrecursion/boot.core   "1.2.0"]
+                 [tailrecursion/boot.task   "1.0.2"]
+                 [tailrecursion/hoplon      "4.0.8"]
+                 [org.clojure/clojurescript "0.0-2127"]
                  [markdown-clj              "0.9.38"]]
  :require-tasks #{[tailrecursion.boot.task   :refer :all]
                   [tailrecursion.hoplon.boot :refer :all]}
- :uberjar-exclusions [#"^cljs/" #"^tailrecursion/boot/task/util/cljs" #".*\.SF$"]
  :src-paths     #{"src"}
  :src-static    #{"resources/assets"}
  :public        "resources/public"
