@@ -6,8 +6,8 @@
   :dependencies  [['tailrecursion/boot.core   "2.0.0"]
                   ['tailrecursion/boot.task   "2.0.0"]
                   ['tailrecursion/hoplon      "5.0.0"]
-                  ['org.clojure/clojurescript "0.0-2156"]
-                  ['markdown-clj              "0.9.38"]]
+                  ['markdown-clj              "0.9.38"]
+                  ['org.clojure/clojurescript "0.0-2156"]]
   :src-paths     #{"src"}
   :out-path      "resources/public")
 
