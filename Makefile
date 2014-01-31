@@ -1,10 +1,6 @@
 help:
-	@echo "USAGE: make [help|boot|deploy]"
-
-boot:
-	boot rebuild-boot
-	chmod 0755 ./boot
+	@echo "USAGE: make [help|deploy]"
 
 deploy: boot
-	./boot production
-	#ghp-import -p resources/public
+	boot prod
+	ghp-import -p resources/public
