@@ -3,7 +3,7 @@
     [bootstrap.meta :as meta]))
 
 (defn setup []
-  (spliced
+  (vector
     (meta/viewport "width=device-width, initial-scale=1.0") 
     (link :href "css/bootstrap.min.css" :rel "stylesheet" :media "screen") 
     (link :href "css/starter-template.css" :rel "stylesheet" :media "screen")))

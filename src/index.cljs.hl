@@ -1,20 +1,23 @@
 (page "index.html"
   (:refer-clojure :exclude [int])
   (:require-macros
-    [bootstrap.code             :as code])
+   [bootstrap.code             :as code])
   (:require
-    [clojure.string             :as string]
-    [bootstrap.core             :as core]
-    [bootstrap.grid             :as grid]
-    [bootstrap.meta             :as meta]
-    [bootstrap.list             :as list]
-    [bootstrap.page             :as page]
-    [bootstrap.tabs             :as tabs]
-    [bootstrap.glyph            :as glyph]
-    [bootstrap.panel            :as panel]
-    [bootstrap.button           :as button]
-    [bootstrap.navbar           :as navbar]
-    [tailrecursion.hoplon.util  :as hutil]))
+   [io.hoplon                  :as hoplon]
+   [io.hoplon.examples.bmi     :as bmi]
+   [io.hoplon.examples.counter :as counter]
+   [clojure.string             :as string]
+   [bootstrap.core             :as core]
+   [bootstrap.grid             :as grid]
+   [bootstrap.meta             :as meta]
+   [bootstrap.list             :as list]
+   [bootstrap.page             :as page]
+   [bootstrap.tabs             :as tabs]
+   [bootstrap.glyph            :as glyph]
+   [bootstrap.panel            :as panel]
+   [bootstrap.button           :as button]
+   [bootstrap.navbar           :as navbar]
+   [tailrecursion.hoplon.util  :as hutil]))
 
 (def route (hutil/route-cell 10 "#/home/"))
 
@@ -33,7 +36,8 @@
   (.run js/Hyphenator))
 
 (def-values
-  [page-setup nav-bar
+  [page-setup
+   nav-bar
    content-home
    content-getting-started
    content-docs
@@ -42,110 +46,26 @@
   (page/navbar-fixed-top
     route
     "Hoplon"
-    "Hoplon"
     [(a :href "#/home/"                       "Home") (div)]
     [(a :href "#/getting-started/" "Getting Started") (core/container)]
     [(a :href "#/docs/"                       "Docs") (core/container)]
     [(a :href "#/community/"             "Community") (core/container)]
     [(a :href hoplon-url :target "_blank"   "GitHub") (core/container)]))
 
-(def indexed (partial map-indexed list))
-
 (defc gs-tasks {:cur nil :toc []})
 (defc gs-tips  {:cur nil :toc []})
 
-(defelem jump-to-toc [{:keys [tocs]} _]
-  (a :class "topfix" :do-scroll-to (cell= (some zero? (map :cur tocs)))))
+(def gs-info (partial hoplon/gs-block :type :info))
+(def gs-task (partial hoplon/gs-block :toc gs-tasks :type :primary))
+(def gs-tip  (partial hoplon/gs-block :toc gs-tips  :type :warning))
 
-(defelem table-of-contents [{:keys [size toc]} _]
-  (let [toc* (cell= (indexed (:toc toc)))]
-    (ul :class "list-unstyled"
-      (loop-tpl
-        :size size
-        :bindings [[i title] toc*]
-        (li (a
-              :style "cursor:pointer;"
-              :on-click #(do (swap! toc assoc :cur nil)
-                             (swap! toc assoc :cur (inc @i)))
-              (text "~{title}")))))))
-
-(defelem gs-block [{:keys [toc type title]} kids]
-  (when toc (swap! toc update-in [:toc] conj title))
-  (panel/default :class (str "panel-" (name type))
-    (when toc
-      (a
-        :class "topfix"
-        :do-scroll-to (cell= (= ~(count (:toc @toc)) (:cur toc)))))
-    (panel/heading
-      (panel/title title))
-    (panel/body
-      kids
-      (when toc
-        (div :style "text-align:center"
-          (a :on-click #(do (swap! toc assoc :cur nil)
-                            (swap! toc assoc :cur 0))
-            "back to top"))))))
-
-(def gs-info (partial gs-block :type :info))
-(def gs-task (partial gs-block :toc gs-tasks :type :primary))
-(def gs-tip  (partial gs-block :toc gs-tips  :type :warning))
-
-(defc example     1)
-(defc bmi-height  180)
-(defc bmi-weight  800)
-
-(defc task2syntax 0)
-
-(defelem my-list [attrs children]
-  (let [heading (b)
-         body    (ul)
-         widget  (div :class "my-list" (heading) (body))]
-    (on-append! widget
-      (fn [{:keys [title] :as attrs} children]
-        (when title (do! heading :text title))
-        (add-attributes! widget (dissoc attrs :title))
-        (apply body (map li children))))
-    (apply widget attrs children)))
-
-(defc= bmi
-  (let [h (/ bmi-height 100)
-        w (/ bmi-weight 10)]
-    (/ w (* h h))))
-
-(defc= bmi-msg
-  (cond
-    (< bmi 18.5) ["underweight" "orange"]
-    (< bmi 25.0) ["normal"      "inherit"]
-    (< bmi 30.0) ["overweight"  "orange"]
-    :else        ["obese"       "red"]))
+(defc example  1)
 
 (def int js/parseInt)
 (def calc-op {"+" + "-" - "*" * "/" /})
 (defc calc-x 0)
 (defc calc-y 0)
 (defc calc-z +)
-
-(defn counter-code []
-  (code/highlight :clj
-    ;;{{
-    (page "index.html")
-
-    (defc clicks 0)
-
-    (html
-      (head)
-      (body
-        (text "Clicks so far: ~{clicks} ")
-        (button :on-click #(swap! clicks inc) "click me!")))
-    ;;}}
-    ))
-
-(defn counter-ex []
-  (let [clicks (cell 0)]
-    (panel/default
-      (panel/body
-        (text "Clicks so far: ~{clicks} ")
-        (button :on-click #(swap! clicks inc) "click me!")))))
 
 (defn calc-code []
   (code/highlight :clj
@@ -383,10 +303,6 @@
           (h4 "Baz")
           (p "Content for tab 2."))))))
 
-(def video-dims         {:width 523 :height 392})
-(def video-url          "//www.youtube-nocookie.com/embed/XQu8TTBmGhA")
-(def video-thumb-url    "http://img.youtube.com/vi/XQu8TTBmGhA/0.jpg")
-
 (defn copyright-footer []
   (footer :style "padding:30px 0px;"
     (div :style "text-align:center;"
@@ -400,11 +316,9 @@
 (html :lang "en"
   (head
     (meta :charset "utf-8")
-    (meta :name "viewport"    :content "width=device-width, initial-scale=1.0")
+    page-setup
     (meta :name "keywords"    :content "clojure, clojurescript, cqrs, castra, cljson, spa")
     (meta :name "description" :content "Hoplon provides a number of libraries promoting a simpler model for Clojure/ClojureScript web applications.")
-    (link :href "css/bootstrap.min.css"     :rel "stylesheet" :media "screen")
-    (link :href "css/starter-template.css"  :rel "stylesheet" :media "screen")
     (title "Hoplon • A simpler way to program the web with Clojure and ClojureScript"))
   (body
     (nav-bar)
@@ -590,17 +504,6 @@
               of the DOM and the linkages between the DOM and cells are
               defined, the user interface manages itself."))
           (grid/col6
-            (comment
-              (h2 (small "Screencast"))
-              (panel/default
-                (panel/body
-                  (iframe
-                    :class "center-block"
-                    :width (:width video-dims)
-                    :height (:height video-dims)
-                    :src video-url
-                    :frameborder "0"
-                    :allowfullscreen true))))
             (h2 (small "Examples"))
             (list/divgroup
               (list/divitem
@@ -682,154 +585,11 @@
                     changes to the DOM.")
                   (hr)
                   (p :class "text-muted" "The demo:")
-                  (panel/default
-                    (panel/body
-                      (div
-                        (form
-                          (div :class "form-group"
-                            (label (text "Height (~{bmi-height} cm)"))
-                            (input
-                              :on-change #(reset! bmi-height (val-id "bmi-ht"))
-                              :id     "bmi-ht"
-                              :class  "form-control"
-                              :type   "range"
-                              :min    0
-                              :max    250
-                              :value  @bmi-height))
-                          (div :class "form-group"
-                            (label (text "Weight (~(.toFixed (/ bmi-weight 10) 1) kg)"))
-                            (input
-                              :on-change #(reset! bmi-weight (val-id "bmi-wt"))
-                              :id     "bmi-wt"
-                              :class  "form-control"
-                              :type   "range"
-                              :min    0
-                              :max    1500
-                              :value  @bmi-weight))
-                          (div :class "form-group"
-                            (label
-                              (text "BMI ~(.toFixed bmi 1) (~(first bmi-msg))"))
-                            (input
-                              :do-css (cell= {:background-color (second bmi-msg)})
-                              :readonly   true
-                              :class      "form-control"
-                              :type       "range"
-                              :min        0
-                              :max        500
-                              :do-value   (cell= (* bmi 10))))))))
+                  (panel/default (panel/body (bmi/demo)))
                   (p :class "text-muted" "The cells:")
-                  (code/highlight :clj
-                    ;;{{
-                    (def height (cell 180)) ; height in cm
-                    (def weight (cell  80)) ; weight in kg
-
-                    (def bmi ; formula: [bmi, description, color]
-                      (cell=
-                        (let [htm (/ height 100) ; height in meters
-                              bmi (/ weight (* htm htm))]
-                          (cond
-                            (< bmi 18.5) [bmi "underweight"  "orange"]
-                            (< bmi 25.0) [bmi "normal"      "inherit"]
-                            (< bmi 30.0) [bmi "overweight"   "orange"]
-                            :else        [bmi "obese"           "red"]))))
-                    ;;}}
-                    )
+                  (bmi/code)
                   (p :class "text-muted" "The user interface:")
-                  (code/highlight :clj
-                    ;;{{
-                    ;; Some details related to <input type="range">
-                    ;; have been omitted for clarity.
-                    (form
-                      (label (text "Height (~{height} cm)"))
-                      (input
-                        :id "bmi-h"
-                        :value @height
-                        :on-change #(reset! height (val-id "bmi-h")))
-
-                      (label (text "Weight (~{weight} kg)"))
-                      (input
-                        :id "bmi-w"
-                        :value @weight
-                        :on-change #(reset! weight (val-id "bmi-w")))
-
-                      (label (text "BMI ~(first bmi) (~(second bmi))"))
-                      (input
-                        :do-value (cell= (first bmi))
-                        :do-css (cell= {:background-color (nth bmi 2)})))
-                    ;;}}
-                    )))
-              (list/divitem :on-click #(reset! example 3)
-                (a :class "topfix" :do-scroll-to (cell= (= example 3)))
-                (a
-                  :do-toggle (cell= (not= example 3))
-                  (panel/title "List Component"))
-                (div
-                  :do-toggle (cell= (= example 3))
-                  (panel/title "List Component")
-                  (hr)
-                  (p
-                    "This is an example of a custom element, or component. The "
-                    (em "on-append!")
-                    " function is used to provide the implementation for
-                    appending children and setting attributes. This ensures
-                    that children are, in this case, properly wrapped in list
-                    item elements and appended to the inner unordered list
-                    instead of to the outermost element. A special "
-                    (em "title")
-                    " attribute is also implemented here that sets the text of
-                    the inner bold element.")
-                  (p
-                    "By implementing the HTML semantic this component becomes
-                    a first-class DOM element. It can be used in page markup
-                    and it can be passed around without any need for the
-                    recipient to understand its internal structure. It can be
-                    combined with other elements at any level to create more
-                    complex components.")
-                  (hr)
-                  (p :class "text-muted" "The demo:")
-                  (panel/default
-                    (panel/body
-                      (div
-                        (p "See the list component below.")
-                        (hr)
-                        (my-list :title "Items:"
-                          (span "item one")
-                          (span "item two")
-                          (span "item three")))))
-                  (p :class "text-muted" "The component constructor:")
-                  (code/highlight :clj
-                    ;;{{
-                    ;; Define custom element <my-list>.
-                    (defelem my-list [attrs children]
-                      (let [head (b)    ; Obtain references to inner
-                            body (ul)   ; container elements.
-                            this (div :class "my-list" (head) (body))]
-                        ;; Implement appendChild/setAttribute.
-                        (on-append! this
-                          (fn [{:keys [title] :as attrs} children]
-                            ;; The "title" attribute sets title text.
-                            (when title (do! head :text title))
-                            ;; Other attributes are set on outer div.
-                            (add-attributes! this (dissoc attrs :title))
-                            ;; Children are wrapped in <li>s and
-                            ;; appended to inner <ul> element.
-                            (apply body (map li children))))
-                        ;; Initialize element.
-                        (apply this attrs children)))
-                    ;;}}
-                    )
-                  (p :class "text-muted" "The page markup:")
-                  (code/highlight :clj
-                    ;;{{
-                    (div
-                      (p "See the list component below.")
-                      (hr)
-                      (my-list :title "Items:"
-                        (span "item one")
-                        (span "item two")
-                        (span "item three")))
-                    ;;}}
-                    ))))
+                  (bmi/markup))))
             (panel/default
               (panel/heading
                 (panel/title "Architecture"))
@@ -846,7 +606,8 @@
 
     (content-getting-started
       (grid/row
-        (grid/col12
+        (grid/col2)
+        (grid/col8
           (h1
             "Getting Started" (br)
             (small "Build a Hoplon application from scratch."))
@@ -861,14 +622,14 @@
             applications.")
 
           (br)
-          (jump-to-toc :tocs (cell= [gs-tasks]))
+          (hoplon/jump-to-toc :tocs (cell= [gs-tasks]))
           (panel/default
             (panel/heading
               (panel/title "Table of Contents"))
             (panel/body
               (grid/row
                 (grid/col12
-                  (table-of-contents :size 10 :toc gs-tasks)))))
+                  (hoplon/table-of-contents :size 10 :toc gs-tasks)))))
 
           (gs-info :title "System Requirements (Compiler)"
             (ul
@@ -971,12 +732,14 @@
             (p
               "Modify the " (code "index.cljs.hl") " page such that it contains
               the following:")
-            (counter-code)
+            (counter/code)
             (p
               "If the compiler is still running in another terminal the
               application will be recompiled. Reload the page and click the
               button a few times. You should see something like this:")
-            (counter-ex))
+            (panel/default
+              (panel/body
+                (counter/demo))))
 
           (gs-task :title "Task 4: A simple calculator."
             (p
@@ -1025,17 +788,7 @@
               and state transition functions that modify the underlying input
               cells as a side effect. This is known as the "
               (a :href cqrs-url :target "_blank" "CQRS pattern") " and forms the
-              basic architecture of a Hoplon single-page app.")
-            (p
-              "Since " (code "loop-tpl") " is a macro that generates markup/code
-              at compile time, it is essentially performing static allocation of
-              DOM elements. This is a key concept in the Hoplon model. In Hoplon
-              the DOM is strictly an I/O mechanism. As always, it turns out that
-              static allocation of I/O resources provides great advantages by
-              reducing the complexity of the application's state, eliminating
-              the need to manage these resources explicitly. (DOM elements, like
-              file descriptors, are not subject to garbage collection and must
-              be explicitly removed from the DOM when no longer needed.)"))
+              basic architecture of a Hoplon single-page app."))
 
           (gs-task :title "Task 6: Add static resources."
             (p
@@ -1077,7 +830,7 @@
               whenever anything in there changes).")
             (p "In order to use bootstrap, the html head tag must contain a
               link to the bootstrap css file. Change " (code "(head)") " to:")
-            (code/highlight :none
+            (code/highlight :clj
               ;;{{
               (head
                 (link :href "css/bootstrap.css" :rel "stylesheet"))
@@ -1128,19 +881,20 @@
 
     (content-docs
       (grid/row
-        (grid/col12
+        (grid/col2)
+        (grid/col8
           (h1
             "Docs" (br)
             (small "Basic Hoplon docs."))
           (hr)
-          (jump-to-toc :tocs (cell= [gs-tips]))
+          (hoplon/jump-to-toc :tocs (cell= [gs-tips]))
           (panel/default
             (panel/heading
               (panel/title "Table of Contents"))
             (panel/body
               (grid/row
                 (grid/col12
-                  (table-of-contents :size 10 :toc gs-tips)))))
+                  (hoplon/table-of-contents :size 10 :toc gs-tips)))))
 
           (gs-tip :title "External JS Libs And Extern Files"
             (code/markdown
