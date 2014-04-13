@@ -293,8 +293,7 @@
 
     (defelem tabs
       [{:keys [state] :as attr :or {state (cell 0)}} kids]
-      (let [ctnr (div (dissoc attr :state))
-            [trigs conts] (->> kids (partition 2) (apply map list))
+      (let [[trigs conts] (->> kids (partition 2) (apply map list))
             a-void #(a :href "javascript:void(0)" %)
             mktrig #(trigger :state state :tab %1 (li (a-void %2)))
             mkcont #(content :state state :tab %1 (%2 :class "tab-pane"))]
@@ -908,10 +907,9 @@
               ;;}}
               )
               (p
-                "If lein complains that it 'Could not find template hoplon on the classpath.',
-                 it may mean that you need a more recent version of lein. The command "
-                 (code "lein upgrade") " may help.")
-            )
+                "If lein complains that it 'Could not find template hoplon on
+                the classpath.', it may mean that you need a more recent version
+                of lein. The command " (code "lein upgrade") " may help."))
 
           (gs-task :title "Task 2: Compile the project."
             (p "In another terminal do the following in the project directory:")
@@ -1044,34 +1042,28 @@
               "Now it’s time to add some static resources to the project. For
               example, adding the "
               (a :href bootstrap-url :target "_blank" "Twitter Bootstrap")
-              ". If you look in " (code "build.boot") " file, you'll see that it contains the following:")
+              " CSS stylesheets might help to get things looking fancy.
+              If you look in " (code "build.boot") " file, you'll see that it
+              contains the following:")
             (code/highlight :clj
               ;;{{
-              :src-static #{"resources/assets"}
+              (add-sync! (get-env :out-path) #{"assets"})
               ;;}}
               )
             (p
-              "This defines the location of static assets in your project. Download Bootstrap
-              and copy the CSS files into the directory. Create two additional directories, 'fonts',
-              and 'js' in assets; copy the bootstrap font files into fonts directory, and the js files into js directory.
-              The project directory should be organized something like this now:")
+              "This defines the location of static assets in your project.
+              Download Bootstrap and copy the " (code "bootstrap.css") " file
+              into the " (code "assets/css") " directory. The project directory
+              should be organized something like this now:")
             (code/highlight :none
               ;;{{
               .
               ├── build.boot
+              ├── assets
+              │   └── css
+              │       ├── bootstrap.css
+              │       └── main.css
               ├── resources
-              │   ├── assets
-              │   │   ├── css
-              │   │   │   ├── bootstrap-theme.css
-              │   │   │   ├── ...
-              │   │   │   └── bootstrap.min.css
-              │   │   ├── fonts
-              │   │   │   ├── glyphicons-halflings-regular.eot
-              │   │   │   ├── ...
-              │   │   │   └── glyphicons-halflings-regular.woff
-              │   │   └── js
-              │   │       ├── bootstrap.js
-              │   │       └── bootstrap.min.jss
               │   └── public
               │       ├── index.html
               │       └── main.js
@@ -1080,17 +1072,18 @@
               ;;}}
               )
             (p
-              "(various css and font files have been omitted for brevity). Restart the compiler and see how the "
-             (code "css, fonts, and js") "directories are copied over into the output directory automatically (and
+              "Restart the compiler and see how the " (code "css") " directory
+              is copied over into the output directory automatically (and
               whenever anything in there changes).")
-            (p "In order to use bootstrap, the html head tag must contain a link to the bootstrap css file. Change " (code "(head)") " to ")
-         (code/highlight :none
-         ;;{{
-           (head
-             (link :href "css/bootstrap.min.css" :rel "stylesheet"))    
-         ;;}}
-         ) 
-           (p
+            (p "In order to use bootstrap, the html head tag must contain a
+              link to the bootstrap css file. Change " (code "(head)") " to:")
+            (code/highlight :none
+              ;;{{
+              (head
+                (link :href "css/bootstrap.css" :rel "stylesheet"))
+              ;;}}
+              )
+            (p
               "This is enough to bring in the bootstrap look and feel."))
 
           (gs-task :title "Task 7: Create a “tabs” abstraction."
