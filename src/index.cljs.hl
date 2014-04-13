@@ -36,6 +36,7 @@
   [page-setup nav-bar
    content-home
    content-getting-started
+   content-docs
    content-community
    content-github]
   (page/navbar-fixed-top
@@ -44,6 +45,7 @@
     "Hoplon"
     [(a :href "#/home/"                       "Home") (div)]
     [(a :href "#/getting-started/" "Getting Started") (core/container)]
+    [(a :href "#/docs/"                       "Docs") (core/container)]
     [(a :href "#/community/"             "Community") (core/container)]
     [(a :href hoplon-url :target "_blank"   "GitHub") (core/container)]))
 
@@ -844,7 +846,7 @@
 
     (content-getting-started
       (grid/row
-        (grid/col6
+        (grid/col12
           (h1
             "Getting Started" (br)
             (small "Build a Hoplon application from scratch."))
@@ -859,16 +861,14 @@
             applications.")
 
           (br)
-          (jump-to-toc :tocs (cell= [gs-tasks gs-tips]))
+          (jump-to-toc :tocs (cell= [gs-tasks]))
           (panel/default
             (panel/heading
               (panel/title "Table of Contents"))
             (panel/body
               (grid/row
-                (grid/col6
-                  (table-of-contents :size 10 :toc gs-tasks))
-                (grid/col6
-                  (table-of-contents :size 10 :toc gs-tips)))))
+                (grid/col12
+                  (table-of-contents :size 10 :toc gs-tasks)))))
 
           (gs-info :title "System Requirements (Compiler)"
             (ul
@@ -1121,118 +1121,26 @@
               "index.html.hl"
               (tabs-code2h))
             (p "Compile and reload the page. You should see something like this:")
-            (tabs-ex))
-          )
+            (tabs-ex))))
 
-        (grid/col6
-          (h2 :style "color:transparent;" "asdf")
-          (gs-tip :title "Boot Configuration"
-            (p
-              "There are a few keys in the " (code "boot.edn") " configuration
-              file that are important when building Hoplon applications.
-              Understanding how these keys work will help you to organize your
-              Hoplon project in a way that works best for your workflow and
-              deployment situation.")
-            (dl :class "dl-horizontal"
-              (dt (tt ":public"))
-              (dd
-                (p
-                  "The output directory for the Hoplon compiler. HTML and
-                  static content ends up here. This is where you point your
-                  webserver's document root."))
-              (dt (tt ":src-paths"))
-              (dd
-                (p
-                  "A set of paths in which the build process looks for source
-                  files to compile. These directories can contain Hoplon,
-                  Clojure, ClojureScript, JavaScript, or any other type of
-                  source file. The various compilers generally dispatch on
-                  filename extension, so the directory structure is pretty
-                  much up to you. The file watcher monitors these directories
-                  for changes and recompiles the project when necessary."))
-              (dt (tt ":src-static"))
-              (dd
-                (p
-                  "A set of paths containing the static content for the
-                  project. This may include external JavaScript files, CSS
-                  stylesheets, images, etc. The contents of these directories
-                  are merged into the " (tt ":public") " directory after
-                  compilation, and any subdirectory structure is overlayed.")))
-            (p
-              "Also, it's a good idea to set up your " (code ".gitignore")
-              " file correctly, because the boot watch task uses your "
-              (tt "git(1)") " configuration to determine which files will
-              trigger recompiling and which will be ignored."))
+      (hr)
+      (copyright-footer))
 
-          (gs-tip :title "Hoplon Boot Options"
-            (p
-              "Hoplon source files are compiled by the Hoplon compiler. The
-              easiest way to do this is to use the " (code "hoplon") " boot
-              task. Options to boot tasks can be specified by wrapping the
-              task name and arguments in a vector. (Boot reads in the command
-              line arguments as an EDN string.) The " (code "hoplon") " task
-              takes a single command line argument–a map of key/value options.")
-            (p
-              "The options map may include options to be passed to the
-              ClojureScript compiler (" (code ":optimizations") ", "
-              (code ":source-map") ", etc.). Setting the " (code ":prerender")
-              " key to false will disable the “prerendering” of
-              DOM content in " (tt "phantomjs(1)") ", which speeds up the
-              compilation process at the expense of SEO (handy when developing
-              but probably not ideal for production builds).")
-            (p
-              "A typical development build invocation could look something like
-              this:")
-            (code/highlight :bash
-              ;;{{
-              $ boot watch [hoplon {:prerender false :optimizations :whitespace :pretty-print true}]
-              ;;}}
-              )
-            (p "Production builds could look something like this:")
-            (code/highlight :bash
-              ;;{{
-              $ boot [hoplon {:optimizations :advanced}]
-              ;;}}
-              )
-            (p
-              "Command line arguments can be specified in the project "
-              (code "boot.edn") " file as their own tasks by adding entries to
-              the " (code ":tasks") " key. The above examples could be added as
-              tasks like this:")
-            (code/highlight :clj
-              ;;{{
-              ; boot.edn
-              {:dependencies  ...
-               :require-tasks ...
-               :public        ...
-               :src-paths     ...
-               :tasks
-               {:development  {:doc  "Build project for development."
-                               :main [:hoplon {:prerender     false
-                                               :optimizations :whitespace
-                                               :pretty-print  true}]}
-                :production   {:doc  "Build project for production."
-                               :main [:hoplon {:optimizations :advanced}]}}}
-              ;;}}
-              )
-            (code/markdown
-              ;;{{
-              After adding these tasks to the `boot.edn` file they will appear
-              in the list of tasks that are displayed.
-              ;;}}
-              )
-            (code/highlight :bash
-              ;;{{
-              # display list of available tasks
-              $ boot help
-
-              # build for development
-              $ boot watch development
-
-              # build for production
-              $ boot production
-              ;;}}
-              ))
+    (content-docs
+      (grid/row
+        (grid/col12
+          (h1
+            "Docs" (br)
+            (small "Basic Hoplon docs."))
+          (hr)
+          (jump-to-toc :tocs (cell= [gs-tips]))
+          (panel/default
+            (panel/heading
+              (panel/title "Table of Contents"))
+            (panel/body
+              (grid/row
+                (grid/col12
+                  (table-of-contents :size 10 :toc gs-tips)))))
 
           (gs-tip :title "External JS Libs And Extern Files"
             (code/markdown
@@ -1527,12 +1435,120 @@
               " method. This illustrates the I/O model in Hoplon: output
               reactively updates the DOM in relation to the underlying state via
               formula cells, while input updates the underlying state via events
-              emitted by the DOM.")
-            )
+              emitted by the DOM."))
+
+          #_(gs-tip :title "Boot Configuration"
+            (p
+              "There are a few keys in the " (code "build.boot") " configuration
+              file that are important when building Hoplon applications.
+              Understanding how these keys work will help you to organize your
+              Hoplon project in a way that works best for your workflow and
+              deployment situation.")
+            (dl :class "dl-horizontal"
+              (dt (tt ":out-path"))
+              (dd
+                (p
+                  "The output directory for the Hoplon compiler. HTML and
+                  static content ends up here. This is where you point your
+                  webserver's document root."))
+              (dt (tt ":src-paths"))
+              (dd
+                (p
+                  "A set of paths in which the build process looks for source
+                  files to compile. These directories can contain Hoplon,
+                  Clojure, ClojureScript, JavaScript, or any other type of
+                  source file. The various compilers generally dispatch on
+                  filename extension, so the directory structure is pretty
+                  much up to you. The file watcher monitors these directories
+                  for changes and recompiles the project when necessary."))
+              #_(dt (tt ":src-static"))
+              #_(dd
+                (p
+                  "A set of paths containing the static content for the
+                  project. This may include external JavaScript files, CSS
+                  stylesheets, images, etc. The contents of these directories
+                  are merged into the " (tt ":public") " directory after
+                  compilation, and any subdirectory structure is overlayed.")))
+            (p
+              "Also, it's a good idea to set up your " (code ".gitignore")
+              " file correctly, because the boot watch task uses your "
+              (tt "git(1)") " configuration to determine which files will
+              trigger recompiling and which will be ignored."))
+
+          #_(gs-tip :title "Hoplon Boot Options"
+            (p
+              "Hoplon source files are compiled by the Hoplon compiler. The
+              easiest way to do this is to use the " (code "hoplon") " boot
+              task. Options to boot tasks can be specified by wrapping the
+              task name and arguments in a vector. (Boot reads in the command
+              line arguments as an EDN string.) The " (code "hoplon") " task
+              takes a single command line argument–a map of key/value options.")
+            (p
+              "The options map may include options to be passed to the
+              ClojureScript compiler (" (code ":optimizations") ", "
+              (code ":source-map") ", etc.). Setting the " (code ":prerender")
+              " key to false will disable the “prerendering” of
+              DOM content in " (tt "phantomjs(1)") ", which speeds up the
+              compilation process at the expense of SEO (handy when developing
+              but probably not ideal for production builds).")
+            (p
+              "A typical development build invocation could look something like
+              this:")
+            (code/highlight :bash
+              ;;{{
+              $ boot watch [hoplon {:prerender false :optimizations :whitespace :pretty-print true}]
+              ;;}}
+              )
+            (p "Production builds could look something like this:")
+            (code/highlight :bash
+              ;;{{
+              $ boot [hoplon {:optimizations :advanced}]
+              ;;}}
+              )
+            (p
+              "Command line arguments can be specified in the project "
+              (code "boot.edn") " file as their own tasks by adding entries to
+              the " (code ":tasks") " key. The above examples could be added as
+              tasks like this:")
+            (code/highlight :clj
+              ;;{{
+              ; boot.edn
+              {:dependencies  ...
+               :require-tasks ...
+               :public        ...
+               :src-paths     ...
+               :tasks
+               {:development  {:doc  "Build project for development."
+                               :main [:hoplon {:prerender     false
+                                               :optimizations :whitespace
+                                               :pretty-print  true}]}
+                :production   {:doc  "Build project for production."
+                               :main [:hoplon {:optimizations :advanced}]}}}
+              ;;}}
+              )
+            (code/markdown
+              ;;{{
+              After adding these tasks to the `boot.edn` file they will appear
+              in the list of tasks that are displayed.
+              ;;}}
+              )
+            (code/highlight :bash
+              ;;{{
+              # display list of available tasks
+              $ boot help
+
+              # build for development
+              $ boot watch development
+
+              # build for production
+              $ boot production
+              ;;}}
+              ))
           ))
 
       (hr)
       (copyright-footer))
+
 
     (content-community
       (grid/row
