@@ -1,0 +1,39 @@
+(ns io.hoplon
+  (:require
+   [bootstrap.panel :as panel]))
+
+(def indexed (partial map-indexed list))
+
+(defelem jump-to-toc
+  [{:keys [tocs]} _]
+  (a :class "topfix" :do-scroll-to (cell= (some zero? (map :cur tocs)))))
+
+(defelem table-of-contents
+  [{:keys [size toc]} _]
+  (let [toc* (cell= (indexed (:toc toc)))]
+    (ul :class "list-unstyled"
+      (loop-tpl :bindings [[i title] toc*]
+        (li
+          (a
+            :style "cursor:pointer;"
+            :on-click #(do (swap! toc assoc :cur nil)
+                           (swap! toc assoc :cur (inc @i)))
+            (text "~{title}")))))))
+
+(defelem gs-block
+  [{:keys [toc type title]} kids]
+  (when toc (swap! toc update-in [:toc] conj title))
+  (panel/default :class (str "panel-" (name type))
+    (when toc
+      (a
+        :class "topfix"
+        :do-scroll-to (cell= (= ~(count (:toc @toc)) (:cur toc)))))
+    (panel/heading
+      (panel/title title))
+    (panel/body
+      kids
+      (when toc
+        (div :style "text-align:center"
+          (a :on-click #(do (swap! toc assoc :cur nil)
+                            (swap! toc assoc :cur 0))
+            "back to top"))))))
