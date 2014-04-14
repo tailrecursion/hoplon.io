@@ -1,0 +1,521 @@
+(ns io.hoplon.content.getting-started
+  (:require-macros
+    [bootstrap.code             :as code])
+  (:require
+    [io.hoplon                  :as hoplon]
+    [bootstrap.grid             :as grid]
+    [bootstrap.panel            :as panel]
+    [bootstrap.tabs             :as tabs]
+    [io.hoplon.examples.counter :as counter]
+    [io.hoplon.content.shared   :refer [hoplon-demos-url boot-url bootstrap-url
+                                        cqrs-url
+                                        copyright-footer]]
+    [clojure.string             :as string]
+    ))
+
+(defn calc-code []
+  (code/highlight :clj
+    ;;{{
+    (page "index.html"
+      (:refer-clojure :exclude [int]))
+
+    (def int js/parseInt)
+    (def ops {"+" + "-" - "*" * "/" /})
+
+    (defc  x      0)
+    (defc  y      0)
+    (defc  op     +)
+    (defc= result (op x y))
+
+    (html
+      (head)
+      (body
+        (input
+          :id "x"
+          :type "text"
+          :value "0"
+          :on-change #(reset! x (int (val-id "x"))))
+        (select
+          :id "op"
+          :on-change #(reset! op (ops (val-id "op")))
+          (option :value "+" :selected true "+")
+          (option :value "-" "-")
+          (option :value "*" "*")
+          (option :value "/" "/"))
+        (input
+          :id "y"
+          :type "text"
+          :value "0"
+          :on-change #(reset! y (int (val-id "y"))))
+        (text " = ~{result}")))
+    ;;}}
+    ))
+
+(defn calc-ex []
+  (let [x (cell 0)
+        y (cell 0)
+        op (cell +)
+        ops {"+" + "-" - "*" * "/" /}]
+    (panel/default
+      (panel/body
+        (input
+          :id "calc-x"
+          :type "text"
+          :value @x
+          :on-change #(reset! x (int (val-id "calc-x"))))
+        (select
+          :id "calc-op"
+          :style "margin-left:15px;margin-right:15px;"
+          :on-change #(reset! op (ops (val-id "calc-op")))
+          (option :value "+" :selected true "+")
+          (option :value "-" "-")
+          (option :value "*" "*")
+          (option :value "/" "/"))
+        (input
+          :id "calc-y"
+          :type "text"
+          :value @y
+          :on-change #(reset! y (int (val-id "calc-y"))))
+        (text " = ~(op x y)")))))
+
+(defn loop-code1 []
+  (code/highlight :clj
+    ;;{{
+    (page "index.html")
+
+    (defc things ["one" "two" "three"])
+
+    (html
+      (head)
+      (body
+        (ul
+          (loop-tpl :bindings [x things]
+            (li @x)))))
+    ;;}}
+    ))
+
+(defn loop-ex1 []
+  (let [xs (cell ["one" "two" "three"])]
+    (panel/default
+      (panel/body
+        (ul
+          (loop-tpl :size 3 :bindings [x xs]
+            (li @x)))))))
+
+(defn loop-code2 []
+  (code/highlight :clj
+    ;;{{
+    (page "index.html"
+      (:require
+       [clojure.string :refer [upper-case lower-case]]))
+    ;; State machine private
+    (defc  uc?    false)
+    (defc  things [{:text "one"} {:text "two"} {:text "three"}])
+    (defc= case   (if uc? upper-case lower-case))
+
+    ;; State machine public API
+    (defc= state  (mapv #(update-in % [:text] case) things))
+    (defn toggle-case! [_] (swap! uc? not))
+
+    ;; Presentation (uses public API)
+    (html
+      (head)
+      (body
+        (ul
+          (loop-tpl :bindings [{x :text} state]
+            (li (text "~{x}"))))
+        (button :on-click toggle-case! "toggle case")))
+    ;;}}
+    ))
+
+(defn loop-ex2 []
+  (let [u? (cell false)
+        uc (cell= (if u? string/upper-case string/lower-case))
+        xs (cell [{:text "one"} {:text "two"} {:text "three"}])
+        st (cell= (mapv #(update-in % [:text] uc) xs))]
+    (panel/default
+      (panel/body
+        (ul
+          (loop-tpl :size 3 :bindings [{x :text} st]
+            (li (text "~{x}"))))
+        (button :on-click #(swap! u? not) "toggle case")))))
+
+(defn tabs-code []
+  (code/highlight :clj
+    ;;{{
+    (ns ui.tabs)
+
+    (defelem active
+      [{:keys [state]} [elem]]
+      (elem :do-class (cell= {:active state})))
+
+    (defelem trigger
+      [{:keys [state tab]} [elem]]
+      (active :state (cell= (= state tab))
+        (elem :on-click #(reset! state tab))))
+
+    (defelem content
+      [{:keys [state tab]} [elem]]
+      (active :state (cell= (= state tab)) elem))
+
+    (defelem tabs
+      [{:keys [state] :as attr :or {state (cell 0)}} kids]
+      (let [[trigs conts] (->> kids (partition 2) (apply map list))
+            a-void #(a :href "javascript:void(0)" %)
+            mktrig #(trigger :state state :tab %1 (li (a-void %2)))
+            mkcont #(content :state state :tab %1 (%2 :class "tab-pane"))]
+        (div (dissoc attr :state)
+          (ul :class "nav nav-tabs" (map-indexed mktrig trigs))
+          (div :class "tab-content" (map-indexed mkcont conts)))))
+    ;;}}
+    ))
+
+(defn tabs-code2 []
+  (code/highlight :clj
+    ;;{{
+    (page "index.html"
+      (:require [ui.tabs :as tabs]))
+
+    (html
+      (head
+        (link :rel "stylesheet" :href "css/bootstrap.css"))
+      (body
+        (tabs/tabs
+          (span "Zero")
+          (div
+            (h4 "Foo")
+            (p "Content for tab 0."))
+          (span "One")
+          (div
+            (h4 "Bar")
+            (p "Content for tab 1."))
+          (span "Two")
+          (div
+            (h4 "Baz")
+            (p "Content for tab 2.")))))
+    ;;}}
+    ))
+
+(defn tabs-code2h []
+  (code/highlight :xml
+    ;;{{
+    <script type="text/hoplon">
+      (page "index.html"
+        (:require [ui.tabs :as tabs]))
+    </script>
+
+    <html>
+      <head>
+        <link rel="stylesheet" href="css/bootstrap.css">
+      </head>
+      <body>
+        <tabs.tabs>
+          <span>Zero</span>
+          <div>
+            <h4>Foo</h4>
+            <p>Content for tab 0.</p>
+          </div>
+          <span>One</span>
+          <div>
+            <h4>Bar</h4>
+            <p>Content for tab 1.</p>
+          </div>
+          <span>Two</span>
+          <div>
+            <h4>Baz</h4>
+            <p>Content for tab 2.</p>
+          </div>
+        </tabs.tabs>
+      </body>
+    </html>
+    ;;}}
+    ))
+
+(defn tabs-ex []
+  (panel/default
+    (panel/body
+      (tabs/tabs
+        (span "Zero")
+        (div
+          (h4 "Foo")
+          (p "Content for tab 0."))
+        (span "One")
+        (div
+          (h4 "Bar")
+          (p "Content for tab 1."))
+        (span "Two")
+        (div
+          (h4 "Baz")
+          (p "Content for tab 2."))))))
+
+(defn show [gs-task gs-tasks gs-info]
+  (grid/row
+    (grid/col2)
+    (grid/col8
+      (h1
+        "Getting Started" (br)
+        (small "Build a Hoplon application from scratch."))
+      (hr)
+      (p
+        "This article will demonstrate how to build Hoplon applications.
+        A simple application will be developed incrementally. New features
+        will be added at each step, showing how different parts of Hoplon
+        are used. After running through the basics here, check out the "
+        (a :href hoplon-demos-url :target "_blank" "hoplon demos")
+        " repository to see some complete, self-contained example
+        applications.")
+
+      (br)
+      (hoplon/jump-to-toc :tocs (cell= [gs-tasks]))
+      (panel/default
+        (panel/heading
+          (panel/title "Table of Contents"))
+        (panel/body
+          (grid/row
+            (grid/col12
+              (hoplon/table-of-contents :size 10 :toc gs-tasks)))))
+
+      (gs-info :title "System Requirements (Compiler)"
+        (ul
+          (li "Java 6+")
+          (li "Leiningen 2")
+          (li "The " (a :href boot-url :target "_blank" "boot") " build tool.")))
+
+      (gs-info :title "Browser Compatibility"
+        (ul
+          (li "Chrome")
+          (li "Safari")
+          (li "Firefox")
+          (li "Internet Explorer 8+")))
+
+      (gs-task :title "Task 1: Create a new project."
+        (p
+          "The Hoplon Leiningen template can be used to create a simple
+          “hello world” project:")
+        (code/highlight :bash
+          ;;{{
+          $ lein new hoplon my-project
+          ;;}}
+          )
+        (p
+          "The new project directory should look like this:")
+        (code/highlight :none
+          ;;{{
+          .
+          ├── README.md
+          ├── build.boot
+          ├── assets
+          │   └── css
+          │       └── main.css
+          └── src
+          └── index.cljs.hl
+          ;;}}
+          )
+        (p
+          "If lein complains that it 'Could not find template hoplon on
+          the classpath.', it may mean that you need a more recent version
+          of lein. The command " (code "lein upgrade") " may help."))
+
+      (gs-task :title "Task 2: Compile the project."
+        (p "In another terminal do the following in the project directory:")
+        (code/highlight :bash
+          ;;{{
+          $ boot watch hoplon
+          ;;}}
+          )
+        (p
+          "This starts the Hoplon compiler in “watcher” mode–source
+          directories are monitored for changes and recompiled when
+          necessary. When it's finished compiling the project directory
+          should look something like this:")
+        (code/highlight :none
+          ;;{{
+          .
+          ├── README.md
+          ├── build.boot
+          ├── assets
+          │   └── css
+          │       └── main.css
+          ├── resources
+          │   └── public
+          │       ├── main.js
+          │       ├── index.html
+          │       └── css
+          │           └── main.css
+          └── src
+          └── index.cljs.hl
+          ;;}}
+          )
+        (p
+          "Options can be passed to the JVM by setting the " (code "JVM_OPTS")
+          " environment variable. For example, JVM heap space can be set to
+          1G like this:")
+        (code/highlight :bash
+          ;;{{
+          $ JVM_OPTS="-Xmx1g" boot watch hoplon
+          ;;}}
+          )
+        (p
+          "Load " (code "index.html") " in a browser and enjoy a friendly
+          greeting."))
+
+      (gs-task :title "Task 3: Add a counter."
+        (p
+          "Now we add a counter to the page that will keep track of how
+          many times a button was clicked. To do this we add an input
+          cell containing the click count to the environment, and link
+          it to UI elements for input and output interactions with the
+          user. Input will be click events on the button. Output will
+          be the contents of a text node displaying the current count.")
+        (p
+          "Button click events are wired up to the input cell with the "
+          (code ":on-click") " attribute. The " (code "text") " macro does
+          some string interpolation and wires the input cell to the value
+          of a text node such that it’s updated whenever the cell’s value
+          changes.")
+        (p
+          "Modify the " (code "index.cljs.hl") " page such that it contains
+          the following:")
+        (counter/code)
+        (p
+          "If the compiler is still running in another terminal the
+          application will be recompiled. Reload the page and click the
+          button a few times. You should see something like this:")
+        (panel/default
+          (panel/body
+            (counter/demo))))
+
+      (gs-task :title "Task 4: A simple calculator."
+        (p
+          "The next task is to build a simple calculator that can add,
+          subtract, multiply, or divide two integers. Modify the "
+          (code "index.cljs.hl") " file to contain the following:")
+        (calc-code)
+        (p "Compile and reload the page. You should see something like this:")
+        (calc-ex)
+        (p
+          "Notice how the presentation (the page markup) is effectively
+          decoupled from the application state (the cells). The
+          four cells that contain the application's state could be
+          defined in a different namespace, distributed in a jar
+          file, deployed to a Maven repository, and used in a
+          number of different pages. They form a well-defined API
+          for the frontend developer to hook into when developing
+          the page markup. This decoupling of presentation and
+          state is a key component of the Hoplon model."))
+
+      (gs-task :title "Task 5: Using the looping macro."
+        (p
+          "Most applications have sequential collections that need to be
+          displayed to the user in some kind of template. Hoplon provides
+          the " (code "loop-tpl") " macro that can be used in the page
+          markup to iterate over the collection.")
+        (loop-code1)
+        (p "Compile and reload the page. You should see something like this:")
+        (loop-ex1)
+        (p
+          "Note how " (code "loop-tpl") " iterates over the " (code "things")
+          " cell, binding each item to " (code "x") ", in turn. However,
+          notice that " (code "x") " needs to be dereferenced to be used in
+          the template. This is because " (code "x") " is actually bound to
+          a cell that always contains the nth item of the collection cell
+          and not to the item itself.")
+        (p
+          "Here is a more interesting example that uses destructuring in
+          the " (code ":bindings") " attribute:")
+        (loop-code2)
+        (p "Now when you reload the page you should see something like this:")
+        (loop-ex2)
+        (p
+          "Notice the organization of the public API for the page’s
+          underlying state machine: it consists of read-only formula cells
+          and state transition functions that modify the underlying input
+          cells as a side effect. This is known as the "
+          (a :href cqrs-url :target "_blank" "CQRS pattern") " and forms the
+          basic architecture of a Hoplon single-page app."))
+
+      (gs-task :title "Task 6: Add static resources."
+        (p
+          "Now it’s time to add some static resources to the project. For
+          example, adding the "
+          (a :href bootstrap-url :target "_blank" "Twitter Bootstrap")
+          " CSS stylesheets might help to get things looking fancy.
+          If you look in " (code "build.boot") " file, you'll see that it
+          contains the following:")
+        (code/highlight :clj
+          ;;{{
+          (add-sync! (get-env :out-path) #{"assets"})
+          ;;}}
+          )
+        (p
+          "This defines the location of static assets in your project.
+          Download Bootstrap and copy the " (code "bootstrap.css") " file
+          into the " (code "assets/css") " directory. The project directory
+          should be organized something like this now:")
+        (code/highlight :none
+          ;;{{
+          .
+          ├── build.boot
+          ├── assets
+          │   └── css
+          │       ├── bootstrap.css
+          │       └── main.css
+          ├── resources
+          │   └── public
+          │       ├── index.html
+          │       └── main.js
+          └── src
+          └── index.cljs.hl
+          ;;}}
+          )
+        (p
+          "Restart the compiler and see how the " (code "css") " directory
+          is copied over into the output directory automatically (and
+          whenever anything in there changes).")
+        (p "In order to use bootstrap, the html head tag must contain a
+          link to the bootstrap css file. Change " (code "(head)") " to:")
+        (code/highlight :clj
+          ;;{{
+          (head
+            (link :href "css/bootstrap.css" :rel "stylesheet"))
+          ;;}}
+          )
+        (p
+          "This is enough to bring in the bootstrap look and feel."))
+
+      (gs-task :title "Task 7: Create a “tabs” abstraction."
+        (p
+          "This task demonstrates how to create a UI kit library that can be
+          used in multiple pages. UI kits contain custom tags representing
+          user interface abstractions. One commonly used abstraction is the
+          “tabs” metaphor that everyone is familiar with.")
+        (p
+          "The new UI library should live in a separate namespace and
+          contain custom DOM elements to use in the application pages.
+          Create a new Hoplon source file, " (code "src/ui/tabs.cljs.hl")
+          " with the following contents:")
+        (tabs-code)
+        (p
+          "The " (code "defelem") " macro defines a function whose arguments
+          are “normalized” for the HTML markup semantic. It takes a vector
+          of bindings and a number of body expressions. The bindings vector
+          should bind the attribute map as the first argument and a sequence
+          of children as the second. This removes the need to explicitly
+          parse the arguments when the function is called in the page markup
+          with key/value arguments as attributes, etc.")
+        (p
+          "Notice how there is no need to " (code ":refer") " any of the
+          Hoplon or Javelin vars in the namespace declaration. The Hoplon
+          compiler does that automatically so you can just use "
+          (code "defelem") ", " (code "div") ", " (code "span") ", etc. in
+          the namespace without explicitly requiring them.")
+        (p
+          "Then modify " (code "index.cljs.hl") " such that it looks like
+          this, using the newly created " (code "tabs") " custom tag:")
+        (tabs/tabs
+          "index.cljs.hl"
+          (tabs-code2)
+          "index.html.hl"
+          (tabs-code2h))
+        (p "Compile and reload the page. You should see something like this:")
+        (tabs-ex)))))

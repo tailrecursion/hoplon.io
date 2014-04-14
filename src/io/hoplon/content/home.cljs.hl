@@ -1,0 +1,293 @@
+(ns io.hoplon.content.home
+  (:require-macros
+    [bootstrap.code             :as code])
+  (:require
+    [io.hoplon                :as hoplon]
+    [bootstrap.core              :as core]
+    [bootstrap.grid           :as grid]
+    [bootstrap.panel          :as panel]
+    [bootstrap.list              :as list]
+    [bootstrap.tabs              :as tabs]
+    [bootstrap.button            :as button]
+    [io.hoplon.examples.bmi      :as bmi]
+    [io.hoplon.content.shared :refer [boot-url hoplon-url hoplon-clojars-url
+
+                                      copyright-footer]]))
+
+(defn show [example]
+  (list
+    (core/jumbotron
+      (core/container :class "lambda"
+        (core/container
+          (h1 "Hoplon")
+          (p "A simpler way to program the web.")
+          (p (button/start :href "#/getting-started/" "Get started »")))))
+    (core/container
+      (grid/row
+        (grid/col4
+          (h2 "Clojure, everywhere.")
+          (p
+            "Write everything in Clojure and ClojureScript, clientside and
+            serverside. Even the page markup is ClojureScript that is
+            evaluated to produce the DOM. Pages can still be written using
+            the familiar HTML syntax if desired."))
+        (grid/col4
+          (h2 "Simplicity on the client.")
+          (p
+            "Use a spreadsheet-like dataflow programming environment to manage
+            client state. Develop basic content-oriented pages and complex
+            thick-client applications without descending into “callback
+            hell”."))
+        (grid/col4
+          (h2 "Simplicity on the server.")
+          (p
+            "Decouple business logic from HTTP-related concerns while
+            satisfying complex, fine-grained authorization requirements with
+            transparent, performant transfer of Clojure data between server
+            and client.")))
+      (hr)
+      (grid/row
+        (grid/col6
+          (h2 "Overview " (small "Hoplon in a nutshell."))
+          (p
+            "Hoplon provides a number of libraries promoting a simpler model
+            for web applications. The project can be divided into three main
+            components: the HTML evaluator, the clientside state machine, and
+            serverside RPC middleware. These components can be used together
+            as a full stack, or individually as a part of another stack.")
+          (p
+            "More concretely, Hoplon ships with a compiler for compiling
+            Hoplon pages into HTML and JavaScript (implemented as a build
+            task for the "
+            (a :href boot-url :target "_blank" "boot")
+            " build tool), ClojureScript libraries for creating
+            spreadsheet-like dataflow programs and wiring them to the DOM,
+            and ClojureScript and Clojure libraries for RPC interaction
+            between client and server.")
+          (p
+            "The source code for Hoplon is hosted on "
+            (a :href hoplon-url :target "_blank" "GitHub")
+            " and Maven artifacts are deployed to "
+            (a :href hoplon-clojars-url :target "_blank" "Clojars")
+            ". Contributions of code, feedback, feature requests, etc. are
+            welcome. Please read the "
+            (a :href "#/community/" "Community")
+            " page for more information.")
+
+          (h2 "Web Apps " (small "Single-page applications, not documents."))
+          (p
+            "Web applications are not documents. Users need to be able to
+            interact with them. They contain state. Through them the user
+            communicates with backend systems to have some effect on the
+            real world.")
+          (p
+            "Hoplon web apps are organized like applications. The Hoplon
+            compiler produces artifacts, not documents. These artifacts are
+            equivalent to JAR files in Maven–their coordinates being the
+            URL on which they're deployed. The compilation unit is the “page”,
+            which is compiled to produce an HTML file–a single-page app.")
+          (p
+            "Hoplon does not perform any serverside HTML rendering; it is
+            completely unnecessary, even for SEO purposes. (Reload this
+            page with JavaScript disabled and see how the content was
+            “prerendered” at compile time.)")
+
+          (h2 "HTML Evaluator " (small "Page markup is a program."))
+          (p
+            "Web application user interfaces are specified as trees of
+            nested elements in HTML markup, but this document-like
+            appearance is misleading. Without JavaScript this markup cannot
+            provide the dynamic behavior that web applications require.")
+          (p
+            "It is at the boundary between the DOM and the JavaScript
+            environment that the incidental complexities of web application
+            UI development are found. There is a fundamental disconnect
+            between the literal representation of the DOM (the HTML markup)
+            and the dynamic environment (the JavaScript VM). The page markup
+            is evaluated by the browser and the resulting DOM is then
+            accessible from JavaScript, but it's a one-way linkage–there is
+            no way to refer to objects created dynamically in the JavaScript
+            environment from the markup. The browser's HTML evaluation model
+            lacks a means of abstraction, preventing the development of new
+            elements by composition.")
+          (p
+            "Hoplon provides an HTML evaluator that closes the loop, unifying
+            the page markup and the JavaScript environment. Page markup,
+            expressed in either the standard HTML5 syntax or Clojure sexps,
+            is evaluated as ClojureScript and the result becomes the DOM for
+            the page. HTML tags are simply ClojureScript vars. Of course,
+            Hoplon ships with all of the standard HTML5 primitives but the
+            evaluation model now facilitates the use of custom compound
+            elements defined in the environment, too.")
+          (p
+            "Additionally, the unification of HTML and ClojureScript syntax,
+            semantics, and namespace in the HTML evaluator facilitates the
+            use of macros in markup.  This makes it possible to write
+            powerful looping and control structures for use in the page's
+            HTML markup itself, bringing the power and expressiveness of
+            Lisp to HTML.")
+
+          (h2 "Components " (small "First-class custom DOM elements."))
+          (p
+            "While there is no shortage of templating systems to create
+            blobs of DOM elements, there is no mechanism to create custom
+            elements that are composable in any meaningful way. Consider
+            the situation where a template engine binds a DOM template to
+            some data and returns the filled-in DOM subtree. What happens
+            when you append a child to, or set an attribute on that DOM
+            element? The child gets appended to, or attribute set on the
+            outermost element of the filled template, generally not what is
+            required for the composition semantic.")
+          (p
+            "Hoplon provides facilities for creating real, first-class
+            components. That is to say, Hoplon components are first-class
+            citizens in the DOM world–they are, essentially, user-defined
+            custom DOM elements. They have a literal representation in the
+            page markup and they implement the semantics of HTML: setting
+            attributes and appending children. When a child is appended to
+            a Hoplon component or an attribute is set, either in HTML markup
+            or programmatically, the component's implementation is used
+            instead of the built-in DOM one. In this way components can be
+            built by composing simpler components and those may be used as
+            a basis for even more complex components, without running into
+            the limitations of template composition.")
+
+          (h2 "Spreadsheets " (small "Client state made simple."))
+          (p
+            "Remember how awesome spreadsheets are? You never think about
+            state when you’re programming a spreadsheet. Instead, you focus
+            on values and the formulas that define the relationships between
+            them. When a new value is entered into a cell the rest of the
+            spreadsheet updates itself as necessary to maintain the
+            correctness of the formulas.")
+          (p
+            "After a spreadsheet is set up you can link its cells to charts
+            and forms to create a user interface that manages its own state,
+            automatically. User input flows from forms to input cells.
+            Formulas then recompute their values as necessary. These values
+            then flow to charts and graphs for the user to view.")
+          (p
+            "Hoplon applies this crazy, futuristic technology to frontend
+            web development. Forgoing the clunky grid metaphor and names
+            like " (em "A1") " and " (em "B27") ", Hoplon provides a cell
+            reference type. These cells, like cells in a spreadsheet, are
+            either updated directly (input cells), or automatically in
+            accordance with a formula.")
+
+          (h2 "Charts and Forms " (small "Stateless, automatic UI."))
+          (p
+            "The purpose of a program's user interface is to transmit input
+            from the user to the underlying state model and to present output
+            derived from the underlying state model to the user for viewing.")
+          (p
+            "In a web application the user interface is derived from the page
+            markup. User input consists entirely of DOM events: "
+            (em "click") ", " (em "change") ", etc. Output is presented to
+            the user by manipulating the properties of DOM elements: adding
+            or removing CSS classes, changing the content of text nodes,
+            etc.")
+          (p
+            "Hoplon provides bindings that can be used to link DOM elements
+            to the underlying state model in the same way that charts and
+            forms are linked to cells in a spreadsheet. Once the structure
+            of the DOM and the linkages between the DOM and cells are
+            defined, the user interface manages itself."))
+        (grid/col6
+          (h2 (small "Examples"))
+          (list/divgroup
+            (list/divitem
+              :on-click #(reset! example 1)
+              (a
+                :do-toggle (cell= (not= example 1))
+                (panel/title "Typical Page"))
+              (div
+                :do-toggle (cell= (= example 1))
+                (panel/title "Typical Page")
+                (hr)
+                (p
+                  "The page can be coded in either ClojureScript or HTML
+                  syntax. The compiler can parse either one. It's easy to add
+                  a preprocessing step to parse HAML, etc. if desired.  HTML
+                  is usually more verbose and noisy than ClojureScript, so
+                  most examples in this document will be using the latter
+                  syntax.")
+                (hr)
+                (p :class "text-muted" "Using ClojureScript syntax:")
+                (code/highlight :clj
+                  ;;{{
+                  (page "foo/bar.html"
+                    (:require [my.lib :as lib]))
+
+                  (defc clicks 0)
+
+                  (html
+                    (head
+                      (title "Hello World")
+                      (link :rel "stylesheet" :href "css/main.css"))
+                    (body
+                      (lib/heading-large "Hello, world!")
+                      (p (text "You've clicked ~{clicks} times."))
+                      (button :on-click #(swap! clicks inc) "Click me!")))
+                  ;;}}
+                  )
+                (p :class "text-muted" "Using HTML syntax:")
+                (code/highlight :xml
+                  ;;{{
+                  <script type="text/hoplon">
+                  (page "foo/bar.html"
+                    (:require [my.lib :as lib]))
+
+                  (defc clicks 0)
+                  </script>
+
+                  <html>
+                  <head>
+                  <title>Hello World</title>
+                  <link rel="stylesheet" href="css/main.css">
+                  </head>
+                  <body>
+                  <lib.heading-large>Hello, world!</lib.heading-large>
+                  <p><text>You've clicked ~{clicks} times.</text></p>
+                  <button on-click="{{ #(swap! clicks inc) }}">
+                  Click me!
+                  </button>
+                  </body>
+                  </html>
+                  ;;}}
+                  )))
+            (list/divitem
+              :on-click #(reset! example 2)
+              (a :class "topfix" :do-scroll-to (cell= (= example 2)))
+              (a
+                :do-toggle (cell= (not= example 2))
+                (panel/title "BMI Calculator"))
+              (div
+                :do-toggle (cell= (= example 2))
+                (panel/title "BMI Calculator")
+                (hr)
+                (p
+                  "This is an example of a spreadsheet-like application.
+                  The application's state is contained in "
+                  (em "cells")
+                  " which are wired up to the DOM. DOM events cause changes
+                  to the underlying cells and formula cells in turn cause
+                  changes to the DOM.")
+                (hr)
+                (p :class "text-muted" "The demo:")
+                (panel/default (panel/body (bmi/demo)))
+                (p :class "text-muted" "The cells:")
+                (bmi/code)
+                (p :class "text-muted" "The user interface:")
+                (bmi/markup))))
+          (panel/default
+            (panel/heading
+              (panel/title "Architecture"))
+            (panel/body
+              (tabs/tabs
+                (span "Fig 1")
+                (img :width "523px" :src "img/arch-full.png")
+                (span "Fig 2")
+                (img :width "523px" :src "img/arch-client.jpg")
+                )))))
+      (hr)
+      (copyright-footer))))
