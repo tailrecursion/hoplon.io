@@ -1,6 +1,6 @@
 (ns io.hoplon.content.docs
   (:require-macros
-    [bootstrap.code             :as code])
+    [bootstrap.code           :as code])
   (:require
     [io.hoplon                :as hoplon]
     [bootstrap.grid           :as grid]
@@ -425,4 +425,7 @@
             # build for production
             $ boot production
             ;;}}
-            )))))
+            ))
+      (hr)
+      (copyright-footer))
+    (grid/col2)))

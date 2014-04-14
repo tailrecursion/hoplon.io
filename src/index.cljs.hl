@@ -1,7 +1,6 @@
 (page "index.html"
-  (:refer-clojure :exclude [int])
   (:require-macros
-    [bootstrap.code             :as code])
+    [bootstrap.code              :as code])
   (:require
     [io.hoplon                   :as hoplon]
     [io.hoplon.content.home      :as home]
@@ -13,18 +12,8 @@
                                          bootstrap-url hoplon-group-url
                                          hoplon-issues-url hoplon-discourse-url
                                          copyright-footer]]
-    [io.hoplon.examples.bmi      :as bmi]
-    [io.hoplon.examples.counter  :as counter]
-    [clojure.string              :as string]
     [bootstrap.core              :as core]
-    [bootstrap.grid              :as grid]
-    [bootstrap.meta              :as meta]
-    [bootstrap.list              :as list]
     [bootstrap.page              :as page]
-    [bootstrap.tabs              :as tabs]
-    [bootstrap.glyph             :as glyph]
-    [bootstrap.panel             :as panel]
-    [bootstrap.button            :as button]
     [bootstrap.navbar            :as navbar]
     [tailrecursion.hoplon.util   :as hutil]))
 
@@ -60,12 +49,6 @@
 
 (defc example  1)
 
-(def int js/parseInt)
-(def calc-op {"+" + "-" - "*" * "/" /})
-(defc calc-x 0)
-(defc calc-y 0)
-(defc calc-z +)
-
 (add-initfn!
   (fn []
     (.track js/mixpanel (.. js/window -location -href))
@@ -84,18 +67,15 @@
     (noscript
       (div :class "nojs-error"
         "This page uses JavaScript but it looks like you have it turned off."))
+
     (content-home
       (home/show example))
 
     (content-getting-started
-      (getting-started/show gs-task gs-tasks gs-info)
-      (hr)
-      (copyright-footer))
+      (getting-started/show gs-task gs-tasks gs-info))
 
     (content-docs
-      (docs/show gs-tip gs-tips)
-      (hr)
-      (copyright-footer))
+      (docs/show gs-tip gs-tips))
 
     (content-community
       (community/show))))

@@ -1,252 +1,17 @@
 (ns io.hoplon.content.getting-started
   (:require-macros
-    [bootstrap.code             :as code])
+    [bootstrap.code                :as code])
   (:require
-    [io.hoplon                  :as hoplon]
-    [bootstrap.grid             :as grid]
-    [bootstrap.panel            :as panel]
-    [bootstrap.tabs             :as tabs]
-    [io.hoplon.examples.counter :as counter]
-    [io.hoplon.content.shared   :refer [hoplon-demos-url boot-url bootstrap-url
-                                        cqrs-url
-                                        copyright-footer]]
-    [clojure.string             :as string]
-    ))
-
-(defn calc-code []
-  (code/highlight :clj
-    ;;{{
-    (page "index.html"
-      (:refer-clojure :exclude [int]))
-
-    (def int js/parseInt)
-    (def ops {"+" + "-" - "*" * "/" /})
-
-    (defc  x      0)
-    (defc  y      0)
-    (defc  op     +)
-    (defc= result (op x y))
-
-    (html
-      (head)
-      (body
-        (input
-          :id "x"
-          :type "text"
-          :value "0"
-          :on-change #(reset! x (int (val-id "x"))))
-        (select
-          :id "op"
-          :on-change #(reset! op (ops (val-id "op")))
-          (option :value "+" :selected true "+")
-          (option :value "-" "-")
-          (option :value "*" "*")
-          (option :value "/" "/"))
-        (input
-          :id "y"
-          :type "text"
-          :value "0"
-          :on-change #(reset! y (int (val-id "y"))))
-        (text " = ~{result}")))
-    ;;}}
-    ))
-
-(defn calc-ex []
-  (let [x (cell 0)
-        y (cell 0)
-        op (cell +)
-        ops {"+" + "-" - "*" * "/" /}]
-    (panel/default
-      (panel/body
-        (input
-          :id "calc-x"
-          :type "text"
-          :value @x
-          :on-change #(reset! x (int (val-id "calc-x"))))
-        (select
-          :id "calc-op"
-          :style "margin-left:15px;margin-right:15px;"
-          :on-change #(reset! op (ops (val-id "calc-op")))
-          (option :value "+" :selected true "+")
-          (option :value "-" "-")
-          (option :value "*" "*")
-          (option :value "/" "/"))
-        (input
-          :id "calc-y"
-          :type "text"
-          :value @y
-          :on-change #(reset! y (int (val-id "calc-y"))))
-        (text " = ~(op x y)")))))
-
-(defn loop-code1 []
-  (code/highlight :clj
-    ;;{{
-    (page "index.html")
-
-    (defc things ["one" "two" "three"])
-
-    (html
-      (head)
-      (body
-        (ul
-          (loop-tpl :bindings [x things]
-            (li @x)))))
-    ;;}}
-    ))
-
-(defn loop-ex1 []
-  (let [xs (cell ["one" "two" "three"])]
-    (panel/default
-      (panel/body
-        (ul
-          (loop-tpl :size 3 :bindings [x xs]
-            (li @x)))))))
-
-(defn loop-code2 []
-  (code/highlight :clj
-    ;;{{
-    (page "index.html"
-      (:require
-       [clojure.string :refer [upper-case lower-case]]))
-    ;; State machine private
-    (defc  uc?    false)
-    (defc  things [{:text "one"} {:text "two"} {:text "three"}])
-    (defc= case   (if uc? upper-case lower-case))
-
-    ;; State machine public API
-    (defc= state  (mapv #(update-in % [:text] case) things))
-    (defn toggle-case! [_] (swap! uc? not))
-
-    ;; Presentation (uses public API)
-    (html
-      (head)
-      (body
-        (ul
-          (loop-tpl :bindings [{x :text} state]
-            (li (text "~{x}"))))
-        (button :on-click toggle-case! "toggle case")))
-    ;;}}
-    ))
-
-(defn loop-ex2 []
-  (let [u? (cell false)
-        uc (cell= (if u? string/upper-case string/lower-case))
-        xs (cell [{:text "one"} {:text "two"} {:text "three"}])
-        st (cell= (mapv #(update-in % [:text] uc) xs))]
-    (panel/default
-      (panel/body
-        (ul
-          (loop-tpl :size 3 :bindings [{x :text} st]
-            (li (text "~{x}"))))
-        (button :on-click #(swap! u? not) "toggle case")))))
-
-(defn tabs-code []
-  (code/highlight :clj
-    ;;{{
-    (ns ui.tabs)
-
-    (defelem active
-      [{:keys [state]} [elem]]
-      (elem :do-class (cell= {:active state})))
-
-    (defelem trigger
-      [{:keys [state tab]} [elem]]
-      (active :state (cell= (= state tab))
-        (elem :on-click #(reset! state tab))))
-
-    (defelem content
-      [{:keys [state tab]} [elem]]
-      (active :state (cell= (= state tab)) elem))
-
-    (defelem tabs
-      [{:keys [state] :as attr :or {state (cell 0)}} kids]
-      (let [[trigs conts] (->> kids (partition 2) (apply map list))
-            a-void #(a :href "javascript:void(0)" %)
-            mktrig #(trigger :state state :tab %1 (li (a-void %2)))
-            mkcont #(content :state state :tab %1 (%2 :class "tab-pane"))]
-        (div (dissoc attr :state)
-          (ul :class "nav nav-tabs" (map-indexed mktrig trigs))
-          (div :class "tab-content" (map-indexed mkcont conts)))))
-    ;;}}
-    ))
-
-(defn tabs-code2 []
-  (code/highlight :clj
-    ;;{{
-    (page "index.html"
-      (:require [ui.tabs :as tabs]))
-
-    (html
-      (head
-        (link :rel "stylesheet" :href "css/bootstrap.css"))
-      (body
-        (tabs/tabs
-          (span "Zero")
-          (div
-            (h4 "Foo")
-            (p "Content for tab 0."))
-          (span "One")
-          (div
-            (h4 "Bar")
-            (p "Content for tab 1."))
-          (span "Two")
-          (div
-            (h4 "Baz")
-            (p "Content for tab 2.")))))
-    ;;}}
-    ))
-
-(defn tabs-code2h []
-  (code/highlight :xml
-    ;;{{
-    <script type="text/hoplon">
-      (page "index.html"
-        (:require [ui.tabs :as tabs]))
-    </script>
-
-    <html>
-      <head>
-        <link rel="stylesheet" href="css/bootstrap.css">
-      </head>
-      <body>
-        <tabs.tabs>
-          <span>Zero</span>
-          <div>
-            <h4>Foo</h4>
-            <p>Content for tab 0.</p>
-          </div>
-          <span>One</span>
-          <div>
-            <h4>Bar</h4>
-            <p>Content for tab 1.</p>
-          </div>
-          <span>Two</span>
-          <div>
-            <h4>Baz</h4>
-            <p>Content for tab 2.</p>
-          </div>
-        </tabs.tabs>
-      </body>
-    </html>
-    ;;}}
-    ))
-
-(defn tabs-ex []
-  (panel/default
-    (panel/body
-      (tabs/tabs
-        (span "Zero")
-        (div
-          (h4 "Foo")
-          (p "Content for tab 0."))
-        (span "One")
-        (div
-          (h4 "Bar")
-          (p "Content for tab 1."))
-        (span "Two")
-        (div
-          (h4 "Baz")
-          (p "Content for tab 2."))))))
+    [io.hoplon                     :as hoplon]
+    [bootstrap.grid                :as grid]
+    [bootstrap.panel               :as panel]
+    [bootstrap.tabs                :as tabs]
+    [io.hoplon.examples.counter    :as counter]
+    [io.hoplon.examples.calculator :as calc]
+    [io.hoplon.examples.tabs       :as ex-tabs]
+    [io.hoplon.examples.loops      :as loops]
+    [io.hoplon.content.shared      :refer [hoplon-demos-url boot-url cqrs-url
+                                           bootstrap-url copyright-footer]]))
 
 (defn show [gs-task gs-tasks gs-info]
   (grid/row
@@ -390,9 +155,9 @@
           "The next task is to build a simple calculator that can add,
           subtract, multiply, or divide two integers. Modify the "
           (code "index.cljs.hl") " file to contain the following:")
-        (calc-code)
+        (calc/code)
         (p "Compile and reload the page. You should see something like this:")
-        (calc-ex)
+        (calc/demo)
         (p
           "Notice how the presentation (the page markup) is effectively
           decoupled from the application state (the cells). The
@@ -410,9 +175,9 @@
           displayed to the user in some kind of template. Hoplon provides
           the " (code "loop-tpl") " macro that can be used in the page
           markup to iterate over the collection.")
-        (loop-code1)
+        (loops/code1)
         (p "Compile and reload the page. You should see something like this:")
-        (loop-ex1)
+        (loops/ex1)
         (p
           "Note how " (code "loop-tpl") " iterates over the " (code "things")
           " cell, binding each item to " (code "x") ", in turn. However,
@@ -423,9 +188,9 @@
         (p
           "Here is a more interesting example that uses destructuring in
           the " (code ":bindings") " attribute:")
-        (loop-code2)
+        (loops/code2)
         (p "Now when you reload the page you should see something like this:")
-        (loop-ex2)
+        (loops/ex2)
         (p
           "Notice the organization of the public API for the page’s
           underlying state machine: it consists of read-only formula cells
@@ -494,7 +259,7 @@
           contain custom DOM elements to use in the application pages.
           Create a new Hoplon source file, " (code "src/ui/tabs.cljs.hl")
           " with the following contents:")
-        (tabs-code)
+        (ex-tabs/code)
         (p
           "The " (code "defelem") " macro defines a function whose arguments
           are “normalized” for the HTML markup semantic. It takes a vector
@@ -514,8 +279,11 @@
           this, using the newly created " (code "tabs") " custom tag:")
         (tabs/tabs
           "index.cljs.hl"
-          (tabs-code2)
+          (ex-tabs/code2)
           "index.html.hl"
-          (tabs-code2h))
+          (ex-tabs/code2h))
         (p "Compile and reload the page. You should see something like this:")
-        (tabs-ex)))))
+        (ex-tabs/demo))
+      (hr)
+      (copyright-footer))
+    (grid/col2)))

@@ -1,17 +1,16 @@
 (ns io.hoplon.content.home
   (:require-macros
-    [bootstrap.code             :as code])
+    [bootstrap.code           :as code])
   (:require
     [io.hoplon                :as hoplon]
-    [bootstrap.core              :as core]
+    [bootstrap.core           :as core]
     [bootstrap.grid           :as grid]
     [bootstrap.panel          :as panel]
-    [bootstrap.list              :as list]
-    [bootstrap.tabs              :as tabs]
-    [bootstrap.button            :as button]
-    [io.hoplon.examples.bmi      :as bmi]
+    [bootstrap.list           :as list]
+    [bootstrap.tabs           :as tabs]
+    [bootstrap.button         :as button]
+    [io.hoplon.examples.bmi   :as bmi]
     [io.hoplon.content.shared :refer [boot-url hoplon-url hoplon-clojars-url
-
                                       copyright-footer]]))
 
 (defn show [example]
