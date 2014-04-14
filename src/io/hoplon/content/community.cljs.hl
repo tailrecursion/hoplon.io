@@ -1,0 +1,38 @@
+(ns io.hoplon.content.community
+  (:require
+    [bootstrap.grid           :as grid]
+    [io.hoplon.content.shared :refer [copyright-footer hoplon-url
+                                      hoplon-issues-url hoplon-group-url
+                                      hoplon-discourse-url]]))
+
+(defn show []
+  (grid/row
+    (grid/col3)
+    (grid/col6
+      (h1 "Community")
+      (hr)
+      (dl :class "dl-horizontal"
+        (dt "Source")
+        (dd (a :href hoplon-url :target "_blank" hoplon-url))
+        (dt "Issues")
+        (dd (a :href hoplon-issues-url :target "_blank" hoplon-issues-url))
+        (dt "Mailing List")
+        (dd (a :href hoplon-group-url :target "_blank" hoplon-group-url))
+        (dt "Discussion")
+        (dd (a :href hoplon-discourse-url :target "_blank" hoplon-discourse-url))
+        (dt "Freenode IRC")
+        (dd (tt "#hoplon")))
+      (hr)
+      (h3 "Special Thanks To")
+      (dl :class "dl-horizontal"
+        (dt "Ray Willig")
+        (dd (a :href "https://github.com/rwillig" :target "_blank" "https://github.com/rwillig"))
+        (dt "Alexander Solovyov")
+        (dd (a :href "https://github.com/piranha" :target "_blank" "https://github.com/piranha"))
+        (dt "Kevin Lynagh")
+        (dd (a :href "http://github.com/lynaghk" :target "_blank" "http://github.com/lynaghk"))
+        (dt "The Flapjax Team")
+        (dd (a :href "http://www.flapjax-lang.org/" :target "_blank" "http://www.flapjax-lang.org/")))
+      (hr)
+      (copyright-footer))
+    (grid/col3)))

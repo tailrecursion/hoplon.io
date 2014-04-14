@@ -1,0 +1,115 @@
+(ns io.hoplon.examples.tabs
+  (:refer-hoplon :exclude [code])
+  (:require-macros
+    [bootstrap.code  :as code])
+  (:require
+    [bootstrap.tabs  :as tabs]
+    [bootstrap.panel :as panel]))
+
+(defn code []
+  (code/highlight :clj
+    ;;{{
+    (ns ui.tabs)
+
+    (defelem active
+      [{:keys [state]} [elem]]
+      (elem :do-class (cell= {:active state})))
+
+    (defelem trigger
+      [{:keys [state tab]} [elem]]
+      (active :state (cell= (= state tab))
+        (elem :on-click #(reset! state tab))))
+
+    (defelem content
+      [{:keys [state tab]} [elem]]
+      (active :state (cell= (= state tab)) elem))
+
+    (defelem tabs
+      [{:keys [state] :as attr :or {state (cell 0)}} kids]
+      (let [[trigs conts] (->> kids (partition 2) (apply map list))
+            a-void #(a :href "javascript:void(0)" %)
+            mktrig #(trigger :state state :tab %1 (li (a-void %2)))
+            mkcont #(content :state state :tab %1 (%2 :class "tab-pane"))]
+        (div (dissoc attr :state)
+          (ul :class "nav nav-tabs" (map-indexed mktrig trigs))
+          (div :class "tab-content" (map-indexed mkcont conts)))))
+    ;;}}
+    ))
+
+(defn code2 []
+  (code/highlight :clj
+    ;;{{
+    (page "index.html"
+      (:require [ui.tabs :as tabs]))
+
+    (html
+      (head
+        (link :rel "stylesheet" :href "css/bootstrap.css"))
+      (body
+        (tabs/tabs
+          (span "Zero")
+          (div
+            (h4 "Foo")
+            (p "Content for tab 0."))
+          (span "One")
+          (div
+            (h4 "Bar")
+            (p "Content for tab 1."))
+          (span "Two")
+          (div
+            (h4 "Baz")
+            (p "Content for tab 2.")))))
+    ;;}}
+    ))
+
+(defn code2h []
+  (code/highlight :xml
+    ;;{{
+    <script type="text/hoplon">
+      (page "index.html"
+        (:require [ui.tabs :as tabs]))
+    </script>
+
+    <html>
+      <head>
+        <link rel="stylesheet" href="css/bootstrap.css">
+      </head>
+      <body>
+        <tabs.tabs>
+          <span>Zero</span>
+          <div>
+            <h4>Foo</h4>
+            <p>Content for tab 0.</p>
+          </div>
+          <span>One</span>
+          <div>
+            <h4>Bar</h4>
+            <p>Content for tab 1.</p>
+          </div>
+          <span>Two</span>
+          <div>
+            <h4>Baz</h4>
+            <p>Content for tab 2.</p>
+          </div>
+        </tabs.tabs>
+      </body>
+    </html>
+    ;;}}
+    ))
+
+(defn demo []
+  (panel/default
+    (panel/body
+      (tabs/tabs
+        (span "Zero")
+        (div
+          (h4 "Foo")
+          (p "Content for tab 0."))
+        (span "One")
+        (div
+          (h4 "Bar")
+          (p "Content for tab 1."))
+        (span "Two")
+        (div
+          (h4 "Baz")
+          (p "Content for tab 2."))))))

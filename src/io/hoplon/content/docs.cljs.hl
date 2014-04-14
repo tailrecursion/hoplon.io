@@ -1,0 +1,431 @@
+(ns io.hoplon.content.docs
+  (:require-macros
+    [bootstrap.code           :as code])
+  (:require
+    [io.hoplon                :as hoplon]
+    [bootstrap.grid           :as grid]
+    [bootstrap.panel          :as panel]
+    [io.hoplon.content.shared :refer [copyright-footer]]))
+
+(defn show [gs-tip gs-tips]
+  (grid/row
+    (grid/col2)
+    (grid/col8
+      (h1
+        "Docs" (br)
+        (small "Basic Hoplon docs."))
+      (hr)
+      (hoplon/jump-to-toc :tocs (cell= [gs-tips]))
+      (panel/default
+        (panel/heading
+          (panel/title "Table of Contents"))
+        (panel/body
+          (grid/row
+            (grid/col12
+              (hoplon/table-of-contents :size 10 :toc gs-tips)))))
+
+      (gs-tip :title "External JS Libs And Extern Files"
+        (code/markdown
+          ;;{{
+          External JavaScript libraries can be prepended to the `main.js`
+          file emitted by the ClojureScript compiler and extern files for
+          them can be included in the compilation of the application code
+          by placing the files in a source directory and using a special
+          naming convention.
+
+          * External JS files use the `.inc.js` extension
+          * Extern files for GClosure use the `.ext.js` extension
+
+          External JS files will be prepended to the `main.js` file in
+          alphabetical order.
+          ;;}}
+          ))
+
+      (gs-tip :title "Hoplon Source Files"
+        (code/markdown
+          ;;{{
+          Hoplon compiles files having the `.hl` filename extension. These
+          files may be Hoplon pages, which will be compiles to single-page
+          apps, or ClojureScript namespaces.
+
+          The first form in the file must be a page or namespace declaration.
+          Page declarations specify the output HTML file path relative to
+          the `:public` directory configured in the project `boot.edn` file.
+          Namespace declarations are the same as in ClojureScript.
+
+          In both cases, however, the Hoplon compiler refers vars and macros
+          from the Hoplon and Javelin namespaces into the file namespace so
+          that adding `:refer` clauses for things like `div`, `span`, etc.
+          are not necessary. A special `:refer-hoplon` clause can be used to
+          selectively exclude vars that are to be redefined in the file.
+          ;;}}
+          )
+        (p :class "text-muted" "Example page declaration:")
+        (code/highlight :clj
+          ;;{{
+          (page "foo/bar.html"
+            (:refer-hoplon :exclude [div span])
+            (:refer-clojure :exclude [int])
+            (:require
+              [clojure.set :as set]
+              [clojure.string :as string])
+            (:require-macros
+              [foo.bar.baz :as baz :refer [quux]]))
+          ;;}}
+          )
+        (p :class "text-muted" "Example namespace declaration:")
+        (code/highlight :clj
+          ;;{{
+          (ns foo.bar
+            (:refer-hoplon :exclude [div span])
+            (:refer-clojure :exclude [int])
+            (:require
+              [clojure.set :as set]
+              [clojure.string :as string])
+            (:require-macros
+              [foo.bar.baz :as baz :refer [quux]]))
+          ;;}}
+          ))
+
+      (gs-tip :title "Anatomy of a Hoplon Page"
+        (p
+          "Hoplon page source files have three parts: the page
+          declaration, optional definitions and top-level forms, and
+          the page markup.")
+        (p :class "text-muted" "The page declaration:")
+        (code/highlight :clj
+          ;;{{
+          (page "index.html"
+            (:require [clojure.string :as string]))
+          ;;}}
+          )
+        (p :class "text-muted" "Optional top-level forms and definitions:")
+        (code/highlight :clj
+          ;;{{
+          (def add1 [x] (+ 1 x))
+          ;;}}
+          )
+        (p :class "text-muted" "The page markup:")
+        (code/highlight :clj
+          ;;{{
+          (html
+            (head)
+            (body
+              (h1 "hello, number " (str (add1 41)))))
+          ;;}}
+          ))
+      (gs-tip :title "Sexp Markup Syntax"
+        (p
+          "Hoplon's HTML evaluator provides a sexp-based HTML syntax and
+          semantic. Elements in sexp markup are parenthesized lists, the
+          same as Lisp expressions. The form in function position is the
+          element’s HTML tag. Hoplon adds semantics for setting attributes
+          and appending children. Consider a typical snippet of HTML markup:")
+        (code/highlight :xml
+          ;;{{
+          <div id="greet" class="active">
+          <h1>Hello, world!</h1>
+          <p>I'm new here.</p>
+          </div>
+          ;;}}
+          )
+        (p "This snippet can be expressed in sexp markup like this:")
+        (code/highlight :clj
+          ;;{{
+          (div :id "greet" :class "active"
+            (h1 "Hello, world!")
+            (p "I'm new here."))
+          ;;}}
+          )
+        (p
+          "Notice how attributes can be set by passing them in first as
+          alternating keyword/string pairs. The rest of the arguments are
+          appended to the element (the div in this case) as children.")
+        (p
+          "Sometimes it’s more convenient to specify the attributes as a
+          map, like this:")
+        (code/highlight :clj
+          ;;{{
+          (div {:id "greet" :class "active"}
+            (h1 "Hello, world!")
+            (p "I'm new here."))
+          ;;}}
+          )
+        (p
+          "Additionally, Hoplon provides semantics for anonymous tags in
+          sexp markup. There is, of course, no such thing in HTML markup.
+          The same snippet can be expressed using an anonymous tag:")
+        (code/highlight :clj
+          ;;{{
+          ((div :id "greet" :class "active")
+           (h1 "Hello, world!")
+           (p "I'm new here."))
+          ;;}}
+          )
+        (p
+          "It’s important to understand that the " (code "div") ", "
+          (code "h1") ", and " (code "p") " forms are ClojureScript
+          functions that return DOM elements. DOM elements implement the "
+          (code "IFn") " protocol to achieve the HTML semantic. This means
+          that they can be used to form abstractions:")
+        (code/highlight :clj
+          ;;{{
+          (defn active [& kids]
+            (apply (div :class "active") kids))
+          ;;}}
+          )
+        (p "And then, in the page markup or in a function:")
+        (code/highlight :clj
+          ;;{{
+          (active :id "greet"
+            (h1 "Hello, world!")
+            (p "I'm new here."))
+          ;;}}
+          )
+        (p "Or in HTML markup in the page, even:")
+        (code/highlight :xml
+          ;;{{
+          <active id="greet">
+          <h1>Hello, world!</h1>
+          <p>I'm new here.</p>
+          </active>
+          ;;}}
+          )
+        (p
+          "The result is equivalent to the previous snippets, but more
+          general. These “custom tags” can be used in the page markup like
+          any of the built-in tags.")
+        (p
+          "Finally, sequences or vectors can be used to splice children
+          into the parent similar to how the " (code "unquote-splicing")
+          " form works in Clojure. For instance this,")
+        (code/highlight :clj
+          ;;{{
+          (ul :class "my-list"
+            (map #(li :class "my-item" %) ["item1" "item2"]))
+          ;;}}
+          )
+        (p "is equivalent to this:")
+        (code/highlight :clj
+          ;;{{
+          (apply (ul :class "my-list")
+            (map #(li :class "my-item" %) ["item1" "item2"]))
+          ;;}}
+          ))
+
+      (gs-tip :title "Reader Support For Multiline Strings"
+        (code/markdown
+          ;;{{
+          As described above, text nodes are expressed as strings in sexp
+          syntax markup, and as text contents of HTML nodes in HTML syntax.
+          This is sometimes inconvenient, especially with preformatted text,
+          because of issues with indentation and escaping reserved characters.
+
+          The Hoplon compiler adds a multiline string delimited mode to the
+          reader as a preprocessor pass. Lines in the source file containing
+          only whitespace and `;;{{` or `;;}}` denote the start and end,
+          respectively, of multiline text blocks. These text blocks will be
+          transformed to strings which will be passed on to the reader with
+          proper escaping and with leading whitespace indentation removed.
+          The indentation level is set by the indentation of the initial
+          `;;{{` delimiter.
+          ;;}}
+          ))
+
+      (gs-tip :title "Wiring Up The DOM"
+        (p
+          "DOM interactions can be divided into two categories: input and
+          output. Input is how the user initiates changes to the state of
+          the application, consisting of DOM events like "
+          (em "click") ", " (em "change") ", etc. Output is how the state of
+          the application is conveyed to the user, consisting of setting
+          element attributes, properties, and the contents of text nodes.")
+        (p
+          "In a Hoplon page input is accepted via the special "
+          (code ":on-" (em "event")) " attributes set on DOM elements. All
+          jQuery events are supported, including custom events. The value
+          of this attribute is the event handler. For example:")
+        (code/highlight :clj
+          ;;{{
+          (button
+            :on-click (fn [event] (handle! event))
+            "click this button")
+          ;;}}
+          )
+        (p
+          "Output is displayed via the special " (code ":do-" (em "action"))
+          " attributes set on DOM elements. The value of these attributes is
+          a formula cell whose value forms the argument to the action. For
+          example:")
+        (code/highlight :clj
+          ;;{{
+          (div :do-class (cell= {:active (= 20 page)})
+            (h2 "Page 20")
+            (p "This is the content for page 20."))
+          ;;}}
+          )
+        (p
+          "The " (code ":do-class") " example above adds or removes the "
+          (em "“active”") " class, depending on whether the " (code "page")
+          " cell’s value is equal to 20 or not, respectively. This
+          relationship is maintained automatically, reactively keeping the
+          element’s class in sync with the formula.")
+        (p
+          "The " (code "text") " macro creates DOM text nodes whose content
+          automatically updates itself, interpolating cell values and/or
+          formulas in the argument string. For example:")
+        (code/highlight :clj
+          ;;{{
+          (p (text "the value of x is ~{x}"))
+          ;;}}
+          )
+        (p
+          "This creates a paragraph whose text content is linked to the
+          interpolated string.")
+        (p
+          "Output and input wiring can also be done programmatically using
+          the " (code "do!") " and " (code "on!") " multimethods. For
+          instance, to set the " (em "“active”") " class on element "
+          (code "elem") ", one would do:")
+        (code/highlight :clj
+          ;;{{
+          (do! elem :class {:active true})
+          ;;}}
+          )
+        (p
+          "And to add a handler for the " (em "click") " event one would do:")
+        (code/highlight :clj
+          ;;{{
+          (on! elem :click #(handle! %))
+          ;;}}
+          )
+        (p
+          "It's important to note the these are not reactive. They're just
+          regular functions operating on regular data, not cells. To achieve
+          the reactive behavior of the " (code ":do-class") " example above
+          the expression can be used as the formula of an anonymous cell
+          (anonymous because output is only for side-effects–mutating the
+          DOM in this case):")
+        (code/highlight :clj
+          ;;{{
+          (cell= (do! elem :class {:active (= 20 page)}))
+          ;;}}
+          )
+        (p
+          "Event handlers are normally set just once, so formula cells don’t
+          usually make sense in combination with the " (code "on!")
+          " method. This illustrates the I/O model in Hoplon: output
+          reactively updates the DOM in relation to the underlying state via
+          formula cells, while input updates the underlying state via events
+          emitted by the DOM."))
+
+      #_(gs-tip :title "Boot Configuration"
+          (p
+            "There are a few keys in the " (code "build.boot") " configuration
+            file that are important when building Hoplon applications.
+            Understanding how these keys work will help you to organize your
+            Hoplon project in a way that works best for your workflow and
+            deployment situation.")
+          (dl :class "dl-horizontal"
+            (dt (tt ":out-path"))
+            (dd
+              (p
+                "The output directory for the Hoplon compiler. HTML and
+                static content ends up here. This is where you point your
+                webserver's document root."))
+            (dt (tt ":src-paths"))
+            (dd
+              (p
+                "A set of paths in which the build process looks for source
+                files to compile. These directories can contain Hoplon,
+                Clojure, ClojureScript, JavaScript, or any other type of
+                source file. The various compilers generally dispatch on
+                filename extension, so the directory structure is pretty
+                much up to you. The file watcher monitors these directories
+                for changes and recompiles the project when necessary."))
+            #_(dt (tt ":src-static"))
+            #_(dd
+                (p
+                  "A set of paths containing the static content for the
+                  project. This may include external JavaScript files, CSS
+                  stylesheets, images, etc. The contents of these directories
+                  are merged into the " (tt ":public") " directory after
+                  compilation, and any subdirectory structure is overlayed.")))
+          (p
+            "Also, it's a good idea to set up your " (code ".gitignore")
+            " file correctly, because the boot watch task uses your "
+            (tt "git(1)") " configuration to determine which files will
+            trigger recompiling and which will be ignored."))
+
+      #_(gs-tip :title "Hoplon Boot Options"
+          (p
+            "Hoplon source files are compiled by the Hoplon compiler. The
+            easiest way to do this is to use the " (code "hoplon") " boot
+            task. Options to boot tasks can be specified by wrapping the
+            task name and arguments in a vector. (Boot reads in the command
+            line arguments as an EDN string.) The " (code "hoplon") " task
+            takes a single command line argument–a map of key/value options.")
+          (p
+            "The options map may include options to be passed to the
+            ClojureScript compiler (" (code ":optimizations") ", "
+            (code ":source-map") ", etc.). Setting the " (code ":prerender")
+            " key to false will disable the “prerendering” of
+            DOM content in " (tt "phantomjs(1)") ", which speeds up the
+            compilation process at the expense of SEO (handy when developing
+            but probably not ideal for production builds).")
+          (p
+            "A typical development build invocation could look something like
+            this:")
+          (code/highlight :bash
+            ;;{{
+            $ boot watch [hoplon {:prerender false :optimizations :whitespace :pretty-print true}]
+            ;;}}
+            )
+          (p "Production builds could look something like this:")
+          (code/highlight :bash
+            ;;{{
+            $ boot [hoplon {:optimizations :advanced}]
+            ;;}}
+            )
+          (p
+            "Command line arguments can be specified in the project "
+            (code "boot.edn") " file as their own tasks by adding entries to
+            the " (code ":tasks") " key. The above examples could be added as
+            tasks like this:")
+          (code/highlight :clj
+            ;;{{
+            ; boot.edn
+            {:dependencies  ...
+             :require-tasks ...
+             :public        ...
+             :src-paths     ...
+             :tasks
+             {:development  {:doc  "Build project for development."
+                             :main [:hoplon {:prerender     false
+                                             :optimizations :whitespace
+                                             :pretty-print  true}]}
+              :production   {:doc  "Build project for production."
+                             :main [:hoplon {:optimizations :advanced}]}}}
+            ;;}}
+            )
+          (code/markdown
+            ;;{{
+            After adding these tasks to the `boot.edn` file they will appear
+            in the list of tasks that are displayed.
+            ;;}}
+            )
+          (code/highlight :bash
+            ;;{{
+            # display list of available tasks
+            $ boot help
+
+            # build for development
+            $ boot watch development
+
+            # build for production
+            $ boot production
+            ;;}}
+            ))
+      (hr)
+      (copyright-footer))
+    (grid/col2)))
