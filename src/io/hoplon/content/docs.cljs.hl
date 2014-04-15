@@ -46,6 +46,62 @@
           ;;}}
           )
         )
+      (gs-tip :title "Hoplon Boot Options"
+        (p
+          "Hoplon source files are compiled by the Hoplon compiler. The
+          easiest way to do this is to use the " (code "hoplon") " boot
+          task. Options to boot tasks can be specified by wrapping the
+          task name and arguments in a vector. (Boot reads in the command
+          line arguments as an EDN string.) The " (code "hoplon") " task
+          takes a single command line argument – a map of key/value options.")
+        (p
+          "The options map may include options to be passed to the
+          ClojureScript compiler (" (code ":optimizations") ", "
+          (code ":source-map") ", etc.). Setting the " (code ":prerender")
+          " key to false will disable the “prerendering” of
+          DOM content in " (tt "phantomjs(1)") ", which speeds up the
+          compilation process at the expense of SEO (handy when developing
+          but probably not ideal for production builds).")
+
+        (p
+          "A typical development build invocation could look something like
+          this:")
+        (code/highlight :bash
+          ;;{{
+          $ boot watch [hoplon {:prerender false :pretty-print true}]
+          ;;}}
+          )
+        (p "Production builds could look something like this:")
+        (code/highlight :bash
+          ;;{{
+          $ boot [hoplon {:optimizations :advanced}]
+          ;;}}
+          )
+
+        (p
+          "Command line arguments can be specified in the project "
+          (code "build.boot") " file as their own tasks using "
+          (code "deftask") ". The above examples are already in the
+          generated " (code "build.boot") ", as " (code "development") " and "
+          (code "production") ". We will see them later with more detail.")
+
+        (code/markdown
+          ;;{{
+          Here are some useful boot commands:
+          ;;}}
+          )
+        (code/highlight :bash
+          ;;{{
+          # display list of available tasks
+          $ boot help
+
+          # build for development
+          $ boot development
+
+          # build for production
+          $ boot production
+          ;;}}
+          ))
       (gs-tip :title "Boot Configuration"
         (p
           "If you just want to take Hoplon for a quick ride you may skip
@@ -222,8 +278,9 @@
           (code "main.js") " file emitted by the ClojureScript compiler and
           extern files for them can be included in the compilation of the
           application code by placing the files in a source directory (one
-          listed in " (code ":src-paths") " on " (code "build.boot")")
-          and using a special naming convention.")
+          listed in " (code ":src-paths") " on " (code "build.boot") " - "
+          (code "src") " by default) and using a special naming
+          convention.")
           (ul
             (li "External JS files use the " (code ".inc.js") " extension")
             (li "Extern files for GClosure use the " (code ".ext.js")
@@ -241,7 +298,8 @@
 
           The first form in the file must be a page or namespace declaration.
           Page declarations specify the output HTML file path relative to
-          the `:public` directory configured in the project `boot.edn` file.
+          the `:out-path` directory configured in the project `build.boot`
+          file (`resources/public` by default).
           Namespace declarations are the same as in ClojureScript.
 
           In both cases, however, the Hoplon compiler refers vars and macros
@@ -315,8 +373,8 @@
         (code/highlight :xml
           ;;{{
           <div id="greet" class="active">
-          <h1>Hello, world!</h1>
-          <p>I'm new here.</p>
+            <h1>Hello, world!</h1>
+            <p>I'm new here.</p>
           </div>
           ;;}}
           )
@@ -377,8 +435,8 @@
         (code/highlight :xml
           ;;{{
           <active id="greet">
-          <h1>Hello, world!</h1>
-          <p>I'm new here.</p>
+            <h1>Hello, world!</h1>
+            <p>I'm new here.</p>
           </active>
           ;;}}
           )
@@ -510,77 +568,6 @@
           formula cells, while input updates the underlying state via events
           emitted by the DOM."))
 
-
-
-      #_(gs-tip :title "Hoplon Boot Options"
-          (p
-            "Hoplon source files are compiled by the Hoplon compiler. The
-            easiest way to do this is to use the " (code "hoplon") " boot
-            task. Options to boot tasks can be specified by wrapping the
-            task name and arguments in a vector. (Boot reads in the command
-            line arguments as an EDN string.) The " (code "hoplon") " task
-            takes a single command line argument–a map of key/value options.")
-          (p
-            "The options map may include options to be passed to the
-            ClojureScript compiler (" (code ":optimizations") ", "
-            (code ":source-map") ", etc.). Setting the " (code ":prerender")
-            " key to false will disable the “prerendering” of
-            DOM content in " (tt "phantomjs(1)") ", which speeds up the
-            compilation process at the expense of SEO (handy when developing
-            but probably not ideal for production builds).")
-          (p
-            "A typical development build invocation could look something like
-            this:")
-          (code/highlight :bash
-            ;;{{
-            $ boot watch [hoplon {:prerender false :optimizations :whitespace :pretty-print true}]
-            ;;}}
-            )
-          (p "Production builds could look something like this:")
-          (code/highlight :bash
-            ;;{{
-            $ boot [hoplon {:optimizations :advanced}]
-            ;;}}
-            )
-          (p
-            "Command line arguments can be specified in the project "
-            (code "boot.edn") " file as their own tasks by adding entries to
-            the " (code ":tasks") " key. The above examples could be added as
-            tasks like this:")
-          (code/highlight :clj
-            ;;{{
-            ; boot.edn
-            {:dependencies  ...
-             :require-tasks ...
-             :public        ...
-             :src-paths     ...
-             :tasks
-             {:development  {:doc  "Build project for development."
-                             :main [:hoplon {:prerender     false
-                                             :optimizations :whitespace
-                                             :pretty-print  true}]}
-              :production   {:doc  "Build project for production."
-                             :main [:hoplon {:optimizations :advanced}]}}}
-            ;;}}
-            )
-          (code/markdown
-            ;;{{
-            After adding these tasks to the `boot.edn` file they will appear
-            in the list of tasks that are displayed.
-            ;;}}
-            )
-          (code/highlight :bash
-            ;;{{
-            # display list of available tasks
-            $ boot help
-
-            # build for development
-            $ boot watch development
-
-            # build for production
-            $ boot production
-            ;;}}
-            ))
       (hr)
       (copyright-footer))
     (grid/col2)))
