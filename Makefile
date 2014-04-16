@@ -1,6 +1,5 @@
 help:
 	@echo "USAGE: make [help|deploy]"
 
-deploy: boot
-	boot prod
+deploy: 
 	ghp-import -p resources/public
