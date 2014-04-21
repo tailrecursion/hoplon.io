@@ -4,7 +4,7 @@
 
 (set-env!
   :dependencies  '[[tailrecursion/boot.task   "2.1.2"]
-                   [tailrecursion/hoplon      "5.7.0"]
+                   [tailrecursion/hoplon      "5.7.1"]
                    [markdown-clj              "0.9.41"]
                    [tailrecursion/boot.ring   "0.1.0-SNAPSHOT"]
                    [tailrecursion/boot.notify "2.0.0-SNAPSHOT"]
