@@ -351,7 +351,7 @@
         (p :class "text-muted" "Optional top-level forms and definitions:")
         (code/highlight :clj
           ;;{{
-          (def add1 [x] (+ 1 x))
+          (defn add1 [x] (+ 1 x))
           ;;}}
           )
         (p :class "text-muted" "The page markup:")
