@@ -15,8 +15,17 @@
 
 (defn show [gs-task gs-tasks gs-info]
   (grid/row
-    (grid/col2)
+    (grid/col4
+      (panel/default
+        :class "affix"
+        (panel/heading
+          (panel/title "Table of Contents"))
+        (panel/body
+          (grid/row
+            (grid/col12
+              (hoplon/table-of-contents :size 10 :toc gs-tasks))))))
     (grid/col8
+      (hoplon/jump-to-toc :tocs (cell= [gs-tasks]))
       (h1
         "Getting Started" (br)
         (small "Build a Hoplon application from scratch."))
@@ -29,16 +38,7 @@
         (a :href hoplon-demos-url :target "_blank" "hoplon demos")
         " repository to see some complete, self-contained example
         applications.")
-
       (br)
-      (hoplon/jump-to-toc :tocs (cell= [gs-tasks]))
-      (panel/default
-        (panel/heading
-          (panel/title "Table of Contents"))
-        (panel/body
-          (grid/row
-            (grid/col12
-              (hoplon/table-of-contents :size 10 :toc gs-tasks)))))
 
       (gs-info :title "System Requirements (Compiler)"
         (ul
@@ -285,5 +285,4 @@
         (p "Compile and reload the page. You should see something like this:")
         (ex-tabs/demo))
       (hr)
-      (copyright-footer))
-    (grid/col2)))
+      (copyright-footer))))

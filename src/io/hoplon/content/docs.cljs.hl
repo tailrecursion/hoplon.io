@@ -9,20 +9,22 @@
 
 (defn show [gs-tip gs-tips]
   (grid/row
-    (grid/col2)
-    (grid/col8
-      (h1
-        "Docs" (br)
-        (small "Basic Hoplon docs."))
-      (hr)
-      (hoplon/jump-to-toc :tocs (cell= [gs-tips]))
+    (grid/col4
       (panel/default
+        :class "affix"
         (panel/heading
           (panel/title "Table of Contents"))
         (panel/body
           (grid/row
             (grid/col12
-              (hoplon/table-of-contents :size 10 :toc gs-tips)))))
+              (hoplon/table-of-contents :size 10 :toc gs-tips))))))
+    (grid/col8
+      (hoplon/jump-to-toc :tocs (cell= [gs-tips]))
+      (h1
+        "Docs" (br)
+        (small "Basic Hoplon docs."))
+      (hr)
+
       (gs-tip :title "Creating a Hoplon project"
         (p
           "To create a new Hoplon project you can use " (code "lein") ":")
@@ -569,5 +571,4 @@
           emitted by the DOM."))
 
       (hr)
-      (copyright-footer))
-    (grid/col2)))
+      (copyright-footer))))
