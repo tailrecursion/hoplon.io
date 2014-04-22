@@ -17,7 +17,7 @@
   (grid/row
     (grid/col4
       (panel/default
-        :class "affix"
+        :class "affix hidden-xs hidden-sm"
         (panel/heading
           (panel/title "Table of Contents"))
         (panel/body
@@ -30,6 +30,14 @@
         "Getting Started" (br)
         (small "Build a Hoplon application from scratch."))
       (hr)
+      (panel/default
+        :class "hidden-md hidden-lg"
+        (panel/heading
+          (panel/title "Table of Contents"))
+        (panel/body
+          (grid/row
+            (grid/col12
+              (hoplon/table-of-contents :size 10 :toc gs-tasks)))))
       (p
         "This article will demonstrate how to build Hoplon applications.
         A simple application will be developed incrementally. New features
