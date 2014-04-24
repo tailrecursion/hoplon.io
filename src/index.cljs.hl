@@ -6,6 +6,7 @@
     [io.hoplon.content.home      :as home]
     [io.hoplon.content.getting-started :as getting-started]
     [io.hoplon.content.docs      :as docs]
+    [io.hoplon.content.talks     :as talks]
     [io.hoplon.content.community :as community]
     [io.hoplon.content.shared    :refer [cqrs-url hoplon-url boot-url
                                          hoplon-clojars-url hoplon-demos-url
@@ -29,6 +30,7 @@
    content-home
    content-getting-started
    content-docs
+   content-talks
    content-community
    content-github]
   (page/navbar-fixed-top
@@ -37,15 +39,18 @@
     [(a :href "#/home/"                       "Home") (div)]
     [(a :href "#/getting-started/" "Getting Started") (core/container)]
     [(a :href "#/docs/"                       "Docs") (core/container)]
+    [(a :href "#/talks/"            "Talking Hoplon") (core/container)]
     [(a :href "#/community/"             "Community") (core/container)]
     [(a :href hoplon-url :target "_blank"   "GitHub") (core/container)]))
 
 (defc gs-tasks {:cur nil :toc []})
-(defc gs-tips  {:cur nil :toc []})
+(defc hdocs  {:cur nil :toc []})
+(defc htalks  {:cur nil :toc []})
 
 (def gs-info (partial hoplon/gs-block :type :info))
 (def gs-task (partial hoplon/gs-block :toc gs-tasks :type :primary))
-(def gs-tip  (partial hoplon/gs-block :toc gs-tips  :type :warning))
+(def hdoc  (partial hoplon/gs-block :toc hdocs  :type :primary))
+(def htalk  (partial hoplon/gs-block :toc htalks  :type :info))
 
 (defc example  1)
 
@@ -75,7 +80,10 @@
       (getting-started/show gs-task gs-tasks gs-info))
 
     (content-docs
-      (docs/show gs-tip gs-tips))
+      (docs/show hdoc hdocs))
+
+    (content-talks
+      (talks/show htalk htalks))
 
     (content-community
       (community/show))))

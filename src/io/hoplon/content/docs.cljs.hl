@@ -7,7 +7,7 @@
     [bootstrap.panel          :as panel]
     [io.hoplon.content.shared :refer [copyright-footer]]))
 
-(defn show [gs-tip gs-tips]
+(defn show [hdoc hdocs]
   (grid/row
     (grid/col4
       (panel/default
@@ -17,9 +17,9 @@
         (panel/body
           (grid/row
             (grid/col12
-              (hoplon/table-of-contents :size 10 :toc gs-tips))))))
+              (hoplon/table-of-contents :size 10 :toc hdocs))))))
     (grid/col8
-      (hoplon/jump-to-toc :tocs (cell= [gs-tips]))
+      (hoplon/jump-to-toc :tocs (cell= [hdocs]))
       (h1
         "Docs" (br)
         (small "Basic Hoplon docs."))
@@ -31,8 +31,8 @@
         (panel/body
           (grid/row
             (grid/col12
-              (hoplon/table-of-contents :size 10 :toc gs-tips)))))
-      (gs-tip :title "Creating a Hoplon project"
+              (hoplon/table-of-contents :size 10 :toc hdocs)))))
+      (hdoc :title "Creating a Hoplon project"
         (p
           "To create a new Hoplon project you can use " (code "lein") ":")
         (code/highlight :bash
@@ -55,7 +55,7 @@
           ;;}}
           )
         )
-      (gs-tip :title "Hoplon Boot Options"
+      (hdoc :title "Hoplon Boot Options"
         (p
           "Hoplon source files are compiled by the Hoplon compiler. The
           easiest way to do this is to use the " (code "hoplon") " boot
@@ -111,7 +111,7 @@
           $ boot production
           ;;}}
           ))
-      (gs-tip :title "Boot Configuration"
+      (hdoc :title "Boot Configuration"
         (p
           "If you just want to take Hoplon for a quick ride you may skip
           this section. Just run " (code "boot develpment") " in a terminal and
@@ -281,7 +281,7 @@
           ;;}}
           ))
 
-      (gs-tip :title "External JS Libs And Extern Files"
+      (hdoc :title "External JS Libs And Extern Files"
         (p
           "External JavaScript libraries can be prepended to the "
           (code "main.js") " file emitted by the ClojureScript compiler and
@@ -298,7 +298,7 @@
           "External JS files will be prepended to the " (code "main.js") " file
           in alphabetical order."))
 
-      (gs-tip :title "Hoplon Source Files"
+      (hdoc :title "Hoplon Source Files"
         (code/markdown
           ;;{{
           Hoplon compiles files having the `.hl` filename extension. These
@@ -345,7 +345,7 @@
           ;;}}
           ))
 
-      (gs-tip :title "Anatomy of a Hoplon Page"
+      (hdoc :title "Anatomy of a Hoplon Page"
         (p
           "Hoplon page source files have three parts: the page
           declaration, optional definitions and top-level forms, and
@@ -372,7 +372,7 @@
               (h1 "hello, number " (str (add1 41)))))
           ;;}}
           ))
-      (gs-tip :title "Sexp Markup Syntax"
+      (hdoc :title "Sexp Markup Syntax"
         (p
           "Hoplon's HTML evaluator provides a sexp-based HTML syntax and
           semantic. Elements in sexp markup are parenthesized lists, the
@@ -471,7 +471,7 @@
           ;;}}
           ))
 
-      (gs-tip :title "Reader Support For Multiline Strings"
+      (hdoc :title "Reader Support For Multiline Strings"
         (code/markdown
           ;;{{
           As described above, text nodes are expressed as strings in sexp
@@ -490,7 +490,7 @@
           ;;}}
           ))
 
-      (gs-tip :title "Wiring Up The DOM"
+      (hdoc :title "Wiring Up The DOM"
         (p
           "DOM interactions can be divided into two categories: input and
           output. Input is how the user initiates changes to the state of
