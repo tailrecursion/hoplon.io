@@ -3,12 +3,12 @@
 #tailrecursion.boot.core/version "2.3.1"
 
 (set-env!
-  :dependencies  '[[tailrecursion/boot.task   "2.1.2"]
-                   [tailrecursion/hoplon      "5.7.1"]
+  :dependencies  '[[tailrecursion/boot.task   "2.1.3"]
+                   [tailrecursion/hoplon      "5.7.2"]
                    [markdown-clj              "0.9.41"]
                    [tailrecursion/boot.ring   "0.1.0-SNAPSHOT"]
                    [tailrecursion/boot.notify "2.0.0-SNAPSHOT"]
-                   [org.clojure/clojurescript "0.0-2156"]]
+                   [org.clojure/clojurescript "0.0-2202"]]
   :src-paths     #{"src"}
   :out-path      "resources/public")
 
