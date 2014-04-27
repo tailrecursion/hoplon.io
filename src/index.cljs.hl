@@ -31,8 +31,7 @@
    content-getting-started
    content-docs
    content-talks
-   content-community
-   content-github]
+   content-community]
   (page/navbar-fixed-top
     route
     "Hoplon"
@@ -40,8 +39,7 @@
     [(a :href "#/getting-started/" "Getting Started") (core/container)]
     [(a :href "#/docs/"                       "Docs") (core/container)]
     [(a :href "#/talks/"            "Talking Hoplon") (core/container)]
-    [(a :href "#/community/"             "Community") (core/container)]
-    [(a :href hoplon-url :target "_blank"   "GitHub") (core/container)]))
+    [(a :href "#/community/"  "Community/Contribute") (core/container)]))
 
 (defc gs-tasks {:cur nil :toc []})
 (defc hdocs  {:cur nil :toc []})

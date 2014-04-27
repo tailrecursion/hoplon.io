@@ -3,25 +3,37 @@
     [bootstrap.grid           :as grid]
     [io.hoplon.content.shared :refer [copyright-footer hoplon-url
                                       hoplon-issues-url hoplon-group-url
-                                      hoplon-discourse-url]]))
+                                      hoplon-discourse-url boot-url
+                                      castra-url javelin-url hoplon-io-url
+                                      hoplon-demos-url]]))
 
 (defn show []
   (grid/row
     (grid/col3)
     (grid/col6
-      (h1 "Community")
-      (hr)
+      (h2 "Community" (br)
+        (small  "Need some help? Want to discuss something Hoplon related?"))
       (dl :class "dl-horizontal"
-        (dt "Source")
-        (dd (a :href hoplon-url :target "_blank" hoplon-url))
-        (dt "Issues")
-        (dd (a :href hoplon-issues-url :target "_blank" hoplon-issues-url))
-        (dt "Mailing List")
-        (dd (a :href hoplon-group-url :target "_blank" hoplon-group-url))
-        (dt "Discussion")
+        (dt "Forum")
         (dd (a :href hoplon-discourse-url :target "_blank" hoplon-discourse-url))
         (dt "Freenode IRC")
         (dd (tt "#hoplon")))
+      (hr)
+      (h2 "Contribute" (br)
+        (small "Found a bug? Want to contribute with some code?"))
+      (dl :class "dl-horizontal"
+        (dt "Hoplon")
+        (dd (a :href hoplon-url :target "_blank" hoplon-url))
+        (dt "Boot")
+        (dd (a :href boot-url :target "_blank" boot-url))
+        (dt "Castra")
+        (dd (a :href castra-url :target "_blank" castra-url))
+        (dt "Javelin")
+        (dd (a :href javelin-url :target "_blank" javelin-url))
+        (dt "This site")
+        (dd (a :href hoplon-io-url :target "_blank" hoplon-io-url))
+        (dt "Hoplon demos")
+        (dd (a :href hoplon-demos-url :target "_blank" hoplon-demos-url)))
       (hr)
       (h3 "Special Thanks To")
       (dl :class "dl-horizontal"
