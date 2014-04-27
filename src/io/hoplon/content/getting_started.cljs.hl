@@ -93,14 +93,14 @@
         (p "In another terminal do the following in the project directory:")
         (code/highlight :bash
           ;;{{
-          $ boot watch hoplon
+          $ boot development
           ;;}}
           )
         (p
-          "This starts the Hoplon compiler in “watcher” mode–source
+          "This starts the Hoplon compiler in “development” mode – source
           directories are monitored for changes and recompiled when
-          necessary. When it's finished compiling the project directory
-          should look something like this:")
+          necessary. When it finished compiling the project directory
+          should look like this:")
         (code/highlight :none
           ;;{{
           .
@@ -117,15 +117,6 @@
           │           └── main.css
           └── src
           └── index.cljs.hl
-          ;;}}
-          )
-        (p
-          "Options can be passed to the JVM by setting the " (code "JVM_OPTS")
-          " environment variable. For example, JVM heap space can be set to
-          1G like this:")
-        (code/highlight :bash
-          ;;{{
-          $ JVM_OPTS="-Xmx1g" boot watch hoplon
           ;;}}
           )
         (p
