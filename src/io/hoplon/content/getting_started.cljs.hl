@@ -42,10 +42,7 @@
         "This article will demonstrate how to build Hoplon applications.
         A simple application will be developed incrementally. New features
         will be added at each step, showing how different parts of Hoplon
-        are used. After running through the basics here, check out the "
-        (a :href hoplon-demos-url :target "_blank" "hoplon demos")
-        " repository to see some complete, self-contained example
-        applications.")
+        are used.")
       (br)
 
       (gs-info :title "System Requirements (Compiler)"
@@ -283,5 +280,164 @@
           (ex-tabs/code2h))
         (p "Compile and reload the page. You should see something like this:")
         (ex-tabs/demo))
+
+      (gs-task :title "Castra"
+        (p "The next tasks will help you to getting stated with Castra, the
+          RPC library that comes with Hoplon."))
+
+      (gs-task :title "Castra 1: Create a Castra project"
+        (p
+          "The hoplon-castra Leiningen template can be used to create a simple
+          “hello world” project:")
+        (code/highlight :bash
+          ;;{{
+          $ lein new hoplon-castra my-project
+          ;;}}
+          )
+        (p
+          "The directory of a new hoplon-castra project is:")
+        (code/highlight :none
+          ;;{{
+          .
+          ├── assets
+          │   └── css
+          │       └── main.css
+          ├── build.boot
+          ├── README.md
+          └── src
+              ├── clj
+              │   └── my_project
+              │       ├── api.clj
+              │       └── core.clj
+              ├── cljs
+              │   └── my_project
+              │       └── rpc.cljs
+              └── hl
+                  └── my_project
+                      └── index.cljs.hl
+          ;;}}
+          ))
+
+      (gs-task :title "Castra 2: Compile the project."
+        (p "In another terminal do the following in the project directory:")
+        (code/highlight :bash
+          ;;{{
+          $ boot development
+          ;;}}
+          )
+        (p
+          "This starts the Hoplon compiler in “development” mode — source
+          directories are monitored for changes and recompiled when
+          necessary. It will also start a development web server on port 8000.")
+        (p
+          "Go to " (a :href "http://localhost:8000" :target "_blank"
+                     "http://localhost:8000")
+          " in a browser and enjoy a friendly greeting. Notice the random
+          numbers. They are generated on the server and the client uses Castra
+          to get them."))
+
+      (gs-task :title "Castra 3: Modifying a Castra endpoint"
+        (p "Castra endpoints are functions created with a special "
+          (code "defn") " from the " (code "tailrecursion.castra")
+          " namespace.")
+        (p "Modify the " (code "api.clj") " file such that it contains the
+          following:")
+        (code/highlight :clj
+          ;;{{
+          (ns my-project.api
+            (:refer-clojure :exclude [defn])
+            (:require [tailrecursion.castra :refer [defn]]))
+
+          (def counter (atom 0))
+
+          (defn get-state []
+            {:rpc/query [{:random (rand-int 100)
+                          :counter @counter}]}
+            (swap! counter inc))
+          ;;}}
+          )
+        (p "The " (code "defn") "from Castra takes a special map that works
+          in a manner like the pre- and postconditions in Clojure functions.
+          There is two special keys: " (code ":rpc/pre") " and "
+          (code ":rpc/query") ". When " (code ":rpc/query") " is present, the
+          body of the function is evaluated only for side effects — in this
+          case, updating the counter. The response
+          will be the content of " (code ":rpc/query") ". Like Clojure's pre-
+          and postconditions, the expression needs to be inside a vector, but
+          the vector is not part of the return value, only its content.")
+        (p "Now the endpoint is returning a map with two keys: "
+          (code ":random") " and " (code ":counter") ".
+          Boot is watching those files but it doesn't autoreload
+          the server files yet, so restart " (code "boot development") "to make
+          the server update the response."))
+      (gs-task :title "Castra 4: Update the client - Part 1"
+        (p "Now we need to update the client. First change the "
+          (code "rpc.cljs") " file to make it like this:")
+        (code/highlight :clj
+          ;;{{
+          (ns my-project.rpc
+            (:require-macros
+              [tailrecursion.javelin :refer [defc defc=]])
+            (:require
+              [tailrecursion.javelin]
+              [tailrecursion.castra :refer [mkremote]]))
+
+          (defc state {:random nil})
+          (defc error nil)
+          (defc loading [])
+
+          (defc= random-number (get state :random))
+          (defc= counter (get state :counter))
+
+          (def get-state
+            (mkremote 'my-project.api/get-state state error loading))
+
+          (defn init []
+            (get-state)
+            (js/setInterval get-state 1000))
+          ;;}}
+          )
+        (p "This is the file that makes the communication with the server.
+          It calls functions on the server like if it was just running the
+          function on the client. But it really is sending a request to
+          the server that send a json reponse and this response is parsed
+          on the client.")
+        (p "There is only one new line where we define a formula cell called "
+          (code "counter") ". It will update everytime the state is updated.
+          Next we will change the page so we can see the counter.")
+        (p "Also take a look at the " (code "mkremote") "function. You call
+          it with a quoted namespaced function and three cells: one for the
+          state, one for errors and one to indicate a call in progress. So,
+          if the function call succeeds the state is updated. If it errors,
+          the error cell is updated. And while a call is in progress the
+          loading cell will not be empty."))
+      (gs-task :title "Castra 5: Update the client - Part 2"
+        (p "Change the " (code "index.cljs.hl") " file:")
+        (code/highlight :clj
+          ;;{{
+          (page "index.html"
+            (:require [my-project.rpc :as rpc]))
+
+          (rpc/init)
+
+          (html
+            (head
+              (link :rel "stylesheet" :type "text/css" :href "css/main.css"))
+            (body
+              (h1 (text "Hello, Hoplon and Castra! ~{rpc/random-number}"))
+              (p (text "Look! It's a counter: ~{rpc/counter}"))))
+          ;;}}
+          )
+        (p "Here we added a " (code "p") " tag with a " (code "text") "macro
+          that will update everytime the cell updates. Reload the page and
+          you will see the random numbers and your new counter.
+          Congratulations!"))
+      (gs-task :title "Learn more"
+        (p "You take a look at some documentation on the "
+          (a :href "#/docs/" "docs section") " and there are some example
+          projects on " (a :href hoplon-demos-url "Hoplon demos") ". There
+          are also some tutorials on the "
+          (a :href "#/talks/" "talking Hoplon section")))
+
       (hr)
       (copyright-footer))))
