@@ -5,7 +5,7 @@
     [io.hoplon                :as hoplon]
     [bootstrap.grid           :as grid]
     [bootstrap.panel          :as panel]
-    [io.hoplon.content.shared :refer [copyright-footer]]))
+    [io.hoplon.content.shared :refer [copyright-footer boot-url]]))
 
 (defn show [hdoc hdocs]
   (grid/row
@@ -39,27 +39,14 @@
           ;;{{
           $ lein new hoplon my-project
           ;;}}
-          )
-        (p
-          "The directory of a new Hoplon project is:")
-        (code/highlight :none
-          ;;{{
-          .
-          ├── build.boot
-          ├── README.md
-          ├── assets
-          │   └── css
-          │       └── main.css
-          └── src
-              └── index.cljs.hl
-          ;;}}
-          )
-        )
+          ))
       (hdoc :title "Boot"
         (p "Boot is a build tool used for Hoplon projects. It's also other
           things, but here we are interested in using it with a Hoplon
-          project."))
-      (hdoc :title "Boot Options"
+          project. There is more documentation at the "
+          (a :href boot-url "Boot project page") ", but the information
+          below is enough for most Hoplon related purposes."))
+      (hdoc :title "Boot: Options"
         (p
           "Hoplon source files are compiled by the Hoplon compiler. The
           easiest way to do this is to use the " (code "hoplon") " boot
@@ -125,7 +112,7 @@
           ;;}}
           )
         )
-      (hdoc :title "Boot Configuration"
+      (hdoc :title "Boot: Configuration"
         (p
           "If you just want to take Hoplon for a quick ride you may skip
           this section. Just run " (code "boot develpment") " in a terminal and
@@ -295,7 +282,7 @@
           ;;}}
           ))
 
-      (hdoc :title "Hoplon Source Files"
+      (hdoc :title "Hoplon: Source Files"
         (code/markdown
           ;;{{
           Hoplon compiles files having the `.hl` filename extension. These
@@ -342,7 +329,7 @@
           ;;}}
           ))
 
-      (hdoc :title "Hoplon Page Anatomy"
+      (hdoc :title "Hoplon: Page Anatomy"
         (p
           "Hoplon page source files have three parts: the page
           declaration, optional definitions and top-level forms, and
@@ -371,7 +358,7 @@
           ;;}}
           ))
 
-      (hdoc :title "ClojureScript Markup Syntax"
+      (hdoc :title "Hoplon: ClojureScript Markup Syntax"
         (p
           "Hoplon's HTML evaluator provides a ClojureScript-based HTML syntax
           and semantic. Elements in ClojureScript markup are parenthesized
@@ -470,7 +457,7 @@
           ;;}}
           ))
 
-      (hdoc :title "Reader Support For Multiline Strings"
+      (hdoc :title "Hoplon: Reader Support For Multiline Strings"
         (code/markdown
           ;;{{
           As described above, text nodes are expressed as strings in
@@ -490,7 +477,7 @@
           ;;}}
           ))
 
-      (hdoc :title "Making the DOM Dynamic"
+      (hdoc :title "Hoplon: Making the DOM Dynamic"
         (p
           "DOM interactions can be divided into two categories: input and
           output. Input is how the user initiates changes to the state of
@@ -580,7 +567,7 @@
           formula cells, while input updates the underlying state via events
           emitted by the DOM."))
 
-      (hdoc :title "External JS Libs And Extern Files"
+      (hdoc :title "Hoplon: External JS Libs And Extern Files"
         (p
           "External JavaScript libraries can be prepended to the "
           (code "main.js") " file emitted by the ClojureScript compiler and
@@ -596,6 +583,268 @@
         (p
           "External JS files will be prepended to the " (code "main.js") " file
           in alphabetical order."))
+
+      (hdoc :title "Javelin"
+        (p
+          "You can find documentation about Javelin — cells and formula cells —
+          on the "
+          (a :href "https://github.com/tailrecursion/javelin#overview"
+            "Javelin project page") "."))
+
+      (hdoc :title "Castra"
+        (p
+          "Castra is the RPC library that comes with Hoplon. It allows the
+          illusion of client calling functions defined on the server."))
+
+      (hdoc :title "Castra: Creating a project"
+        (p
+          "To create a new Hoplon project with Castra you can use "
+          (code "lein") ":")
+        (code/highlight :bash
+          ;;{{
+          $ lein new hoplon-castra my-project
+          ;;}}
+          )
+        (p "We will take a look on some of the files from the generated
+          project on the next sections."))
+
+      (hdoc :title "Castra: Server side fuctions"
+        (p
+          "Let's take a look on " (code "src/clj/my_project/api.clj") " of
+          the generated project.")
+        (code/highlight :clj
+          ;;{{
+          (ns my-project.api
+            (:refer-clojure :exclude [defn])
+            (:require [tailrecursion.castra :refer [defn]]))
+
+          (defn get-state []
+            {:random (rand-int 100)})
+          ;;}}
+          )
+        (p
+          "Note the namespace declaration. Here we exclude the Clojure "
+          (code "defn") " and use the one from Castra. The Castra "
+          (code "defn") " accepts a map like the pre- and postconditions
+          map that regular Clojure functions can use. You may use two
+          special keys in this map: " (code ":rpc/pre") " and "
+          (code ":rpc/query") ".")
+        (p
+          "The " (code ":rpc/pre") " value is a vector of expressions. The
+          expressions inside the vector are evaluated and if any of them
+          returns false or nil an assertion error is thrown. You can then
+          deal with the error on the client. The " (code ":rpc/pre") " code
+          is only evaluated at the entry point. That means that if the client
+          calls a function A the " (code ":rpc/pre") " of A is
+          evaluated. But if in A there is a call to function B which also
+          has " (code ":rpc/pre") " it will not be executed when it is called
+          from A.")
+        (p
+          "The " (code ":rpc/query") " value is also a vector of expressions,
+          but it should only have one expression. The vector content will be
+          the response. So when " (code ":rpc/query") " is present, the body
+          is only evaluated for side-effects.")
+        (p
+          "Let's rewrite the " (code "get-state") " function using "
+          (code ":rpc/pre") " and " (code ":rpc/query") ". Pretend that "
+          (code "login!") " is a function that returns true if the user
+          is logged in and false otherwise.")
+        (code/highlight :clj
+          ;;{{
+          (defn get-state []
+            {:rpc/pre [(login!)]
+             :rpc/query [{:random (rand-int 100)}]}
+            "The function body only matters for side-effects when
+            you use the special :rpc/query key.")
+          ;;}}
+          )
+        (p
+          "If you are using this special map, the function needs a body. It
+          can even be " (code "nil") " but it needs something in it, or it
+          will consider the map as a regular function body and use it as
+          the response value."))
+      (hdoc :title "Castra: Server configuration"
+        (p
+          "Now you have functions, but your client cannot reach them just yet.
+          Some server configuration is necessary. Castra provides a Ring
+          handler that listens to Castra POST requests. These requests
+          contain the function that should be called on the server. The handler
+          is called " (code "castra") " and is located on the "
+          (code "tailrecursion.castra.handler") " namespace. One form to use
+          the handler can be found in the " (code "core.clj") " file on the
+          generated project:")
+        (code/highlight :clj
+          ;;{{
+          (ns my-project.core
+            (:require
+              [ring.adapter.jetty               :refer [run-jetty]]
+              [ring.middleware.resource         :refer [wrap-resource]]
+              [ring.middleware.session          :refer [wrap-session]]
+              [ring.middleware.session.cookie   :refer [cookie-store]]
+              [ring.middleware.file             :refer [wrap-file]]
+              [ring.middleware.file-info        :refer [wrap-file-info]]
+              [tailrecursion.castra.handler     :refer [castra]]))
+
+          (defn app [port public-path]
+            (-> (castra 'my-project.api)
+                (wrap-session {:store (cookie-store {:key "a 16-byte secret"})})
+                (wrap-file public-path)
+                (wrap-file-info)
+                (run-jetty {:join? false :port port})))
+          ;;}}
+          )
+        (p
+          "You give " (code "castra") " the namespaces where there are
+          functions you want to call from the client. While developing, there
+          is no need to worry about the server setup. There is a "
+          (code "develoment") " task in the generated project that takes care
+          of this step. Just remember to add any other namespaces on your "
+          (code "build.boot") " when necessary."))
+
+      (hdoc :title "Castra: Client side - mkremote"
+        (p
+          "On the client side we need the " (code "mkremote") " function from "
+          (code "tailrecursion.castra") " namespace. Let's have a look on the
+          generated " (code "rpc.cljs") " file:")
+        (code/highlight :clj
+          ;;{{
+          (ns my-project.rpc
+            (:require-macros
+              [tailrecursion.javelin :refer [defc defc=]])
+            (:require
+              [tailrecursion.javelin]
+              [tailrecursion.castra :refer [mkremote]]))
+
+          (defc state {:random nil})
+          (defc error nil)
+          (defc loading [])
+
+          (defc= random-number (get state :random))
+
+          (def get-state
+            (mkremote 'my-project.api/get-state state error loading))
+
+          (defn init []
+            (get-state)
+            (js/setInterval get-state 1000))
+          ;;}}
+          )
+        (p
+          "We need to require " (code "tailrecursion.javelin") " for the "
+          (code "state") ", "(code "error") " and " (code "loading") " cells. "
+          (code "mkremote") " takes a quoted namespaced function and three
+          cells as arguments and it returns a function. The namespaced function
+          is the one that will be called on the server. The returned function
+          can be called on the client with any arguments that will also be
+          passed to the function called on the server.")
+        (p
+          (code "mkremote") " sends the POST request to the url the user
+          is by default. But you can bind the " (code "*url*") " dynamic var
+          to make it POST to any url you want:")
+        (code/highlight :clj
+          ;;{{
+          (binding [*url* "/foo/bar/"]
+            (mkremote ...))
+          ;;}}
+          ))
+
+      (hdoc :title "Castra: Client side - state cell"
+        (p
+          "When the function succeeds the " (code "state") " cell is updated
+          with the return value. When there is an error, the " (code "state")
+          " cell doesn't change, so it stays with the last \"good\" state.")
+        (p
+          "You should use the state to create views for you users. It's common
+          to use formula cells to separate the state in more manageable
+          pieces."))
+
+      (hdoc :title "Castra: Client side - error cell"
+        (p
+          "When the function call returns an error, the error cell will be
+          updated. One possible error is when you can't reach the server.
+          Let's take a look at the contents of the " (code "error") " cell
+          after the error occurred:")
+        (code/highlight :clj
+          ;;{{
+          {:type :tailrecursion.castra/exception
+           :isa #{}
+           :message "The server is temporarily unavailable."
+           :data nil
+           :cause ["Unexpected end of input"]
+           :trace ""
+           :status 500
+           :severity :error}
+          ;;}}
+          )
+        (p
+          "You could then use a formula cell to display the error message to
+          the user. You should also clear the error cell after you deal with
+          it.")
+        (p
+          "Another error could be a failure in the " (code ":rpc/pre")
+          " condition on the server. Here what is the error when you just put "
+          (code "false") " there.")
+        (code/highlight :clj
+          ;;{{
+          {:type :tailrecursion.castra/fatal
+           :isa #{:tailrecursion.castra/exception}
+           :message "Server error."
+           :data nil
+           :cause ["Assert failed: (if G__11117 (clojure.core/and false) true)"]
+           :trace "clojure.lang.ExceptionInfo: Server error.\n
+                   at clojure.core$ex_info.invoke (core.clj:4327)\n
+                   ... and the rest of the stacktrace from the server
+                   (omitted for brevity)."
+           :status 500
+           :severity :fatal}
+          ;;}}
+          )
+        (p
+          "If you are using the " (code ":rpc/pre") " condition for access
+          control, this could mean a login failure.")
+        (p
+          "You can also throw custom errors on the server, there are several
+          already defined on " (code "tailrecursion.castra") " like the "
+          (code "auth") " error shown below:")
+        (code/highlight :clj
+          ;;{{
+          (ns my-project.api
+            (:require
+              [tailrecursion.castra :as c]))
+
+          (throw (c/ex c/auth "Username or password incorrect" {:some "data"}))
+          ;;}}
+          )
+        (p
+          "This will give the following error on the client:")
+        (code/highlight :clj
+          ;;{{
+          {:type :tailrecursion.castra/auth
+           :isa #{:tailrecursion.castra/exception}
+           :message "Username or password incorrect"
+           :data {:some "data"}
+           :cause []
+           :trace "... (omitted for brevity)."
+           :status 403
+           :severity :error}
+          ;;}}
+          )
+        (p
+          "The errors have different " (code ":message") " and "
+          (code ":severity") " which makes easier to decide what should
+          be displayed for the user or not."))
+
+      (hdoc :title "Castra: Client side - loading cell"
+        (p
+          "While any " (code "mkremote") " calls are in progress, the loading
+          cell won't be empty. After every remote function returns the loading
+          cell will be empty again. You can use that to show a loading
+          indicator.")
+        (code/highlight :clj
+          ;;{{
+          (div :toggle (cell= (seq loading)) "Loading ...")
+          ;;}}
+        ))
 
       (hr)
       (copyright-footer))))

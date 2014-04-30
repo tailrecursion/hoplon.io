@@ -11,16 +11,18 @@
   (grid/row
     (grid/col3)
     (grid/col6
-      (h2 "Community" (br)
-        (small  "Need some help? Want to discuss something Hoplon related?"))
+      (h2 "Community")
+      (p (strong "Need some help? Want to discuss something Hoplon related? No
+        doubt is too small."))
       (dl :class "dl-horizontal"
         (dt "Forum")
         (dd (a :href hoplon-discourse-url :target "_blank" hoplon-discourse-url))
         (dt "Freenode IRC")
         (dd (tt "#hoplon")))
       (hr)
-      (h2 "Contribute" (br)
-        (small "Found a bug? Want to contribute with some code?"))
+      (h2 "Contribute")
+      (p (strong "Found a bug? Want to contribute with some code? Found a typo?
+        Any help is welcome. Open an issue or send a pull request."))
       (dl :class "dl-horizontal"
         (dt "Hoplon")
         (dd (a :href hoplon-url :target "_blank" hoplon-url))
