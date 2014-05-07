@@ -8,14 +8,8 @@
     [io.hoplon.content.docs      :as docs]
     [io.hoplon.content.talks     :as talks]
     [io.hoplon.content.community :as community]
-    [io.hoplon.content.shared    :refer [cqrs-url hoplon-url boot-url
-                                         hoplon-clojars-url hoplon-demos-url
-                                         bootstrap-url hoplon-group-url
-                                         hoplon-issues-url hoplon-discourse-url
-                                         copyright-footer]]
     [bootstrap.core              :as core]
     [bootstrap.page              :as page]
-    [bootstrap.navbar            :as navbar]
     [tailrecursion.hoplon.util   :as hutil]))
 
 (def route (hutil/route-cell 10 "#/home/"))
