@@ -4,9 +4,9 @@
 
 (set-env!
   :dependencies  '[[tailrecursion/boot.task   "2.1.3"]
-                   [tailrecursion/hoplon      "5.7.2"]
+                   [tailrecursion/hoplon      "5.8.3"]
                    [markdown-clj              "0.9.41"]
-                   [tailrecursion/boot.ring   "0.1.0-SNAPSHOT"]
+                   [tailrecursion/boot.ring   "0.1.0"]
                    [tailrecursion/boot.notify "2.0.0-SNAPSHOT"]
                    [org.clojure/clojurescript "0.0-2202"]]
   :src-paths     #{"src"}
