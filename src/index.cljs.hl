@@ -46,10 +46,9 @@
 
 (defc example  1)
 
-(add-initfn!
-  (fn []
-    (.track js/mixpanel (.. js/window -location -href))
-    (hyphenate!)))
+(with-init!
+  (.track js/mixpanel (.. js/window -location -href))
+  (hyphenate!))
 
 (html :lang "en"
   (head
