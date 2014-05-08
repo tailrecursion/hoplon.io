@@ -18,7 +18,9 @@
         (dt "Forum")
         (dd (a :href hoplon-discourse-url :target "_blank" hoplon-discourse-url))
         (dt "Freenode IRC")
-        (dd (tt "#hoplon")))
+        (dd (tt "#hoplon") " — "
+          (a :href "https://webchat.freenode.net/" :target "_blank" "IRC webclient")
+          ": choose a nick and put " (tt "#hoplon") " on the channels field."))
       (hr)
       (h2 "Contribute")
       (p (strong "Found a bug? Want to contribute with some code? Found a typo?
