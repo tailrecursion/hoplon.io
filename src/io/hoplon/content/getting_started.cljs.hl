@@ -341,26 +341,25 @@
           to get them."))
 
       (gs-task :title "Castra 3: Modifying a Castra endpoint"
-        (p "Castra endpoints are functions created with a special "
-          (code "defn") " from the " (code "tailrecursion.castra")
+        (p "Castra endpoints are functions created with "
+          (code "defrpc") " from the " (code "tailrecursion.castra")
           " namespace.")
         (p "Modify the " (code "api.clj") " file such that it contains the
           following:")
         (code/highlight :clj
           ;;{{
           (ns my-project.api
-            (:refer-clojure :exclude [defn])
-            (:require [tailrecursion.castra :refer [defn]]))
+            (:require [tailrecursion.castra :refer [defrpc]]))
 
           (def counter (atom 0))
 
-          (defn get-state []
+          (defrpc get-state []
             {:rpc/query [{:random (rand-int 100)
                           :counter @counter}]}
             (swap! counter inc))
           ;;}}
           )
-        (p "The " (code "defn") "from Castra takes a special map that works
+        (p "The " (code "defrpc") "from Castra takes a special map that works
           in a manner like the pre- and postconditions in Clojure functions.
           There are two special keys: " (code ":rpc/pre") " and "
           (code ":rpc/query") ". When " (code ":rpc/query") " is present, the
@@ -370,10 +369,9 @@
           and postconditions, the expression needs to be inside a vector, but
           the vector is not part of the return value, only its content.")
         (p "Now the endpoint is returning a map with two keys: "
-          (code ":random") " and " (code ":counter") ".
-          Boot is watching those files but it doesn't autoreload
-          the server files yet, so restart " (code "boot development") "to make
-          the server update the response."))
+          (code ":random") " and " (code ":counter") ". Boot will autoreload
+          the server side files when you save them if you are using the "
+          (code "boot development") " task."))
       (gs-task :title "Castra 4: Update the client - Part 1"
         (p "Now we need to update the client. First change the "
           (code "rpc.cljs") " file to make it like this:")

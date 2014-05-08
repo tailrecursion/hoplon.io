@@ -133,7 +133,7 @@
             :project      'my-project
             :version      "0.1.0-SNAPSHOT"
             :dependencies '[[tailrecursion/boot.task   "2.1.3"]
-                            [tailrecursion/hoplon      "5.7.2"]
+                            [tailrecursion/hoplon      "5.8.3"]
                             [org.clojure/clojurescript "0.0-2202"]]
             :out-path     "resources/public"
             :src-paths    #{"src"})
@@ -183,7 +183,7 @@
             :project      'my-project
             :version      "0.1.0-SNAPSHOT"
             :dependencies '[[tailrecursion/boot.task   "2.1.3"]
-                            [tailrecursion/hoplon      "5.7.2"]
+                            [tailrecursion/hoplon      "5.8.3"]
                             [org.clojure/clojurescript "0.0-2202"]]
             :out-path     "resources/public"
             :src-paths    #{"src"})
@@ -615,17 +615,14 @@
         (code/highlight :clj
           ;;{{
           (ns my-project.api
-            (:refer-clojure :exclude [defn])
-            (:require [tailrecursion.castra :refer [defn]]))
+            (:require [tailrecursion.castra :refer [defrpc]]))
 
-          (defn get-state []
+          (defrpc get-state []
             {:random (rand-int 100)})
           ;;}}
           )
         (p
-          "Note the namespace declaration. Here we exclude the Clojure "
-          (code "defn") " and use the one from Castra. The Castra "
-          (code "defn") " accepts a map like the pre- and postconditions
+          (code "defrpc") " accepts a map like the pre- and postconditions
           map that regular Clojure functions can use. You may use two
           special keys in this map: " (code ":rpc/pre") " and "
           (code ":rpc/query") ".")
@@ -635,8 +632,8 @@
           returns false or nil an assertion error is thrown. You can then
           deal with the error on the client. The " (code ":rpc/pre") " code
           is only evaluated at the entry point. That means that if the client
-          calls a function A the " (code ":rpc/pre") " of A is
-          evaluated. But if in A there is a call to function B which also
+          calls a rpc A the " (code ":rpc/pre") " of A is
+          evaluated. But if in A there is a call to rpc B which also
           has " (code ":rpc/pre") " it will not be executed when it is called
           from A.")
         (p
@@ -645,13 +642,13 @@
           the response. So when " (code ":rpc/query") " is present, the body
           is only evaluated for side-effects.")
         (p
-          "Let's rewrite the " (code "get-state") " function using "
+          "Let's rewrite the " (code "get-state") " rpc using "
           (code ":rpc/pre") " and " (code ":rpc/query") ". Pretend that "
           (code "login!") " is a function that returns true if the user
           is logged in and false otherwise.")
         (code/highlight :clj
           ;;{{
-          (defn get-state []
+          (defrpc get-state []
             {:rpc/pre [(login!)]
              :rpc/query [{:random (rand-int 100)}]}
             "The function body only matters for side-effects when
@@ -659,10 +656,10 @@
           ;;}}
           )
         (p
-          "If you are using this special map, the function needs a body. It
+          "If you are using this special map, the rpc needs a body. It
           can even be " (code "nil") " but it needs something in it, or it
-          will consider the map as a regular function body and use it as
-          the response value."))
+          will consider the map as a regular body and use it as the response
+          value."))
       (hdoc :title "Castra: Server configuration"
         (p
           "Now you have functions, but your client cannot reach them just yet.
@@ -699,7 +696,21 @@
           is no need to worry about the server setup. There is a "
           (code "develoment") " task in the generated project that takes care
           of this step. Just remember to add any other namespaces on your "
-          (code "build.boot") " when necessary."))
+          (code "build.boot") " when necessary.")
+        (p
+          "Notice that you expose every function and rpc in the namespace.
+          You can control that using " (code ":only") " and " (code ":exclude")
+          " to choose which rpcs and functions will be exposed or which ones
+          won't be.")
+        (code/highlight :clj
+          ;;{{
+          ;; Only foo, bar and baz can be accessed from the client:
+          (castra '[my-project.api :only [foo bar baz]])
+
+          ;; foo, bar and baz cannot be accessed from the client:
+          (castra '[my-project.api :exclude [foo bar baz]])
+          ;;}}
+          ))
 
       (hdoc :title "Castra: Client side - mkremote"
         (p
