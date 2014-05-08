@@ -12,7 +12,7 @@
     [bootstrap.page              :as page]
     [tailrecursion.hoplon.util   :as hutil]))
 
-(def route (hutil/route-cell 10 "#/home/"))
+(def route (route-cell "#/home/"))
 
 (defn hyphenate! []
   (.. (js/jQuery "p") (addClass "hyphenate") (css "text-align" "justify"))
