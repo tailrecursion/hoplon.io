@@ -608,7 +608,7 @@
         (p "We will take a look on some of the files from the generated
           project on the next sections."))
 
-      (hdoc :title "Castra: Server side fuctions"
+      (hdoc :title "Castra: Server side rpc"
         (p
           "Let's take a look on " (code "src/clj/my_project/api.clj") " of
           the generated project.")
