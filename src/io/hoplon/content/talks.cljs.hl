@@ -72,5 +72,19 @@
             :target "_blank"
             "https://pmbauer.github.io/2014/01/27/hoplon-binary-clock/")))
 
+      (htalk :title "AngularJS on Hoplon"
+        (p
+          (a
+            :href "https://yokolet.github.io/"
+            :target "_blank"
+            "Yoko Harada")
+          " shows how easy is to use AngularJS with Hoplon. Take a look:")
+
+        (p
+          (a
+            :href "https://yokolet.github.io/2014/03/24/angularjsonhoplon/"
+            :target "_blank"
+            "https://yokolet.github.io/2014/03/24/angularjsonhoplon/")))
+
       (hr)
       (copyright-footer))))
