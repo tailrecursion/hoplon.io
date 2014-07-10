@@ -19,7 +19,7 @@
         (div :class "form-group"
           (label (text "Height (~{bmi-height} cm)"))
           (input
-            :on-change #(reset! bmi-height (val-id "bmi-ht"))
+            :on-input #(reset! bmi-height (val-id "bmi-ht"))
             :id     "bmi-ht"
             :class  "form-control"
             :type   "range"
@@ -29,7 +29,7 @@
         (div :class "form-group"
           (label (text "Weight (~(.toFixed (/ bmi-weight 10) 1) kg)"))
           (input
-            :on-change #(reset! bmi-weight (val-id "bmi-wt"))
+            :on-input #(reset! bmi-weight (val-id "bmi-wt"))
             :id     "bmi-wt"
             :class  "form-control"
             :type   "range"
@@ -76,13 +76,13 @@
       (input
         :id "bmi-h"
         :value @height
-        :on-change #(reset! height (val-id "bmi-h")))
+        :on-input #(reset! height (val-id "bmi-h")))
 
       (label (text "Weight (~{weight} kg)"))
       (input
         :id "bmi-w"
         :value @weight
-        :on-change #(reset! weight (val-id "bmi-w")))
+        :on-input #(reset! weight (val-id "bmi-w")))
 
       (label (text "BMI ~(first bmi) (~(second bmi))"))
       (input
