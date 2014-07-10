@@ -14,10 +14,6 @@
 
 (def route (route-cell "#/home/"))
 
-(defn hyphenate! []
-  (.. (js/jQuery "p") (addClass "hyphenate") (css "text-align" "justify"))
-  (.run js/Hyphenator))
-
 (def-values
   [page-setup
    nav-bar
@@ -45,10 +41,6 @@
 (def htalk  (partial hoplon/gs-block :toc htalks  :type :info))
 
 (defc example  1)
-
-(with-init!
-  (.track js/mixpanel (.. js/window -location -href))
-  (hyphenate!))
 
 (html :lang "en"
   (head
