@@ -32,15 +32,24 @@
           (grid/row
             (grid/col12
               (hoplon/table-of-contents :size 10 :toc htalks)))))
-      (htalk :title "Clojure/West 2014 - Web Programming with Hoplon"
+      (htalk :title "Reactive web apps with Hoplon and DataScript"
         (p
-          "Alan Dipert and Micha Niskin talked about Hoplon and Undead
-          Technology. Just follow the link:")
+          "Daniel Neal briefly introduces Hoplon, then semi
+          live-codes an application combining Hoplon and DataScript.")
         (p
           (a
-            :href "https://www.youtube.com/watch?v=wVXjExRiFy0"
+            :href "https://skillsmatter.com/skillscasts/5380-reactive-web-apps-with-hoplon-and-datascript"
             :target "_blank"
-            "https://www.youtube.com/watch?v=wVXjExRiFy0")))
+            "https://skillsmatter.com/skillscasts/5380-reactive-web-apps-with-hoplon-and-datascript")))
+      (htalk :title "Clojure/West 2014 - Web Programming with Hoplon"
+             (p
+               "Alan Dipert and Micha Niskin talked about Hoplon and Undead
+          Technology. Just follow the link:")
+             (p
+               (a
+                 :href "https://www.youtube.com/watch?v=wVXjExRiFy0"
+                 :target "_blank"
+                 "https://www.youtube.com/watch?v=wVXjExRiFy0")))
 
       (htalk :title "A Quick Dashboard in Hoplon & Castra"
         (p
