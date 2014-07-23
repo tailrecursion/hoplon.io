@@ -275,7 +275,7 @@ Click me!
   <span class="p">(</span><span class="nf">body</span>
     <span class="p">(</span><span class="nf">ul</span>
       <span class="p">(</span><span class="nf">loop-tpl</span> <span class="ss">:bindings</span> <span class="p">[</span><span class="nv">x</span> <span class="nv">things</span><span class="p">]</span>
-        <span class="p">(</span><span class="nf">li</span> <span class="err">@</span><span class="nv">x</span><span class="p">)))))</span>
+        <span class="p">(</span><span class="nf">li</span> <span class="nv">x</span><span class="p">)))))</span>
 </pre></div><p>Compile and reload the page. You should see something like this:</p><div class="panel panel-default"><div class="panel-body"><ul><li>one</li><li>two</li><li>three</li></ul></div></div><p>Note how <code>loop-tpl</code> iterates over the <code>things</code> cell, binding each item to <code>x</code>, in turn. However,
           notice that <code>x</code> needs to be dereferenced to be used in
           the template. This is because <code>x</code> is actually bound to
