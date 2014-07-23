@@ -18,7 +18,7 @@
       (body
         (ul
           (loop-tpl :bindings [x things]
-            (li @x)))))
+            (li x)))))
     ;;}}
     ))
 
