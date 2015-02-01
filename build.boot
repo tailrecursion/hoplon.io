@@ -1,37 +1,34 @@
-#!/usr/bin/env boot
-
-#tailrecursion.boot.core/version "2.3.1"
-
 (set-env!
-  :dependencies  '[[tailrecursion/boot.task   "2.1.3"]
-                   [tailrecursion/hoplon      "5.8.3"]
-                   [markdown-clj              "0.9.41"]
-                   [tailrecursion/boot.ring   "0.1.0"]
-                   [tailrecursion/boot.notify "2.0.0-SNAPSHOT"]
-                   [org.clojure/clojurescript "0.0-2202"]]
-  :src-paths     #{"src"}
-  :out-path      "resources/public")
-
-(add-sync! (get-env :out-path) #{"resources/assets"})
+  :dependencies  '[[adzerk/boot-cljs      "0.0-2727-0" :scope "test"]
+                   [adzerk/boot-cljs-repl "0.1.8"      :scope "test"]
+                   [adzerk/boot-reload    "0.2.4"      :scope "test"]
+                   [pandeiro/boot-http    "0.6.1"      :scope "test"]
+                   [tailrecursion/hoplon  "6.0.0-SNAPSHOT"]
+                   [markdown-clj          "0.9.62"]]
+  :source-paths   #{"src"}
+  :asset-paths    #{"resources/assets"}
+  :target-path    "resources/public")
 
 (require
-  '[tailrecursion.boot.task :refer :all]
-  '[tailrecursion.hoplon.boot :refer :all]
-  '[tailrecursion.boot.task.notify :refer [hear]]
-  '[tailrecursion.boot.task.ring :refer [dev-server]])
+  '[adzerk.boot-cljs :refer [cljs]]
+  '[adzerk.boot-cljs-repl :refer [cljs-repl start-repl]]
+  '[adzerk.boot-reload :refer [reload]]
+  '[pandeiro.boot-http :refer [serve]]
+  '[tailrecursion.hoplon.boot :refer [hoplon]])
 
 (deftask dev
   "Build hoplon.io for local development."
   []
   (comp
     (watch)
-    (hear)
-    (hoplon {:pretty-print  true
-             :prerender     false
-             :optimizations :whitespace})
-    (dev-server)))
+    (hoplon :pretty-print true)
+    (cljs :optimizations :none :unified-mode true)
+    (serve :dir (get-env :target-path))
+    (speak)))
 
 (deftask prod
   "Build hoplon.io for production deployment."
   []
-  (hoplon {:optimizations :advanced}))
+  (comp
+    (hoplon)
+    (cljs :optimizations :advanced)))

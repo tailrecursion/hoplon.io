@@ -1,5 +1,25 @@
 # hoplon.io
 
+## Warning
+
+This branch is a testbed for upcoming Boot 2 Hoplon port.
+Comparing its contents with `master` branch you could find out
+how to migrate your Hoplon app to Boot 2.
+
+Discussion is [here.][3]
+Any help with either testing or porting Hoplon is very much appreciated and PRs are welcome.
+
+## Prerequisites
+
+To test this branch out you need to install `boot2` branch of Hoplon in local maven repo:
+```bash
+$ git clone https://github.com/tailrecursion/hoplon.git && cd hoplon
+$ git checkout boot2
+$ lein install
+```
+
+## Build & run
+
 Source code for the [Hoplon documentation site][1].
 
 ```bash
@@ -29,3 +49,4 @@ this license. You must not remove this notice, or any other, from this software.
 
 [1]: http://hoplon.io
 [2]: https://github.com/davisp/ghp-import
+[3]: http://hoplon.discoursehosting.net/t/porting-hoplon-to-boot2/405
