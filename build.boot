@@ -14,7 +14,7 @@
   '[adzerk.boot-cljs-repl :refer [cljs-repl start-repl]]
   '[adzerk.boot-reload :refer [reload]]
   '[pandeiro.boot-http :refer [serve]]
-  '[tailrecursion.hoplon.boot :refer [hoplon]])
+  '[tailrecursion.hoplon.boot :refer [hoplon prerender]])
 
 (deftask dev
   "Build hoplon.io for local development."
@@ -33,4 +33,5 @@
   []
   (comp
     (hoplon)
-    (cljs :optimizations :advanced)))
+    (cljs :optimizations :advanced)
+    (prerender)))
