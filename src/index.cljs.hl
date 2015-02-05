@@ -1,4 +1,4 @@
-(page io.hoplon.index
+(page "index.html"
   (:require-macros
     [bootstrap.code              :as code])
   (:require

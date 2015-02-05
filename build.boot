@@ -1,5 +1,5 @@
 (set-env!
-  :dependencies  '[[adzerk/boot-cljs      "0.0-2727-0" :scope "test"]
+  :dependencies  '[[adzerk/boot-cljs      "0.0-2760-0" :scope "test"]
                    [adzerk/boot-cljs-repl "0.1.8"      :scope "test"]
                    [adzerk/boot-reload    "0.2.4"      :scope "test"]
                    [pandeiro/boot-http    "0.6.1"      :scope "test"]
@@ -22,7 +22,9 @@
   (comp
     (watch)
     (hoplon :pretty-print true)
-    (cljs :optimizations :none :unified-mode true)
+    (cljs :optimizations :none
+          :unified-mode  true
+          :source-map    true)
     (serve :dir (get-env :target-path))
     (speak)))
 
