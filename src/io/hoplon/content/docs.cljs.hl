@@ -8,8 +8,7 @@
     [io.hoplon.content.shared :refer [copyright-footer boot-url]]))
 
 (defn show [hdoc hdocs]
-  (flatten-expr
-   (grid/row
+  (grid/row
     (grid/col4
      (panel/default
        :class "affix hidden-xs hidden-sm"
@@ -859,4 +858,4 @@
                            ))
 
      (hr)
-     (copyright-footer)))))
+     (copyright-footer))))

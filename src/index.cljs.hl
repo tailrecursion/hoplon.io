@@ -12,7 +12,7 @@
     [bootstrap.page              :as page]
     [tailrecursion.hoplon.util   :as hutil]))
 
-(def route (route-cell "#/home/"))
+(def route (cell "#/home/") #_(route-cell "#/home/"))
 
 (def-values
   [page-setup
@@ -44,10 +44,10 @@
 
 (html :lang "en"
   (head
-    (meta :charset "utf-8")
+    (html-meta :charset "utf-8")
     page-setup
-    (meta :name "keywords"    :content "clojure, clojurescript, cqrs, castra, cljson, spa")
-    (meta :name "description" :content "Hoplon provides a number of libraries promoting a simpler model for Clojure/ClojureScript web applications.")
+    (html-meta :name "keywords"    :content "clojure, clojurescript, cqrs, castra, cljson, spa")
+    (html-meta :name "description" :content "Hoplon provides a number of libraries promoting a simpler model for Clojure/ClojureScript web applications.")
     (title "Hoplon • A simpler way to program the web with Clojure and ClojureScript"))
   (body
     (nav-bar)

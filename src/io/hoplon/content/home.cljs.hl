@@ -14,8 +14,7 @@
                                       copyright-footer]]))
 
 (defn show [example]
-  (flatten-expr
-   (list
+  (list
     (core/jumbotron
      (core/container :class "lambda"
                      (core/container
@@ -290,4 +289,4 @@
             (img :width "523px" :src "img/arch-client.jpg")
             )))))
      (hr)
-     (copyright-footer)))))
+     (copyright-footer))))

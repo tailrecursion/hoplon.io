@@ -14,8 +14,7 @@
                                            bootstrap-url copyright-footer]]))
 
 (defn show [gs-task gs-tasks gs-info]
-  (flatten-expr
-   (grid/row
+  (grid/row
     (grid/col4
      (panel/default
        :class "affix hidden-xs hidden-sm"
@@ -443,4 +442,4 @@
                 (a :href "#/talks/" "talking Hoplon section")))
 
      (hr)
-     (copyright-footer)))))
+     (copyright-footer))))

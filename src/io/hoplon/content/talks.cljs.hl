@@ -8,8 +8,7 @@
     [io.hoplon.content.shared :refer [copyright-footer]]))
 
 (defn show [htalk htalks]
-  (flatten-expr
-   (grid/row
+  (grid/row
     (grid/col4
      (panel/default
        :class "affix hidden-xs hidden-sm"
@@ -97,4 +96,4 @@
                 "https://yokolet.github.io/2014/03/24/angularjsonhoplon/")))
 
      (hr)
-     (copyright-footer)))))
+     (copyright-footer))))

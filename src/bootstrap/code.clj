@@ -1,9 +1,9 @@
 (ns bootstrap.code
   (:require
-    [clojure.java.shell                     :refer [sh]]
-    [clojure.string                         :refer [join]]
-    [markdown.core                          :refer [md-to-html-string]]
-    [tailrecursion.hoplon.compiler.tagsoup  :refer [parse-snip]]))
+    [clojure.java.shell                :refer [sh]]
+    [clojure.string                    :refer [join]]
+    [markdown.core                     :refer [md-to-html-string]]
+    [tailrecursion.boot-hoplon.tagsoup :refer [parse-snip]]))
 
 (create-ns 'tailrecursion.hoplon)
 
