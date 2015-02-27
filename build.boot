@@ -4,7 +4,7 @@
                    [adzerk/boot-reload        "0.2.4"]
                    [pandeiro/boot-http        "0.6.2"]
                    [markdown-clj              "0.9.63"]
-                   [adzerk/boot-cljs          "0.0-2814-1"]
+                   [adzerk/boot-cljs          "0.0-2814-0"]
                    [tailrecursion/boot-hoplon "0.1.0-SNAPSHOT"]
                    [tailrecursion/hoplon      "6.0.0-SNAPSHOT"]]
   :source-paths   #{"src"}
