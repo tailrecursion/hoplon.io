@@ -1,11 +1,11 @@
 (set-env!
   :dependencies  '[[clj-tagsoup               "0.3.0"]
-                   [adzerk/boot-cljs-repl     "0.1.8"]
+                   [adzerk/boot-cljs-repl     "0.1.9"]
                    [adzerk/boot-reload        "0.2.4"]
-                   [pandeiro/boot-http        "0.6.1"]
-                   [markdown-clj              "0.9.62"]
-                   [adzerk/boot-cljs          "0.0-2760-0"]
-                   [tailrecursion/boot-hoplon "0.1.0"]
+                   [pandeiro/boot-http        "0.6.2"]
+                   [markdown-clj              "0.9.63"]
+                   [adzerk/boot-cljs          "0.0-2814-1"]
+                   [tailrecursion/boot-hoplon "0.1.0-SNAPSHOT"]
                    [tailrecursion/hoplon      "6.0.0-SNAPSHOT"]]
   :source-paths   #{"src"}
   :asset-paths    #{"resources/assets"}
