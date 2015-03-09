@@ -122,7 +122,7 @@
           compiler. You should not edit these files as they are rewritten
           everytime the source is compiled.")
               (p
-                "Open " (code "resources/public/index.html") " in a browser and
+                "Open " (code "http://localhost:8000/") " in a browser and
           enjoy a friendly greeting."))
 
      (gs-task :title "Task 3: Add a counter."
