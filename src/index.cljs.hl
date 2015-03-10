@@ -12,8 +12,7 @@
     [bootstrap.page              :as page]
     [tailrecursion.hoplon.util   :as hutil]))
 
-(def route (cell "#/home/") #_(route-cell "#/home/"))
-(set! js/window.onhashchange #(reset! route js/location.hash))
+(def route (route-cell "#/home/"))
 
 (def-values
   [page-setup
