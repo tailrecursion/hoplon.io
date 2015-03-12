@@ -29,15 +29,20 @@
   (defelem example
     [{:keys [title]} [desc & kids]]
     (fn [index state]
-      (list/divitem :click #(reset! state index)
-        (a :toggle (cell= (not= state index))
-          (panel/title :text title))
-        (div :toggle (cell= (= state index))
-          (panel/title :text title)
-          (hr)
-          desc
-          (hr)
-          kids))))
+      (let [default?  (cell= (= index 0))
+            expanded? (cell= (= state index))]
+        (list
+          (a :class "topfix"
+             :scroll-to (cell= (and (not default?) expanded?)))
+          (list/divitem :click #(reset! state index)
+            (a :toggle (cell= (not expanded?))
+              (panel/title :text title))
+            (div :toggle expanded?
+              (panel/title :text title)
+              (hr)
+              desc
+              (hr)
+              kids))))))
 
   (defelem codepanel
     [{:keys [title]} kids]

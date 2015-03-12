@@ -5,35 +5,35 @@
 (def indexed (partial map-indexed list))
 
 (defelem jump-to-toc
-  [{:keys [tocs]} _]
-  (a :class "topfix" :do-scroll-to (cell= (some zero? (map :cur tocs)))))
+  [{:keys [states]} _]
+  (a :class "topfix" :do-scroll-to (cell= (some zero? (map :cur states)))))
 
 (defelem table-of-contents
-  [{:keys [size toc]} _]
-  (let [toc* (cell= (indexed (:toc toc)))]
+  [{:keys [state]} _]
+  (let [toc* (cell= (indexed (:state state)))]
     (ul :class "list-unstyled"
       (loop-tpl :bindings [[i title] toc*]
         (li
           (a
            :style "cursor:pointer;"
-           :on-click #(do (swap! toc assoc :cur nil)
-                          (swap! toc assoc :cur (inc @i)))
+           :on-click #(do (swap! state assoc :cur nil)
+                          (swap! state assoc :cur (inc @i)))
            (text "~{title}")))))))
 
 (defelem gs-block
-  [{:keys [toc type title]} kids]
-  (when toc (swap! toc update-in [:toc] conj title))
+  [{:keys [state type title]} kids]
+  (when state (swap! state update-in [:state] conj title))
   (panel/default :class (str "panel-" (name type))
-    (when toc
+    (when state
       (a
        :class "topfix"
-       :do-scroll-to (cell= (= ~(count (:toc @toc)) (:cur toc)))))
+       :do-scroll-to (cell= (= ~(count (:state @state)) (:cur state)))))
     (panel/heading
       (panel/title title))
     (panel/body
       kids
-      (when toc
+      (when state
         (div :style "text-align:center"
-             (a :on-click #(do (swap! toc assoc :cur nil)
-                               (swap! toc assoc :cur 0))
+             (a :on-click #(do (swap! state assoc :cur nil)
+                               (swap! state assoc :cur 0))
                 "back to top"))))))

@@ -1,7 +1,7 @@
 (set-env!
   :dependencies  '[[clj-tagsoup               "0.3.0"]
                    [adzerk/boot-cljs-repl     "0.1.9"]
-                   [adzerk/boot-reload        "0.2.4"]
+                   [adzerk/boot-reload        "0.2.6"]
                    [pandeiro/boot-http        "0.6.2"]
                    [markdown-clj              "0.9.63"]
                    [adzerk/boot-cljs          "0.0-2814-0"]
@@ -22,13 +22,12 @@
   "Build hoplon.io for local development."
   []
   (comp
-    (watch :verbose true)
+    (watch)
     (speak)
     (haml)
-    (hoplon :pretty-print true)
-    (reload :on-jsload 'tailrecursion.hoplon/page-load)
-    (cljs :optimizations :none
-          :source-map    true)))
+    (hoplon)
+    (reload)
+    (cljs)))
 
 (deftask prod
   "Build hoplon.io for production deployment."
