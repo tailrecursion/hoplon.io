@@ -49,10 +49,10 @@
       :charset "utf-8")
     page-setup
     (html-meta
-      :name "keywords"
+      :name    "keywords"
       :content "clojure, clojurescript, cqrs, castra, cljson, spa")
     (html-meta
-      :name "description"
+      :name    "description"
       :content "Hoplon provides a number of libraries promoting a simpler model for Clojure/ClojureScript web applications.")
     (title "Hoplon • A simpler way to program the web with Clojure and ClojureScript"))
   (body
@@ -66,8 +66,8 @@
           :class "nojs-error"
           "This page uses JavaScript but it looks like you have it turned off."))
       (content-home            :style "display:none" (home/show example))
-      #_(content-getting-started :style "display:none" (getting-started/show gs-task gs-tasks gs-info))
-      #_(content-docs            :style "display:none" (docs/show hdoc hdocs))
-      #_(content-talks           :style "display:none" (talks/show htalk htalks))
-      #_(content-community       :style "display:none" (community/show)))))
+      (content-getting-started :style "display:none" (getting-started/show gs-task gs-tasks gs-info))
+      (content-docs            :style "display:none" (docs/show hdoc hdocs))
+      (content-talks           :style "display:none" (talks/show htalk htalks))
+      (content-community       :style "display:none" (community/show)))))
 
