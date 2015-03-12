@@ -23,12 +23,12 @@
   []
   (comp
     (watch :verbose true)
+    (speak)
     (haml)
     (hoplon :pretty-print true)
     (reload :on-jsload 'tailrecursion.hoplon/page-load)
     (cljs :optimizations :none
-          :source-map    true)
-    (speak)))
+          :source-map    true)))
 
 (deftask prod
   "Build hoplon.io for production deployment."

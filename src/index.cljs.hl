@@ -65,7 +65,7 @@
         (div
           :class "nojs-error"
           "This page uses JavaScript but it looks like you have it turned off."))
-      (content-home            :style "display:none" (home/show example))
+      (content-home            :style "display:none" (home/show))
       (content-getting-started :style "display:none" (getting-started/show gs-task gs-tasks gs-info))
       (content-docs            :style "display:none" (docs/show hdoc hdocs))
       (content-talks           :style "display:none" (talks/show htalk htalks))

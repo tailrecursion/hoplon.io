@@ -1,9 +1,6 @@
-(ns io.hoplon.examples.bmi
-  (:refer-hoplon :exclude [code])
-  (:require-macros
-   [bootstrap.code :as code]))
+(ns io.hoplon.examples.bmi)
 
-(defn demo []
+(defelem demo [_ _]
   (let [bmi-height  (cell 180)
         bmi-weight  (cell 800)
         bmi         (cell= (let [h (/ bmi-height 100)
