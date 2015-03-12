@@ -16,77 +16,37 @@
                              :else        ["obese"       "red"]))]
     (div
       (form
+
         (div :class "form-group"
-          (label (text "Height (~{bmi-height} cm)"))
+          (label
+            (text "Height (~{bmi-height} cm)"))
           (input
-            :on-input #(reset! bmi-height (val-id "bmi-ht"))
-            :id     "bmi-ht"
-            :class  "form-control"
-            :type   "range"
-            :min    0
-            :max    250
-            :value  @bmi-height))
+            :input #(reset! bmi-height (deref %))
+            :class "form-control"
+            :type  "range"
+            :min   0
+            :max   250
+            :value bmi-height))
+
         (div :class "form-group"
-          (label (text "Weight (~(.toFixed (/ bmi-weight 10) 1) kg)"))
+          (label
+            (text "Weight (~(.toFixed (/ bmi-weight 10) 1) kg)"))
           (input
-            :on-input #(reset! bmi-weight (val-id "bmi-wt"))
-            :id     "bmi-wt"
-            :class  "form-control"
-            :type   "range"
-            :min    0
-            :max    1500
-            :value  @bmi-weight))
+            :input #(reset! bmi-weight (deref %))
+            :class "form-control"
+            :type  "range"
+            :min   0
+            :max   1500
+            :value bmi-weight))
+
         (div :class "form-group"
           (label
             (text "BMI ~(.toFixed bmi 1) (~(first bmi-msg))"))
           (input
-            :do-css (cell= {:background-color (second bmi-msg)})
-            :readonly   true
-            :class      "form-control"
-            :type       "range"
-            :min        0
-            :max        500
-            :do-value   (cell= (* bmi 10))))))))
-
-(defn code []
-  (code/highlight :clj
-    ;;{{
-    (def height (cell 180)) ; height in cm
-    (def weight (cell  80)) ; weight in kg
-
-    (def bmi ; formula: [bmi, description, color]
-      (cell=
-        (let [htm (/ height 100) ; height in meters
-              bmi (/ weight (* htm htm))]
-          (cond
-            (< bmi 18.5) [bmi "underweight"  "orange"]
-            (< bmi 25.0) [bmi "normal"      "inherit"]
-            (< bmi 30.0) [bmi "overweight"   "orange"]
-            :else        [bmi "obese"           "red"]))))
-    ;;}}
-    ))
-
-(defn markup []
-  (code/highlight :clj
-    ;;{{
-    ;; Some details related to <input type="range">
-    ;; have been omitted for clarity.
-    (form
-      (label (text "Height (~{height} cm)"))
-      (input
-        :id "bmi-h"
-        :value @height
-        :on-input #(reset! height (val-id "bmi-h")))
-
-      (label (text "Weight (~{weight} kg)"))
-      (input
-        :id "bmi-w"
-        :value @weight
-        :on-input #(reset! weight (val-id "bmi-w")))
-
-      (label (text "BMI ~(first bmi) (~(second bmi))"))
-      (input
-        :do-value (cell= (first bmi))
-        :do-css (cell= {:background-color (nth bmi 2)})))
-    ;;}}
-    ))
+            :css      (cell= {:background-color (second bmi-msg)})
+            :readonly true
+            :class    "form-control"
+            :type     "range"
+            :min      0
+            :max      500
+            :do-value (cell= (* bmi 10))))))))

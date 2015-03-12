@@ -1,5 +1,6 @@
 (ns bootstrap.code
   (:require
+    [tailrecursion.hoplon.markdown     :as md]
     [clojure.java.shell                :refer [sh]]
     [clojure.string                    :refer [join]]
     [markdown.core                     :refer [md-to-html-string]]

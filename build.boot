@@ -8,7 +8,7 @@
                    [tailrecursion/boot-hoplon "0.1.0"]
                    [tailrecursion/hoplon      "6.0.0-SNAPSHOT"]]
   :source-paths   #{"src"}
-  :asset-paths    #{"resources/assets"}
+  :resource-paths #{"resources/assets"}
   :target-path    "resources/public")
 
 (require
@@ -16,17 +16,18 @@
   '[adzerk.boot-cljs-repl :refer [cljs-repl start-repl]]
   '[adzerk.boot-reload :refer [reload]]
   '[pandeiro.boot-http :refer [serve]]
-  '[tailrecursion.boot-hoplon :refer [hoplon prerender html2cljs]])
+  '[tailrecursion.boot-hoplon :refer [haml hoplon prerender html2cljs]])
 
 (deftask dev
   "Build hoplon.io for local development."
   []
   (comp
-    (watch)
+    (watch :verbose true)
+    (haml)
     (hoplon :pretty-print true)
+    (reload :on-jsload 'tailrecursion.hoplon/page-load)
     (cljs :optimizations :none
           :source-map    true)
-    (serve :dir (get-env :target-path))
     (speak)))
 
 (deftask prod

@@ -13,7 +13,7 @@
 (def hoplon-issues-url    "https://github.com/tailrecursion/hoplon/issues")
 (def hoplon-discourse-url "http://hoplon.discoursehosting.net")
 
-(defn copyright-footer []
+(defelem copyright-footer [attr kids]
   (footer :style "padding:30px 0px;"
     (div :style "text-align:center;"
       "Copyright © Alan Dipert and Micha Niskin. All rights reserved.")))

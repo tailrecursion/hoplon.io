@@ -7,7 +7,7 @@
 
 (defn navbar-fixed-top [route title-text & kvs]
   (into [(core/setup)
-         (apply navbar/fixed-top route title-text (map first kvs))] 
+         (apply navbar/fixed-top route title-text (map first kvs))]
     (map (fn [[l c]] (c :do-toggle (cell= (navbar/active? l route)))) kvs)))
 
 (defelem header [attr kids] (apply (div :class "page-header") attr kids))
