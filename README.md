@@ -1,6 +1,6 @@
 # hoplon.io
 
-Source code for the [Hoplon documentation site][1].
+Source code for the [Hoplon landing site][1].
 
 Get [Boot][3], then:
 
