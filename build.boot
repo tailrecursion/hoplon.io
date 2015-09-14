@@ -1,37 +1,44 @@
-#!/usr/bin/env boot
-
-#tailrecursion.boot.core/version "2.3.1"
-
 (set-env!
-  :dependencies  '[[tailrecursion/boot.task   "2.1.3"]
-                   [tailrecursion/hoplon      "5.8.3"]
-                   [markdown-clj              "0.9.41"]
-                   [tailrecursion/boot.ring   "0.1.0"]
-                   [tailrecursion/boot.notify "2.0.0-SNAPSHOT"]
-                   [org.clojure/clojurescript "0.0-2202"]]
-  :src-paths     #{"src"}
-  :out-path      "resources/public")
-
-(add-sync! (get-env :out-path) #{"resources/assets"})
+ :dependencies '[[adzerk/boot-cljs           "1.7.48-3"]
+                 [adzerk/boot-reload         "0.3.2"]
+                 [org.clojure/clojurescript  "1.7.48"]
+                 [org.clojure/clojure        "1.7.0"]
+                 [hoplon/boot-hoplon         "0.1.5"]
+                 [hoplon                     "6.0.0-alpha10"]
+                 [alandipert/storage-atom    "1.2.4"]
+                 [mathias/boot-sassc         "0.1.5"]
+                 [pandeiro/boot-http         "0.6.3"]
+                 [org.clojure/data.xml       "0.0.8"]
+                 [markdown-clj               "0.9.74"]
+                 [tailrecursion/boot-heredoc "0.1.0"]]
+ :resource-paths #{"assets"}
+ :source-paths #{"src"})
 
 (require
-  '[tailrecursion.boot.task :refer :all]
-  '[tailrecursion.hoplon.boot :refer :all]
-  '[tailrecursion.boot.task.notify :refer [hear]]
-  '[tailrecursion.boot.task.ring :refer [dev-server]])
+ '[adzerk.boot-cljs   :refer [cljs]]
+ '[adzerk.boot-reload :refer [reload]]
+ '[hoplon.boot-hoplon :refer [hoplon prerender]]
+ '[mathias.boot-sassc :refer [sass]]
+ '[boot.heredoc       :refer [heredoc]]
+ '[pandeiro.boot-http :refer [serve]])
 
 (deftask dev
-  "Build hoplon.io for local development."
+  "Build for local development."
   []
   (comp
-    (watch)
-    (hear)
-    (hoplon {:pretty-print  true
-             :prerender     false
-             :optimizations :whitespace})
-    (dev-server)))
+   (watch)
+   (speak)
+   (heredoc)
+   (hoplon)
+   (reload)
+   (cljs)
+   (serve :port 4002)))
 
 (deftask prod
-  "Build hoplon.io for production deployment."
+  "Build for production deployment."
   []
-  (hoplon {:optimizations :advanced}))
+  (comp
+   (heredoc)
+   (hoplon)
+   (cljs :optimizations :advanced)
+   (prerender)))

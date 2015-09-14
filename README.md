@@ -2,6 +2,8 @@
 
 Source code for the [Hoplon documentation site][1].
 
+Get [Boot][3], then:
+
 ```bash
 # build for development
 $ boot dev
@@ -29,3 +31,4 @@ this license. You must not remove this notice, or any other, from this software.
 
 [1]: http://hoplon.io
 [2]: https://github.com/davisp/ghp-import
+[3]: https://github.com/boot-clj/boot
