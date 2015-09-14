@@ -1,0 +1,95 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+@charset "utf-8";
+
+/* ------------- THEMING GOES HERE ------------- */
+
+@import 'theme';
+
+$faint: transparentize($color,.95);
+
+$break: 800px;
+$base: 16px;
+$small: .88888rem;
+$tiny: .77777rem;
+$medium: 1.125rem;
+
+@mixin align( $count, $padding:false, $gutter:false ) { 
+	> * {
+		display: inline-block;
+		vertical-align: top;
+		margin-right: -.25rem !important;
+		@if ( $padding ) {
+			padding-left: $padding !important;
+			padding-right: $padding !important;
+		}
+		width: 100% / $count;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box; 
+	}
+	@if ( $padding ) {
+		margin-left: -$padding;
+		margin-right: -$padding;
+	}
+	@if ( $gutter ) {
+		margin-left: -$padding + $gutter;
+		margin-right: -$padding + $gutter;
+	}
+	@media only screen and (max-width: $break) {
+		> * { display: block; margin-left: 0 !important; margin-right: 0 !important; padding-left: 0 !important; padding-right: 0 !important; width: auto; }
+		padding-left: 0;
+		padding-right: 0;
+		margin-left: 0; 
+		margin-right: 0;
+		.ui-cols & {
+			padding-left: 0;
+			padding-right: 0;
+		}
+	}
+}
+
+@mixin fill() { 
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+@mixin clearfix() { 
+	&:after { content: ' '; display: table; clear: both; }
+}
+
+@mixin flat-headers() { 
+	h1, h2, h3, h4, h5, h6 { margin-top: 0; }
+}
+
+@mixin headlines($color) { 
+	h1, h2, h3, h4, h5, h6, strong { color: $color; }
+}
+
+@mixin transitions() { 
+	-webkit-transition: all .333s ease-out;
+	transition: all .333s ease-out;
+}
+
+@mixin minimized($scale) { 
+	@include transitions();
+	&.minimized {
+		-webkit-transform: scale($scale);
+		-ms-transform: scale($scale);
+		transform: scale($scale);
+	}
+}
+
+
+@import 
+	'base',
+	'opensans',
+	'layout',
+	'header',
+	'profiles',
+	'posts',
+	'footer',
+	'tabs'
+;
