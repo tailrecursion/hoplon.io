@@ -1,5 +1,5 @@
 (page "index.html"
-  (:require-macros [util :refer [md]]))
+  (:require-macros [util :refer [md highlight]]))
 
 (def +nav-links+
   (mapv
@@ -25,6 +25,30 @@
   (let [[inner & outers] (reverse attr-vals)]
     (reduce #(elem-ctor attr-kw %2 %1) (elem-ctor attr-kw inner kids) outers)))
 
+(defn loud [& children]
+  (div :style "text-transform:uppercase;"
+    children))
+
+(defelem timer [attrs children]
+  (let [seconds (cell 0)]
+    (.setInterval js/window #(swap! seconds inc) 1000)
+    (div attrs (cell= (str "Seconds Elapsed: " seconds)))))
+
+(defn todo-list []
+  (let [todo-items (cell [])
+        new-item   (cell "")]
+    (div (h3 "TODO")
+         (ul :style "margin-left: 20px;"
+           (loop-tpl :bindings [todo todo-items]
+             (li :style "list-style-type:disc;" todo)))
+         (input :type "text"
+                :value new-item
+                :change #(reset! new-item @%))
+         (button :click #(dosync
+                          (swap! todo-items conj @new-item)
+                          (reset! new-item ""))
+           (text "Add #~{(inc (count todo-items))}")))))
+
 (html
   (head
     (html-meta :charset "utf-8")
@@ -34,8 +58,8 @@
     (html-meta :name "description" :content "ClojureScript Web Framework")
     (link :rel "shortcut icon" :href "/images/logos/hoplon-favicon.png")
     (link :rel "apple-touch-icon" :href "/images/logos/hoplon-favicon.png")
-    (link :rel "stylesheet" :href "css/syntax.css")
     (style "body{display:none;}")
+    (link :rel "stylesheet" :href "css/syntax.css")
     (link :rel "stylesheet" :href "css/main.css"))
   (body :class "home"
     (div :id "page" :class "page"
@@ -105,7 +129,115 @@
                   ClojureScript library. Define functions on the server, call them
                   from the client.
                   ;;}}
-                  ))))))
+                  ))))
+
+           (div :class "demos" :style "font-size: 0.9em;"
+             (div
+               (h4 "A simple custom element")
+               (md p
+                   ;;{{
+                   Elements and custom elements are regular functions. The
+                   function below, `loud`, accepts any number of children. It
+                   constructs and returns a `div` containing the uppercased
+                   `children`.
+                   ;;}}
+                   )
+               (div :style "width:60%; float:left; padding: 5px; border: 1px solid #00ace4; border-radius:10px; color: #333;"
+                 (pre
+                   ;;{{
+                   (defn loud [& children]
+                     (div :style "text-transform:uppercase" children))
+
+                   (loud "Lisp Can Do It")
+                   ;;}}
+                   ))
+               (div :style "padding: 5px; width: 35%; float:right; background-color: #eee; border: 1px solid #aaa; border-radius:10px;"
+                 (loud "Lisp Can Do It")))
+             (div :style "padding-top:20px; clear:both;"
+               (h4 "A stateful custom element")
+               (md p
+                   ;;{{
+                   In this example, the `timer` function initializes
+                   a [Javelin](https://github.com/hoplon/javelin) input cell and
+                   schedules it for periodic update using `window.setInterval`.
+                   The text of the returned `div` is attached reactively to
+                   `seconds` through a formula cell created using  `cell=`.
+                   ;;}}
+                   )
+               (md p
+                   ;;{{
+                   `defelem` is a convenience macro for creating functions that handle attribute arguments naturally.
+                   ;;}}
+                   )
+               (div :style "width:60%; float:left; padding: 5px; border: 1px solid #00ace4; border-radius:10px; color: #333;"
+                 (pre
+                   ;;{{
+                   (defelem timer [attrs children]
+                     (let [seconds (cell 0)]
+                       (.setInterval js/window #(swap! seconds inc) 1000)
+                       (div attrs (cell= (str "Seconds Elapsed: " seconds)))))
+
+                   (p (timer :style "color: green;"))
+
+                   (apply ol (map li (repeatedly 3 timer)))
+                   ;;}}
+                   ))
+               (div :style "padding: 5px; width: 35%; float:right; background-color: #eee; border: 1px solid #aaa; border-radius:10px;"
+                 (p (timer :style "color: green;"))
+                 (apply ol (map li (repeatedly 3 timer)))))
+             (div :style "padding-top:20px; clear:both;fd"
+               (h4 "An application")
+               (md p
+                   ;;{{
+                   In this final example, we create a function, `todo-list`,
+                   that returns instances of a simple application. The
+                   application responds to user input by updating input cell
+                   values when [DOM events](https://en.wikipedia.org/wiki/DOM_events) occur.
+                   ;;}}
+                   )
+               (md p
+                   ;;{{
+                   The `:change` event on the text input is attached to a function that updates the `new-item` input cell as keystrokes occur.
+                   ;;}}
+                   )
+               (md p
+                   ;;{{
+                   The `:click` event on the button is attached to a function
+                   that transactionally moves the value of `new-item` to the end
+                   of the `todo-items` vector.
+                   ;;}}
+                   )
+               (md p
+                   ;;{{
+                   `todo-items` are rendered as `li` elements using the
+                   `loop-tpl` macro. `loop-tpl` efficiently maps
+                   dynamically-sized collections to DOM nodes.
+                   ;;}}
+                   )
+               (div :style "width:60%; float:left; padding: 5px; border: 1px solid #00ace4; border-radius:10px; color: #333;"
+                 (pre
+                   ;;{{
+                   (defn todo-list []
+                     (let [todo-items (cell [])
+                           new-item   (cell "")]
+                       (div
+                         (h3 "TODO")
+                         (ul
+                           (loop-tpl :bindings [todo todo-items]
+                             (li todo)))
+                         (input
+                           :type "text"
+                           :value new-item
+                           :change #(reset! new-item @%))
+                         (button :click #(dosync
+                                          (swap! todo-items conj @new-item)
+                                          (reset! new-item ""))
+                           (text "Add #~{(inc (count todo-items))}")))))
+                   ;;}}
+                   ))
+               (div :style "padding: 5px; width: 35%; float:right; background-color: #eee; border: 1px solid #aaa; border-radius:10px;"
+                 (todo-list))
+               ))))
       (| div :class ["mention" "ui-cols" "ui-col-10 ui-skip-1"]
          (img :src "/images/logos/adzerk.png" :alt "Adzerk")
          (md blockquote
