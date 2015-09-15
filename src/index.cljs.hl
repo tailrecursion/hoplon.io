@@ -208,7 +208,7 @@
                (md p
                    ;;{{
                    The `:click` event on the button is attached to a function
-                   that uses adds the value of `new-item` to the end of
+                   that appends the value of `new-item` to the end of
                    `todo-items` inside a `dosync`. `dosync` is a transactional
                    construct that suspends the propagation of new values through
                    the cell graph while updating multiple cells.
