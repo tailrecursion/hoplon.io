@@ -32,7 +32,7 @@
    (hoplon)
    (reload)
    (cljs)
-   (serve :port 4002)))
+   (serve)))
 
 (deftask prod
   "Build for production deployment."
