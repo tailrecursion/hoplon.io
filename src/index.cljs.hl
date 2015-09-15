@@ -30,7 +30,7 @@
     children))
 
 (defelem timer [attrs children]
-  (let [start (or (:start attrs) 0)
+  (let [start   (or (:start attrs) 0)
         seconds (cell start)]
     (.setInterval js/window #(swap! seconds inc) 1000)
     (div attrs (cell= (str "Seconds Elapsed: " seconds)))))
@@ -179,7 +179,7 @@
                  (pre
                    ;;{{
                    (defelem timer [attrs children]
-                     (let [start (or (:start attrs) 0)
+                     (let [start   (or (:start attrs) 0)
                            seconds (cell start)]
                        (.setInterval js/window #(swap! seconds inc) 1000)
                        (div attrs (cell= (str "Seconds Elapsed: " seconds)))))
