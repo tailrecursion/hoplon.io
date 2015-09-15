@@ -57,7 +57,7 @@ img, iframe, video, audio { max-width: 100%; height: auto; }
 
 hr { background-color: transparent; border: 0 solid rgba(51, 51, 51, 0.05); clear: both; height: 0; margin-bottom: 0; border-width: 0 0 3px 0; margin: 4rem 0; }
 
-p, ul, ol, dl, dd, pre, h1, h2, h3, h4, h5, h6, pre, form, fieldset, table, iframe, blockquote { margin: 1.5rem 0; }
+p, ul, ol, dl, dd, h1, h2, h3, h4, h5, h6, form, fieldset, table, iframe, blockquote { margin: 1.5rem 0; }
 
 label, ul li, ol li, dl dt, dl dd { margin: .5em 0; }
 
@@ -77,22 +77,6 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 { margin-top: 2.5em; }
 h1:first-child, .h1:first-child, h2:first-child, .h2:first-child, h3:first-child, .h3:first-child, h4:first-child, .h4:first-child, h5:first-child, .h5:first-child, h6:first-child, .h6:first-child { margin-top: 1em; }
 h1 em, .h1 em, h2 em, .h2 em, h3 em, .h3 em, h4 em, .h4 em, h5 em, .h5 em, h6 em, .h6 em { font-weight: normal; color: rgba(51, 51, 51, 0.667); margin-left: .5rem; }
 
-ul, ol { padding: 0 0 0 48px; margin: 3rem 0; border-left: 3px solid rgba(51, 51, 51, 0.05); }
-
-ul ul, ol ol, ul ol, ol ul { margin-bottom: 0; margin-top: 0; }
-
-ul, ul li { list-style: disc; }
-
-ul ul li { list-style: circle; }
-
-ol, ol li { list-style: decimal; }
-
-ol ol li { list-style: lower-alpha; }
-
-ol ol ol li { list-style: lower-roman; }
-
-ol ol ol ol li { list-style: lower-greek; }
-
 dt, strong, b { font-weight: bold; }
 
 cite, em, i { font-style: italic; }
@@ -111,19 +95,19 @@ cite a { color: #aaa; }
 
 cite a:hover, cite a:focus { color: #666; }
 
-pre, code { /* background: $yellow; color: $slate; */ border-radius: 5px; font-family: "Lucida Console", Monaco, monospace; }
+/* pre, code { /\* background: $yellow; color: $slate; *\/ border-radius: 5px; font-family: "Lucida Console", Monaco, monospace; } */
 
-code { padding: .125em .325em; margin: -.125em 0; display: inline-block; color: #cf5106; }
+/* code { padding: .125em .325em; margin: -.125em 0; display: inline-block; color: #cf5106; } */
 
-pre { padding: 1em 1.5em; overflow: auto; background: rgba(51, 51, 51, 0.05); box-shadow: 0 0 0 transparent; cursor: text; }
+/* pre { padding: 1em 1.5em; overflow: auto; background: rgba(51, 51, 51, 0.05); box-shadow: 0 0 0 transparent; cursor: text; } */
 
-pre code { color: inherit; }
+/* pre code { color: inherit; } */
 
 pre, pre * { -webkit-transition: background 0.125s, color 0.125s, box-shadow 0.125s cubic-bezier(0, 0.5, 0.5, 1); transition: background 0.125s, color 0.125s, box-shadow 0.125s cubic-bezier(0, 0.5, 0.5, 1); }
 
-pre:hover { background: black; }
+/* pre:hover { background: black; } */
 
-pre:hover * { color: #cccccc; }
+/* pre:hover * { color: #cccccc; } */
 
 abbr, acronym { border-bottom: 1px dotted #666; cursor: pointer; }
 
@@ -206,7 +190,7 @@ input[type="number"]::-webkit-inner-spin-button { left: -.5em; }
 
 input[type="search"] { border-radius: 1.4em; }
 
-input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webkit-search-results-button, input[type="search"]::-webkit-search-results-decoration { display: none; }
+input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-wekit-search-results-button, input[type="search"]::-webkit-search-results-decoration { display: none; }
 
 input[type="range"] { width: 100%; margin: 1em 0; }
 
@@ -556,7 +540,7 @@ header .header-promo h1, header .header-promo h2, header .header-promo h3 { text
 .sharing .share-linkedin, .sharing .share-linkedin * { position: static; }
 
 .mention { background: white; padding: 5% 0 8% 0; background: white; }
-.mention:before { content: ''; position: absolute; width: 200px; display: block; height: 3px; background: rgba(51, 51, 51, 0.05); top: -3rem; left: 50%; margin-left: -100px; }
+/* .mention:before { content: ''; position: absolute; width: 200px; display: block; height: 3px; background: rgba(51, 51, 51, 0.05); top: -3rem; left: 50%; margin-left: -100px; } */
 .mention img { margin: 0 auto 2rem auto; max-width: 80px; display: block; }
 .mention blockquote { font-style: normal; padding-left: 0; border-width: 0; color: #333; text-align: center; margin: 2rem 0; }
 .mention blockquote em { font-style: oblique; color: rgba(51, 51, 51, 0.75); }
