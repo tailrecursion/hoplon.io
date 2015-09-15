@@ -10,10 +10,10 @@
     ["https://github.com/hoplon/hoplon/wiki" "Wiki"]
     ["https://github.com/hoplon" "Code"]]))
 
-(defn >-
+(defn |
   "Create deep nested elements following a regular attribute pattern.
 
-  (>- div :class [\"foo\" \"bar\" \"baz\"] (p \"Hello\"))
+  (| div :class [\"foo\" \"bar\" \"baz\"] (p \"Hello\"))
 
   is analagous to:
 
@@ -26,107 +26,107 @@
     (reduce #(elem-ctor attr-kw %2 %1) (elem-ctor attr-kw inner kids) outers)))
 
 (html
- (head
-  (html-meta :charset "utf-8")
-  (html-meta :name "viewport" :content "width=device-width, maximum-scale=1.0")
-  (html-meta :http-equiv "X-UA-Compatible" :content "IE=edge")
-  (title "Hoplon, a ClojureScript Web Framework")
-  (html-meta :name "description" :content "ClojureScript Web Framework")
-  (link :rel "shortcut icon" :href "/images/logos/hoplon-favicon.png")
-  (link :rel "apple-touch-icon" :href "/images/logos/hoplon-favicon.png")
-  (link :rel "stylesheet" :href "css/syntax.css")
-  (style "body{display:none;}")
-  (link :rel "stylesheet" :href "css/main.css"))
- (body :class "home"
-  (div :id "page" :class "page"
-   (header
-    (>- div :class ["nav-mobile" "nav-mobile-content"] +nav-links+)
-    (nav
-     (>- div :class ["ui-cols" "ui-col-10 ui-skip-1"]
-       (div :class "header-logo"
-         (a :href "/" :style "background-image: url(images/logos/hoplon-logo.png);" "Adzerk"))
-       (div :class "header-links" +nav-links+)
-       (div :class "header-menu" (a :href "#menu"))))
-    (>- div :class ["header-promo" "ui-cols" "ui-col-10 ui-skip-1" "header-promo-content"]
-        (div :class "header-promo-logo"
-          (a :href "http://hoplon.io"
-             (img :src "/images/logos/hoplon-logo.png"
+  (head
+    (html-meta :charset "utf-8")
+    (html-meta :name "viewport" :content "width=device-width, maximum-scale=1.0")
+    (html-meta :http-equiv "X-UA-Compatible" :content "IE=edge")
+    (title "Hoplon, a ClojureScript Web Framework")
+    (html-meta :name "description" :content "ClojureScript Web Framework")
+    (link :rel "shortcut icon" :href "/images/logos/hoplon-favicon.png")
+    (link :rel "apple-touch-icon" :href "/images/logos/hoplon-favicon.png")
+    (link :rel "stylesheet" :href "css/syntax.css")
+    (style "body{display:none;}")
+    (link :rel "stylesheet" :href "css/main.css"))
+  (body :class "home"
+    (div :id "page" :class "page"
+      (header
+        (| div :class ["nav-mobile" "nav-mobile-content"] +nav-links+)
+        (nav
+          (| div :class ["ui-cols" "ui-col-10 ui-skip-1"]
+              (div :class "header-logo"
+                (a :href "/" :style "background-image: url(images/logos/hoplon-logo.png);" "Adzerk"))
+              (div :class "header-links" +nav-links+)
+              (div :class "header-menu" (a :href "#menu"))))
+        (| div :class ["header-promo" "ui-cols" "ui-col-10 ui-skip-1" "header-promo-content"]
+            (div :class "header-promo-logo"
+              (a :href "http://hoplon.io"
+                (img :src "/images/logos/hoplon-logo.png"
                   :alt "Hoplon, a ClojureScript Web Framework")))
-        (div :class "header-promo-text"
-          (h1 "Hoplon")
-          (h3 "ClojureScript Web Framework")
-          (p (a :href "https://github.com/hoplon/hoplon/wiki/Get-Started"
-                :class "ui-action ui-action-large"
-              "Get Started")))))
-   (main :id "content" 
-     (>- div :class ["post" "ui-cols" "ui-col-10 ui-skip-1" "post-body"]
-       (div :class "promo"
-         (div
-          (h2 "Clojure and ClojureScript, everywhere.")
-          (md p
-           ;;{{
-           Hoplon is a set of [Clojure](http://clojure.org)
-           and [ClojureScript](https://github.com/clojure/clojurescript)
-           libraries that pave over the web's idiosyncrasies and present a
-           simpler way to design and build single-page web applications.
-           [Learn more on our wiki](https://github.com/hoplon/hoplon/wiki).
-           ;;}}
-           )))
-       (div :class "features"
-         (ul
-          (li
-           (img :alt "Custom Elements icon"
-                :src "images/graphics/custom-elements.png")
-           (md
-            ;;{{
-            **Custom HTML elements are regular functions** and can be created
-            and composed functionally
-            with [HLisp](https://github.com/hoplon/hoplon/wiki/HLisp)
-            ;;}}
-            ))
-          (li
-           (img :alt "Spreadsheet Icon"
-                :src "images/graphics/spreadsheet.png")
-           (md
-            ;;{{
-            **Spreadsheet-like dataflow** with
-            the [Javelin](https://github.com/hoplon/javelin) ClojureScript
-            library. Intuitively model reactive behavior using cells and
-            formulas.
-            ;;}}
-            ))
-          (li
-           (img :alt "Castra Icon"
-                :src "images/graphics/uncoupled.png")
-           (md
-            ;;{{
-            **Interact with the server** with
-            the [Castra](https://github.com/hoplon/castra) Clojure and
-            ClojureScript library. Define functions on the server, call them
-            from the client.
-            ;;}}
-            ))))))
-   (>- div :class ["mention" "ui-cols" "ui-col-10 ui-skip-1"]
-     (img :src "/images/logos/adzerk.png" :alt "Adzerk")
-     (md blockquote
-         ;;{{
-         **Made at [Adzerk](http://adzerk.com)** | *[Ad serving infrastructure](http://adzerk.com) for awesome companies*
-         ;;}}
-         ))
-   (footer
-    (div :class "ui-cols"
-     (div :class "ui-col-10 ui-skip-1"
-      (div :class "footer-links"
-       (a :href "http://github.com/hoplon" :class "network github"
-        "Adzerk on Github")
-       (a :href
-        "https://github.com/hoplon/hoplon.github.io"
-        "Site Source"))
-      (div :class "footer-privacy"
-       (md small
-           ;;{{
-           Copyright © 2015 [Alan Dipert](http://tailrecursion.com/~alan/),
-           [Micha Niskin](https://github.com/micha),
-           [Joshua Smith](https://github.com/somegoodpixels)
-           ;;}}
-           ))))))))
+            (div :class "header-promo-text"
+              (h1 "Hoplon")
+              (h3 "ClojureScript Web Framework")
+              (p (a :href "https://github.com/hoplon/hoplon/wiki/Get-Started"
+                   :class "ui-action ui-action-large"
+                   "Get Started")))))
+      (main :id "content"
+            (| div :class ["post" "ui-cols" "ui-col-10 ui-skip-1" "post-body"]
+                (div :class "promo"
+                  (div
+                    (h2 "Clojure and ClojureScript, everywhere.")
+                    (md p
+                        ;;{{
+                        Hoplon is a set of [Clojure](http://clojure.org)
+                        and [ClojureScript](https://github.com/clojure/clojurescript)
+                        libraries that pave over the web's idiosyncrasies and present a
+                        simpler way to design and build single-page web applications.
+                        [Learn more on our wiki](https://github.com/hoplon/hoplon/wiki).
+                        ;;}}
+                        )))
+                (div :class "features"
+                  (ul
+                    (li
+                      (img :alt "Custom Elements icon"
+                        :src "images/graphics/custom-elements.png")
+                      (md
+                       ;;{{
+                       **Custom HTML elements are regular functions** and can be created
+                       and composed functionally
+                       with [HLisp](https://github.com/hoplon/hoplon/wiki/HLisp)
+                       ;;}}
+                       ))
+                    (li
+                      (img :alt "Spreadsheet Icon"
+                        :src "images/graphics/spreadsheet.png")
+                      (md
+                       ;;{{
+                       **Spreadsheet-like dataflow** with
+                       the [Javelin](https://github.com/hoplon/javelin) ClojureScript
+                       library. Intuitively model reactive behavior using cells and
+                       formulas.
+                       ;;}}
+                       ))
+                    (li
+                      (img :alt "Castra Icon"
+                        :src "images/graphics/uncoupled.png")
+                      (md
+                       ;;{{
+                       **Interact with the server** with
+                       the [Castra](https://github.com/hoplon/castra) Clojure and
+                       ClojureScript library. Define functions on the server, call them
+                       from the client.
+                       ;;}}
+                       ))))))
+      (| div :class ["mention" "ui-cols" "ui-col-10 ui-skip-1"]
+          (img :src "/images/logos/adzerk.png" :alt "Adzerk")
+          (md blockquote
+              ;;{{
+              **Made at [Adzerk](http://adzerk.com)** | *[Ad serving infrastructure](http://adzerk.com) for awesome companies*
+              ;;}}
+              ))
+      (footer
+        (div :class "ui-cols"
+          (div :class "ui-col-10 ui-skip-1"
+            (div :class "footer-links"
+              (a :href "http://github.com/hoplon" :class "network github"
+                "Adzerk on Github")
+              (a :href
+                "https://github.com/tailrecursion/hoplon.io"
+                "Site Source"))
+            (div :class "footer-privacy"
+              (md small
+                  ;;{{
+                  Copyright © 2015 [Alan Dipert](http://tailrecursion.com/~alan/),
+                  [Micha Niskin](https://github.com/micha),
+                  [Joshua Smith](https://github.com/somegoodpixels)
+                  ;;}}
+                  ))))))))
