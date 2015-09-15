@@ -26,7 +26,7 @@
     (reduce #(elem-ctor attr-kw %2 %1) (elem-ctor attr-kw inner kids) outers)))
 
 (defn loud [& children]
-  (div :style "text-transform:uppercase;"
+  (div :css {:text-transform "uppercase"}
     children))
 
 (defelem timer [attrs children]
@@ -34,20 +34,25 @@
     (.setInterval js/window #(swap! seconds inc) 1000)
     (div attrs (cell= (str "Seconds Elapsed: " seconds)))))
 
-(defn todo-list []
+(defelem todo-list [{:keys [title]} _]
   (let [todo-items (cell [])
         new-item   (cell "")]
-    (div (h3 "TODO")
-         (ul :style "margin-left: 20px;"
-           (loop-tpl :bindings [todo todo-items]
-             (li :style "list-style-type:disc;" todo)))
-         (input :type "text"
-                :value new-item
-                :change #(reset! new-item @%))
-         (button :click #(dosync
-                          (swap! todo-items conj @new-item)
-                          (reset! new-item ""))
-           (text "Add #~{(inc (count todo-items))}")))))
+    (div (h3 (or title "TODO"))
+      (ul :style "margin-left: 20px;"
+        (loop-tpl :bindings [todo todo-items]
+          (li :style "list-style-type:disc;" todo)))
+      (input :type "text"
+        :value new-item
+        :change #(reset! new-item @%))
+      (button :click #(dosync
+                       (swap! todo-items conj @new-item)
+                       (reset! new-item ""))
+        (text "Add #~{(inc (count todo-items))}")))))
+
+(defn scroll-here []
+  (let [marker "marker"]
+    (js/jQuery #(set! (.-location js/window) (str "#" marker)))
+    (a :name marker)))
 
 (html
   (head
@@ -146,7 +151,7 @@
                  (pre
                    ;;{{
                    (defn loud [& children]
-                     (div :style "text-transform:uppercase" children))
+                     (div :css {:text-transform "uppercase"} children))
 
                    (loud "Lisp Can Do It")
                    ;;}}
@@ -189,8 +194,8 @@
                (h4 "An application")
                (md p
                    ;;{{
-                   In this final example, we create a function, `todo-list`,
-                   that returns instances of a simple application. The
+                   In this final example, `todo-list` is a function that returns
+                   an instance of a simple todo list application. The
                    application responds to user input by updating input cell
                    values when [DOM events](https://en.wikipedia.org/wiki/DOM_events) occur.
                    ;;}}
@@ -203,8 +208,10 @@
                (md p
                    ;;{{
                    The `:click` event on the button is attached to a function
-                   that transactionally moves the value of `new-item` to the end
-                   of the `todo-items` vector.
+                   that uses adds the value of `new-item` to the end of
+                   `todo-items` inside a `dosync`. `dosync` is a transactional
+                   construct that suspends the propagation of new values through
+                   the cell graph while updating multiple cells.
                    ;;}}
                    )
                (md p
@@ -217,27 +224,27 @@
                (div :style "width:60%; float:left; padding: 5px; border: 1px solid #00ace4; border-radius:10px; color: #333;"
                  (pre
                    ;;{{
-                   (defn todo-list []
+                   (defelem todo-list [{:keys [title]} _]
                      (let [todo-items (cell [])
                            new-item   (cell "")]
                        (div
-                         (h3 "TODO")
+                         (h3 (or title "TODO"))
                          (ul
                            (loop-tpl :bindings [todo todo-items]
                              (li todo)))
-                         (input
-                           :type "text"
-                           :value new-item
-                           :change #(reset! new-item @%))
+                         (input :type "text"
+                                :value new-item
+                                :change #(reset! new-item @%))
                          (button :click #(dosync
                                           (swap! todo-items conj @new-item)
                                           (reset! new-item ""))
                            (text "Add #~{(inc (count todo-items))}")))))
+
+                   (todo-list :title "TODO List")
                    ;;}}
                    ))
                (div :style "padding: 5px; width: 35%; float:right; background-color: #eee; border: 1px solid #aaa; border-radius:10px;"
-                 (todo-list))
-               ))))
+                 (todo-list :title "TODO List"))))))
       (| div :class ["mention" "ui-cols" "ui-col-10 ui-skip-1"]
          (img :src "/images/logos/adzerk.png" :alt "Adzerk")
          (md blockquote
