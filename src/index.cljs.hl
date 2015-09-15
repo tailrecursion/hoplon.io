@@ -30,7 +30,8 @@
     children))
 
 (defelem timer [attrs children]
-  (let [seconds (cell 0)]
+  (let [start (or (:start attrs) 0)
+        seconds (cell start)]
     (.setInterval js/window #(swap! seconds inc) 1000)
     (div attrs (cell= (str "Seconds Elapsed: " seconds)))))
 
@@ -178,18 +179,21 @@
                  (pre
                    ;;{{
                    (defelem timer [attrs children]
-                     (let [seconds (cell 0)]
+                     (let [start (or (:start attrs) 0)
+                           seconds (cell start)]
                        (.setInterval js/window #(swap! seconds inc) 1000)
                        (div attrs (cell= (str "Seconds Elapsed: " seconds)))))
 
-                   (p (timer :style "color: green;"))
+                   ;; our first timer will start at 0 and count up
+                   (p (timer :style "color: green;" :start 0))
 
-                   (apply ol (map li (repeatedly 3 timer)))
+                   ;; start 3 more timers, each with different starting values
+                   (apply ol (map li (for [r (range 1 4)] (timer :start r))))
                    ;;}}
                    ))
                (div :style "padding: 5px; width: 35%; float:right; background-color: #eee; border: 1px solid #aaa; border-radius:10px;"
-                 (p (timer :style "color: green;"))
-                 (apply ol (map li (repeatedly 3 timer)))))
+                 (p (timer :style "color: green;" :start 0))
+                 (apply ol (map li (for [r (range 1 4)] (timer :start r))))))
              (div :style "padding-top:20px; clear:both;fd"
                (h4 "An application")
                (md p
