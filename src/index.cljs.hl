@@ -34,8 +34,9 @@
   (html-meta :name "description" :content "ClojureScript Web Framework")
   (link :rel "shortcut icon" :href "/images/logos/hoplon-favicon.png")
   (link :rel "apple-touch-icon" :href "/images/logos/hoplon-favicon.png")
-  (link :rel "stylesheet" :href "/css/syntax.css")
-  (link :rel "stylesheet" :href "/css/main.css"))
+  (link :rel "stylesheet" :href "css/syntax.css")
+  (style "body{display:none;}")
+  (link :rel "stylesheet" :href "css/main.css"))
  (body :class "home"
   (div :id "page" :class "page"
    (header
@@ -43,7 +44,7 @@
     (nav
      (>- div :class ["ui-cols" "ui-col-10 ui-skip-1"]
        (div :class "header-logo"
-         (a :href "/" :style "background-image: url(/images/logos/hoplon-logo.png);" "Adzerk"))
+         (a :href "/" :style "background-image: url(images/logos/hoplon-logo.png);" "Adzerk"))
        (div :class "header-links" +nav-links+)
        (div :class "header-menu" (a :href "#menu"))))
     (>- div :class ["header-promo" "ui-cols" "ui-col-10 ui-skip-1" "header-promo-content"]
@@ -74,8 +75,8 @@
        (div :class "features"
          (ul
           (li
-           (img :alt "Custom Elements icon" :src
-            "/images/graphics/custom-elements.png")
+           (img :alt "Custom Elements icon"
+                :src "images/graphics/custom-elements.png")
            (md
             ;;{{
             **Custom HTML elements are regular functions** and can be created
@@ -84,7 +85,8 @@
             ;;}}
             ))
           (li
-           (img :alt "Spreadsheet Icon" :src "/images/graphics/spreadsheet.png")
+           (img :alt "Spreadsheet Icon"
+                :src "images/graphics/spreadsheet.png")
            (md
             ;;{{
             **Spreadsheet-like dataflow** with
@@ -94,7 +96,8 @@
             ;;}}
             ))
           (li
-           (img :alt "Castra Icon" :src "/images/graphics/uncoupled.png")
+           (img :alt "Castra Icon"
+                :src "images/graphics/uncoupled.png")
            (md
             ;;{{
             **Interact with the server** with
