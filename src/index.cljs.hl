@@ -149,7 +149,7 @@
                    ;;}}
                    )
                (div :style "width:60%; float:left; padding: 5px; border: 1px solid #00ace4; border-radius:10px; color: #333;"
-                 (pre
+                 (highlight :clj
                    ;;{{
                    (defn loud [& children]
                      (div :css {:text-transform "uppercase"} children))
@@ -176,7 +176,7 @@
                    ;;}}
                    )
                (div :style "width:60%; float:left; padding: 5px; border: 1px solid #00ace4; border-radius:10px; color: #333;"
-                 (pre
+                 (highlight :clj
                    ;;{{
                    (defelem timer [attrs children]
                      (let [start   (or (:start attrs) 0)
@@ -226,7 +226,7 @@
                    ;;}}
                    )
                (div :style "width:60%; float:left; padding: 5px; border: 1px solid #00ace4; border-radius:10px; color: #333;"
-                 (pre
+                 (highlight :clj
                    ;;{{
                    (defelem todo-list [{:keys [title]} _]
                      (let [todo-items (cell [])

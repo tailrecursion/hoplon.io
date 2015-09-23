@@ -8,7 +8,7 @@
                  [alandipert/storage-atom      "1.2.4"]
                  [mathias/boot-sassc           "0.1.5"]
                  [pandeiro/boot-http           "0.6.3"]
-                 [org.clojure/data.xml         "0.0.8"]
+                 [clj-tagsoup                  "0.3.0"]
                  [markdown-clj                 "0.9.74"]
                  [tailrecursion/boot-heredoc   "0.1.0"]
                  [org.python/jython-standalone "2.7.0"]

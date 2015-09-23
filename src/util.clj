@@ -1,7 +1,7 @@
 (ns util
   (:import org.python.util.PythonInterpreter)
-  (:require [markdown.core    :as md]
-            [clojure.data.xml :as xml]))
+  (:require [markdown.core          :as md]
+            [pl.danieljanus.tagsoup :as ts]))
 
 (defn pygmentize [file-ext code]
   (try
@@ -12,27 +12,31 @@
           (.exec "from pygments.lexers import guess_lexer_for_filename\n")
           (.exec "from pygments.formatters import HtmlFormatter\n")
           (.exec "lex = guess_lexer_for_filename(file, code)\n")
-          (.exec "fmt = HtmlFormatter(noclasses=True)\n")
+          (.exec "fmt = HtmlFormatter()\n")
           (.exec "result = highlight(code, lex, fmt)"))
         (.get "result" java.lang.String))
     (catch Throwable t
       (throw (ex-info "pygments exception" {:file-ext file-ext :code code} t)))))
 
-(defn xml->hoplon
-  [{:keys [tag attrs content] :as elem}]
+(defn html->hoplon
+  [[tag attrs & content]]
   `(~(symbol (name tag)) ~attrs
-    ~@(map #(if (string? %) % (xml->hoplon %)) content)))
+    ~@(map #(if (string? %) % (html->hoplon %)) content)))
+
+(defn parse-string [s]
+  (-> (ts/parse-string s :strip-whitespace false)
+      (get-in [2 2])))
 
 (defmacro md
   ([s] `(md ~'span ~s))
   ([wrapper-sym s]
-   (->> s
+    (-> s
         md/md-to-html-string
-        xml/parse-str
-        xml->hoplon
+        parse-string
+        html->hoplon
         ((fn [[_ & kids]] `(~wrapper-sym ~@kids))))))
 
 (defmacro highlight [file-ext code]
-  (->> (pygmentize (name file-ext) code)
-       xml/parse-str
-       xml->hoplon))
+  (-> (pygmentize (name file-ext) code)
+      parse-string
+      html->hoplon))
