@@ -45,9 +45,10 @@
   (let [tgt (core/tmp-dir!)]
     (core/with-pre-wrap [fs]
       (core/empty-dir! tgt)
-      (if-let [html-file (first (by-name [file] (core/input-files fs)))]
+      (if-let [html-file (first (by-path [file] (core/input-files fs)))]
         (let [f   (copy html-file tgt)
               txt (slurp f)]
+          (util/info "Injecting %s into %s...\n" scripts file)
           (spit f (inject-scripts txt (->> fs
                                            core/input-files
                                            (by-path scripts)
