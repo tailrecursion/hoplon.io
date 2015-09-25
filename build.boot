@@ -50,7 +50,7 @@
               txt (slurp f)]
           (spit f (inject-scripts txt (->> fs
                                            core/input-files
-                                           (by-name scripts)
+                                           (by-path scripts)
                                            (map (comp slurp core/tmp-file)))))
           (-> fs
               (core/rm [html-file])
