@@ -10,7 +10,7 @@
                  [pandeiro/boot-http           "0.6.3"]
                  [clj-tagsoup                  "0.3.0"]
                  [markdown-clj                 "0.9.74"]
-                 [tailrecursion/boot-heredoc   "0.1.0"]
+                 [tailrecursion/boot-heredoc   "0.1.1"]
                  [org.python/jython-standalone "2.7.0"]
                  [org.pygments/pygments        "2.0.2"]]
  :resource-paths #{"assets"}
