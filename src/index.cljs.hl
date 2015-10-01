@@ -68,7 +68,7 @@
     (link :rel "stylesheet" :href "css/syntax.css")
     (link :rel "stylesheet" :href "css/main.css"))
   (body :class "home"
-    (div :id "page" :class "page"
+    (div :id "page" :class "page" :toggle (not prerendering?)
       (header
         (| div :class ["nav-mobile" "nav-mobile-content"] +nav-links+)
         (nav
