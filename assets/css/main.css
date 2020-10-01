@@ -148,7 +148,7 @@ label { display: block; }
 .ui-label { margin: 1em 0 .5em; }
 
 /* resets for all form elements */
-.ui-field, .ui-action { background: rgba(0, 0, 0, 0.08) none no-repeat 0 0; font-family: inherit; vertical-align: top; margin: .5em 0; color: #333; -webkit-appearance: none; border-radius: 4px; border: 2px solid transparent; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; height: 3em; padding: .5em 1em; -webkit-transition: color .25s, background-color .25s, border-color .25s; -moz-transition: color .25s, background-color .25s, border-color .25s; -ms-transition: color .25s, background-color .25s, border-color .25s; -o-transition: color .25s, background-color .25s, border-color .25s; transition: color .25s, background-color .25s, border-color .25s; }
+.ui-field, .ui-action { background: rgba(0, 0, 0, 0.06) none no-repeat 0 0; font-family: inherit; vertical-align: top; margin: .5em 0; color: #333; -webkit-appearance: none; border-radius: 4px; border: 2px solid transparent; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; height: 3em; padding: .5em 1em; -webkit-transition: color .25s, background-color .25s, border-color .25s; -moz-transition: color .25s, background-color .25s, border-color .25s; -ms-transition: color .25s, background-color .25s, border-color .25s; -o-transition: color .25s, background-color .25s, border-color .25s; transition: color .25s, background-color .25s, border-color .25s; }
 
 /* resets for all fields */
 .ui-field { display: block; display: block; width: 100%; }
