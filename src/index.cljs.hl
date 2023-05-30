@@ -4,9 +4,7 @@
 (def +nav-links+
   (mapv
    (fn [[url title]] (a :href url title))
-   [["http://hoplon.discoursehosting.net/" "Discourse"]
-    ["http://webchat.freenode.net/?channels=hoplon" "IRC"]
-    ["http://clojurians.net/" "Slack"]
+   [["http://clojurians.net/" "Slack"]
     ["https://github.com/hoplon/hoplon/wiki" "Wiki"]
     ["https://github.com/hoplon" "Code"]]))
 
@@ -94,168 +92,117 @@
              (div
                (h2 "Clojure and ClojureScript, everywhere.")
                (md p
-                   ;;{{
-                   Hoplon is a set of [Clojure](http://clojure.org)
-                   and [ClojureScript](https://github.com/clojure/clojurescript)
-                   libraries that pave over the web's idiosyncrasies and present a
-                   simpler way to design and build single-page web applications.
-                   [Learn more on our wiki](https://github.com/hoplon/hoplon/wiki).
-                   ;;}}
-                   )))
+                 "Hoplon is a set of [Clojure](http://clojure.org)
+                 and [ClojureScript](https://github.com/clojure/clojurescript)
+                 libraries that pave over the web's idiosyncrasies and present a
+                 simpler way to design and build single-page web applications.
+                 [Learn more on our wiki](https://github.com/hoplon/hoplon/wiki).")))
            (div :class "features"
              (ul
                (li
                  (img :alt "Custom Elements icon"
                    :src "images/graphics/custom-elements.png")
                  (md
-                  ;;{{
-                  **Custom HTML elements are regular functions** and can be created
+                  "**Custom HTML elements are regular functions** and can be created
                   and composed functionally
-                  with [HLisp](https://github.com/hoplon/hoplon/wiki/HLisp)
-                  ;;}}
-                  ))
+                  with [HLisp](https://github.com/hoplon/hoplon/wiki/HLisp)"))
                (li
                  (img :alt "Spreadsheet Icon"
                    :src "images/graphics/spreadsheet.png")
                  (md
-                  ;;{{
-                  **Spreadsheet-like dataflow** with
-                  the [Javelin](https://github.com/hoplon/javelin) ClojureScript
-                  library. Intuitively model reactive behavior using cells and
-                  formulas.
-                  ;;}}
-                  ))
+                   "**Spreadsheet-like dataflow** with
+                   the [Javelin](https://github.com/hoplon/javelin) ClojureScript
+                   library. Intuitively model reactive behavior using cells and
+                   formulas."))
                (li
-                 (img :alt "Castra Icon"
+                 (img :alt "Backend Icon"
                    :src "images/graphics/uncoupled.png")
                  (md
-                  ;;{{
-                  **Interact with the server** with
-                  the [Castra](https://github.com/hoplon/castra) Clojure and
-                  ClojureScript library. Define functions on the server, call them
-                  from the client.
-                  ;;}}
-                  ))))
+                   "**Interact with the server** using whatever you want."))))
 
            (div :class "demos" :style "font-size: 0.9em;"
              (div
                (h4 "A simple custom element")
                (md p
-                   ;;{{
-                   Elements and custom elements are regular functions. The
+                   "Elements and custom elements are regular functions. The
                    function below, `loud`, accepts any number of children. It
                    constructs and returns a `div` containing the uppercased
-                   `children`.
-                   ;;}}
-                   )
+                   `children`.")
                (div :style "width:60%; float:left; padding: 5px; border: 1px solid #00ace4; border-radius:10px; color: #333;"
                  (highlight :clj
-                   ;;{{
-                   (defn loud [& children]
-                     (div :css {:text-transform "uppercase"} children))
-
-                   (loud "Lisp Can Do It")
-                   ;;}}
-                   ))
+                   "(defn loud [& children]\n  (div :css {:text-transform \"uppercase\"} children))\n(loud \"Lisp Can Do It\")"))
                (div :style "padding: 5px; width: 35%; float:right; background-color: #eee; border: 1px solid #aaa; border-radius:10px;"
                  (loud "Lisp Can Do It")))
              (div :style "padding-top:20px; clear:both;"
                (h4 "A stateful custom element")
                (md p
-                   ;;{{
-                   In this example, the `timer` function initializes
-                   a [Javelin](https://github.com/hoplon/javelin) input cell and
-                   schedules it for periodic update using `window.setInterval`.
-                   The text of the returned `div` is attached reactively to
-                   `seconds` through a formula cell created using  `cell=`.
-                   ;;}}
-                   )
-               (md p
-                   ;;{{
-                   `defelem` is a convenience macro for creating functions that handle attribute arguments naturally.
-                   ;;}}
-                   )
+                 "In this example, the `timer` function initializes a
+                 [Javelin](https://github.com/hoplon/javelin) input cell and
+                 schedules it for periodic update using `window.setInterval`.
+                 The text of the returned `div` is attached reactively to
+                 `seconds` through a formula cell created using  `cell=`.")
+               (md p "`defelem` is a convenience macro for creating functions that handle attribute arguments naturally.")
                (div :style "width:60%; float:left; padding: 5px; border: 1px solid #00ace4; border-radius:10px; color: #333;"
                  (highlight :clj
-                   ;;{{
-                   (defelem timer [attrs children]
-                     (let [start   (or (:start attrs) 0)
-                           seconds (cell start)]
-                       (.setInterval js/window #(swap! seconds inc) 1000)
-                       (div attrs (cell= (str "Seconds Elapsed: " seconds)))))
+"(defelem timer [attrs children]
+  (let [start   (or (:start attrs) 0)
+        seconds (cell start)]
+    (.setInterval js/window #(swap! seconds inc) 1000)
+    (div attrs (cell= (str \"Seconds Elapsed: \" seconds)))))
 
-                   ;; our first timer will start at 0 and count up
-                   (p (timer :style "color: green;" :start 0))
+;; our first timer will start at 0 and count up
+(p (timer :style \"color: green;\" :start 0))
 
-                   ;; start 3 more timers, each with different starting values
-                   (apply ol (map li (for [r (range 1 4)] (timer :start r))))
-                   ;;}}
-                   ))
+;; start 3 more timers, each with different starting values
+(apply ol (map li (for [r (range 1 4)] (timer :start r))))"))
                (div :style "padding: 5px; width: 35%; float:right; background-color: #eee; border: 1px solid #aaa; border-radius:10px;"
                  (p (timer :style "color: green;" :start 0))
                  (apply ol (map li (for [r (range 1 4)] (timer :start r))))))
              (div :style "padding-top:20px; clear:both;fd"
                (h4 "An application")
                (md p
-                   ;;{{
-                   In this final example, `todo-list` is a function that returns
+                   "In this final example, `todo-list` is a function that returns
                    an instance of a simple todo list application. The
                    application responds to user input by updating input cell
-                   values when [DOM events](https://en.wikipedia.org/wiki/DOM_events) occur.
-                   ;;}}
-                   )
+                   values when [DOM events](https://en.wikipedia.org/wiki/DOM_events) occur.")
                (md p
-                   ;;{{
-                   The `:change` event on the text input is attached to a function that updates the `new-item` input cell as keystrokes occur.
-                   ;;}}
-                   )
+                 "The `:change` event on the text input is attached to a
+                 function that updates the `new-item` input cell as keystrokes
+                 occur.")
                (md p
-                   ;;{{
-                   The `:click` event on the button is attached to a function
-                   that appends the value of `new-item` to the end of
-                   `todo-items` inside a `dosync`. `dosync` is a transactional
-                   construct that suspends the propagation of new values through
-                   the cell graph while updating multiple cells.
-                   ;;}}
-                   )
+                 "The `:click` event on the button is attached to a function
+                 that appends the value of `new-item` to the end of
+                 `todo-items` inside a `dosync`. `dosync` is a transactional
+                 construct that suspends the propagation of new values through
+                 the cell graph while updating multiple cells.")
                (md p
-                   ;;{{
-                   `todo-items` are rendered as `li` elements using the
-                   `loop-tpl` macro. `loop-tpl` efficiently maps
-                   dynamically-sized collections to DOM nodes.
-                   ;;}}
-                   )
+                 "`todo-items` are rendered as `li` elements using the
+                 `loop-tpl` macro. `loop-tpl` efficiently maps
+                 dynamically-sized collections to DOM nodes.")
                (div :style "width:60%; float:left; padding: 5px; border: 1px solid #00ace4; border-radius:10px; color: #333;"
                  (highlight :clj
-                   ;;{{
-                   (defelem todo-list [{:keys [title]} _]
-                     (let [todo-items (cell [])
-                           new-item   (cell "")]
+"(defelem todo-list [{:keys [title]} _]
+  (let [todo-items (cell [])
+        new-item   (cell \"\")]
                        (div
-                         (h3 (or title "TODO"))
+                         (h3 (or title \"TODO\"))
                          (ul
                            (loop-tpl :bindings [todo todo-items]
                              (li todo)))
-                         (input :type "text"
-                                :value new-item
-                                :change #(reset! new-item @%))
+                         (input :type \"text\"
+                           :value new-item
+                           :change #(reset! new-item @%))
                          (button :click #(dosync
-                                          (swap! todo-items conj @new-item)
-                                          (reset! new-item ""))
-                           (text "Add #~{(inc (count todo-items))}")))))
+                                           (swap! todo-items conj @new-item)
+                                           (reset! new-item \"\"))
+                           (text \"Add #~{(inc (count todo-items))}\")))))
 
-                   (todo-list :title "TODO List")
-                   ;;}}
-                   ))
+(todo-list :title \"TODO List\")"))
                (div :style "padding: 5px; width: 35%; float:right; background-color: #eee; border: 1px solid #aaa; border-radius:10px;"
                  (todo-list :title "TODO List"))))))
       (| div :class ["mention" "ui-cols" "ui-col-10 ui-skip-1"]
          (img :src "/images/logos/adzerk.png" :alt "Adzerk")
-         (md blockquote
-             ;;{{
-             **Made at [Adzerk](http://adzerk.com)** | *[Ad serving infrastructure](http://adzerk.com) for awesome companies*
-             ;;}}
-             ))
+         (md blockquote "**Made at [Adzerk](http://adzerk.com)** | *[Ad serving infrastructure](http://adzerk.com) for awesome companies*"))
       (footer
         (div :class "ui-cols"
           (div :class "ui-col-10 ui-skip-1"
@@ -266,10 +213,4 @@
                 "https://github.com/tailrecursion/hoplon.io"
                 "Site Source"))
             (div :class "footer-privacy"
-              (md small
-                  ;;{{
-                  Copyright © 2015 [Alan Dipert](http://tailrecursion.com/~alan/),
-                  [Micha Niskin](https://github.com/micha),
-                  [Joshua Smith](https://github.com/somegoodpixels)
-                  ;;}}
-                  ))))))))
+              (md small "Copyright © 2015 [Alan Dipert](http://tailrecursion.com/~alan/), [Micha Niskin](https://github.com/micha), [Joshua Smith](https://github.com/somegoodpixels)"))))))))
