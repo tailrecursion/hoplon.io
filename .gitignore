@@ -1,2 +1,6 @@
-/target
+.clj-kondo/**/
 .nrepl-*
+.shadow-cljs/
+node_modules/
+public/js/**/*.*
+!public/js/prism.js

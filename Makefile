@@ -2,4 +2,4 @@ help:
 	@echo "USAGE: make [help|deploy]"
 
 deploy: 
-	ghp-import -p target/
+	ghp-import -p public/
