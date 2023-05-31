@@ -261,7 +261,6 @@ table label ~ input[type], table label ~ textarea { margin-top: 5px; }
 .ui-cols { display: block; margin: 0 auto; padding: 0; width: 85%; max-width: 1200px; }
 @media only screen and (max-width: 1280px) { .ui-cols { min-width: 1088px; } }
 @media only screen and (max-width: 1088px) { .ui-cols { min-width: 100%; } }
-
 .ui-cols:after { content: ' '; display: table; clear: both; }
 
 .ui-cols .ui-col-1, .ui-cols .ui-col-2, .ui-cols .ui-col-3, .ui-cols .ui-col-4, .ui-cols .ui-col-5, .ui-cols .ui-col-6, .ui-cols .ui-col-7, .ui-cols .ui-col-8, .ui-cols .ui-col-9, .ui-cols .ui-col-10, .ui-cols .ui-col-11, .ui-cols .ui-col-12 { display: block; float: left; padding: 0 30px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
@@ -539,12 +538,7 @@ header .header-promo h1, header .header-promo h2, header .header-promo h3 { text
 .sharing .share-facebook { top: -4px; }
 .sharing .share-linkedin, .sharing .share-linkedin * { position: static; }
 
-.mention { background: white; padding: 5% 0 8% 0; background: white; }
-/* .mention:before { content: ''; position: absolute; width: 200px; display: block; height: 3px; background: rgba(51, 51, 51, 0.05); top: -3rem; left: 50%; margin-left: -100px; } */
-.mention img { margin: 0 auto 2rem auto; max-width: 80px; display: block; }
-.mention blockquote { font-style: normal; padding-left: 0; border-width: 0; color: #333; text-align: center; margin: 2rem 0; }
-.mention blockquote em { font-style: oblique; color: rgba(51, 51, 51, 0.75); }
-.mention a { color: #ff5c1e; }
+.mention { background: white; padding: 5% 0 0 0; background: white; }
 
 footer { font-size: 0.88888rem; padding: 3% 0; color: #888; background: #f4f4f4; }
 footer:after { content: ' '; display: table; clear: both; }
@@ -575,3 +569,26 @@ footer small a:hover { color: #ed462f; }
 .tabset .tabset-contents { margin: 2rem 0; }
 .tabset .tabset-contents > * { display: none; }
 .tabset .tabset-contents > *.selected { display: block; }
+.code-container {
+  margin-right: 12px;
+  padding: 5px;
+  border: 1px solid #00ace4;
+  border-radius:10px;
+  color: #333;
+  background-color: #f5f2f0;
+  flex-grow: 1;
+  max-width: 100%;
+}
+.code-result-container{
+  padding: 5px;
+  background-color: #eee;
+  border: 1px solid #aaa;
+  border-radius:10px;
+  flex-grow: 1;
+}
+.code-example {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: stretch;
+}
