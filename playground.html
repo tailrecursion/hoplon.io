@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hoplon Playground</title>
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.1/dist/es-module-shims.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/scittle-hoplon@0.0.1/dist/scittle.js" type="application/javascript"></script>
+    <script>scittle.core.disable_auto_eval();</script>
+    <script src="https://cdn.jsdelivr.net/npm/scittle-hoplon@0.0.1/dist/scittle.javelin.js" type="application/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/scittle-hoplon@0.0.1/dist/scittle.hoplon.js" type="application/javascript"></script>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "squint-cljs": "https://unpkg.com/squint-cljs@0.4.67/index.js",
+          "squint-cljs/core.js": "https://unpkg.com/squint-cljs@0.4.67/core.js",
+          "squint-cljs/string.js": "https://unpkg.com/squint-cljs@0.4.67/string.js",
+          "codemirror": "https://cdn.jsdelivr.net/npm/codemirror/dist/index.js",
+          "@codemirror/commands": "https://cdn.jsdelivr.net/npm/@codemirror/commands/dist/index.js",
+          "@codemirror/search": "https://cdn.jsdelivr.net/npm/@codemirror/search/dist/index.js",
+          "@codemirror/autocomplete": "https://cdn.jsdelivr.net/npm/@codemirror/autocomplete/dist/index.js",
+          "@codemirror/lint": "https://cdn.jsdelivr.net/npm/@codemirror/lint/dist/index.js",
+          "crelt": "https://cdn.jsdelivr.net/npm/crelt/index.es.js",
+          "@nextjournal/lezer-clojure": "https://cdn.jsdelivr.net/npm/@nextjournal/lezer-clojure/dist/index.es.js",
+          "@lezer/highlight": "https://cdn.jsdelivr.net/npm/@lezer/highlight/dist/index.js",
+          "@lezer/lr": "https://cdn.jsdelivr.net/npm/@lezer/lr/dist/index.js",
+          "@lezer/markdown": "https://ga.jspm.io/npm:@lezer/markdown@1.1.0/dist/index.js",
+          "@lezer/common": "https://cdn.jsdelivr.net/npm/@lezer/common/dist/index.js",
+          "@codemirror/language": "https://cdn.jsdelivr.net/npm/@codemirror/language/dist/index.js",
+          "@codemirror/state": "https://cdn.jsdelivr.net/npm/@codemirror/state/dist/index.js",
+          "@codemirror/view": "https://cdn.jsdelivr.net/npm/@codemirror/view/dist/index.js",
+          "style-mod": "https://cdn.jsdelivr.net/npm/style-mod/src/style-mod.js",
+          "w3c-keyname": "https://cdn.jsdelivr.net/npm/w3c-keyname/index.es.js",
+          "@nextjournal/clojure-mode": "https://ga.jspm.io/npm:@nextjournal/clojure-mode@0.3.0/dist/nextjournal/clojure_mode.mjs"
+        }
+      }
+    </script>
+    <script type="module" type="application/javascript">
+      import * as cm from 'codemirror';
+      import * as clj_m from '@nextjournal/clojure-mode';
+      import * as cv from '@codemirror/view';
+      globalThis.cm = cm;
+      globalThis.clj_m = clj_m;
+      globalThis.cv = cv;
+      scittle.core.eval_script_tags();
+    </script>
+
+    <script type="application/x-scittle" src="cljs/codemirror.cljs"></script>
+  </head>
+  <body>
+    <div id="editor"> </div>
+    <button id="evalMe" onClick="eval_me()">Eval</button>
+    <button id="toggleEditor" onClick="toggle_editor()">Hide Editor</button>
+    <div id="app"> Loading Hoplon app </div>
+  </body>
+</html>
