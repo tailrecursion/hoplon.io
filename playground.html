@@ -4,9 +4,10 @@
     <title>Hoplon Playground</title>
     <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.1/dist/es-module-shims.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/scittle-hoplon@0.0.1/dist/scittle.js" type="application/javascript"></script>
-    <script>scittle.core.disable_auto_eval();</script>
+    <script src="https://cdn.jsdelivr.net/npm/scittle-hoplon@0.0.1/dist/scittle.promesa.js" type="application/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/scittle-hoplon@0.0.1/dist/scittle.javelin.js" type="application/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/scittle-hoplon@0.0.1/dist/scittle.hoplon.js" type="application/javascript"></script>
+    <script>scittle.core.disable_auto_eval();</script>
 
     <script type="importmap">
       {
@@ -47,9 +48,5 @@
     <script type="application/x-scittle" src="cljs/codemirror.cljs"></script>
   </head>
   <body>
-    <div id="editor"> </div>
-    <button id="evalMe" onClick="eval_me()">Eval</button>
-    <button id="toggleEditor" onClick="toggle_editor()">Hide Editor</button>
-    <div id="app"> Loading Hoplon app </div>
   </body>
 </html>
