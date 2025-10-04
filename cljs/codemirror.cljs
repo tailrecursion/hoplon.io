@@ -52,9 +52,8 @@
 (set! (.-eval_me js/globalThis) eval-me)
 
 (def extension
-  (.of js/cv.keymap (.concat (clj->js [{:key "Mod-Enter"
-                                        :run eval-me}])
-                      js/clj_m.complete_keymap  )))
+  (.of js/cv.keymap (clj->js [{:key "Mod-Enter"
+                               :run eval-me}])))
 
 (def default-code
   (str/trim "
@@ -139,11 +138,11 @@
   [code]
   (set! (.-cm_instance js/globalThis)
     (js/cm.EditorView. #js {:doc code
-                            :extensions #js [extension,
-                                             js/cm.basicSetup,
+                            :extensions #js [js/cm.basicSetup,
+                                             (js/lc.clojure),
+                                             (.highest js/cs.Prec extension)
                                              (js/cm.EditorView.theme #js {"&.cm-editor" #js {"max-height" "90vh"}
-                                                                          ".cm-scroller" #js {"overflow" "auto"}}),
-                                             js/clj_m.default_extensions]
+                                                                          ".cm-scroller" #js {"overflow" "auto"}})]
                             :parent (js/document.querySelector "#editor")}))
   (reset! show-editor-interface? true))
 
